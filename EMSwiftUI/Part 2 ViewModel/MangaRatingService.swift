@@ -1,37 +1,22 @@
-//
-//  MangaListService.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 18/12/23.
-//
-
 import Foundation
 import Combine
 
-protocol MangaListServiceProtocol: AnyObject {
+// Изначально хотел добавить этот метод в MangaListViewModel потом впомнил про 4 принцип солида и создал отдельный сервис
+protocol MangaRatingServiceProtocol: AnyObject {
     var network: NetworkProtocol { get }
-    
-    func getManga() -> AnyPublisher<MangaListModel, Error>
-    
+        
     func getRating(mangaId: String) -> AnyPublisher<RatingResponse, Error>
 }
 
-final class MangaListService: MangaListServiceProtocol {
+final class MangaRatingService: MangaRatingServiceProtocol {
     let network: NetworkProtocol
     
     init(network: NetworkProtocol) {
         self.network = network
     }
-
 }
 
-extension MangaListService {
-    func getManga() -> AnyPublisher<MangaListModel, Error> {
-        let endpoint = Endpoint.mangaList
-        
-        return network.getData(with: endpoint.url, MangaListModel.self)
-    }
-    
+extension MangaRatingService {
     func getRating(mangaId: String) -> AnyPublisher<RatingResponse, Error> {
         let endpoint = Endpoint(path: "/statistics/manga/" + mangaId)
         

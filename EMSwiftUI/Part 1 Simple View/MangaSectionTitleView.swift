@@ -8,13 +8,34 @@
 import SwiftUI
 
 struct MangaSectionTitleView: View {
+    let title: String
+    
     var body: some View {
-        VStack {
-            // TODO: Create section title View
+        HStack {
+            sectionTitle(title: title)
+            
+            Spacer()
+            
+            moreButton()
         }
     }
 }
 
-#Preview {
-    MangaSectionTitleView()
+private extension MangaSectionTitleView {
+    func sectionTitle(title: String) -> some View {
+        Text(title)
+            .font(.title3)
+            .bold()
+    }
+    
+    func moreButton() -> some View {
+        Button(action: { }) {
+            HStack(spacing: 10) {
+                Text("more")
+                
+                Image(systemName: "chevron.right")
+            }
+        }
+    }
 }
+
