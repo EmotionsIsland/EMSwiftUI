@@ -1,0 +1,6 @@
+framework module Pods_EMSwiftUI {
+  umbrella header "Pods-EMSwiftUI-umbrella.h"
+
+  export *
+  module * { export * }
+}
