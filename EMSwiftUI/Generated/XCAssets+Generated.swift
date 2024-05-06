@@ -32,7 +32,9 @@ internal enum Asset {
     internal static let whiteText = ColorAsset(name: "whiteText")
   }
   internal enum Icons {
+    internal static let filterIcon = ImageAsset(name: "filterIcon")
     internal static let moreIcon = ImageAsset(name: "moreIcon")
+    internal static let searchIcon = ImageAsset(name: "searchIcon")
     internal static let starIcon = ImageAsset(name: "starIcon")
   }
 }

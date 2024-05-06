@@ -51,6 +51,13 @@ extension Endpoint {
         
         return Endpoint(path: "/manga", queryItems: queryItems)
     }
+    static var bigMangaList: Self {
+        let queryItems = [URLQueryItem(name: "limit", value: "100"),
+                          URLQueryItem(name: "order[followedCount]", value: "desc"),
+                          URLQueryItem(name: "includes[]", value: "cover_art")]
+        
+        return Endpoint(path: "/manga", queryItems: queryItems)
+    }
     
     static var mangaCover: Self {
         return Endpoint(path: "/cover")
