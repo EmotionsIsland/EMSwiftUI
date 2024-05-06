@@ -12,9 +12,9 @@
 		D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */; };
 		D83E2ECF2B2FC7ED00A338A7 /* MangaListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */; };
 		D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ED02B2FCE6B00A338A7 /* ImageExtension.swift */; };
-		D83E2EE12B2FDB6900A338A7 /* Пример.png in Resources */ = {isa = PBXBuildFile; fileRef = D83E2EE02B2FDB6900A338A7 /* Пример.png */; };
+		D83E2EE12B2FDB6900A338A7 /* Part3Example.png in Resources */ = {isa = PBXBuildFile; fileRef = D83E2EE02B2FDB6900A338A7 /* Part3Example.png */; };
 		D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2EE22B2FDBC300A338A7 /* FilterView.swift */; };
-		D83E2EE62B2FDDBC00A338A7 /* Пример.png in Resources */ = {isa = PBXBuildFile; fileRef = D83E2EE52B2FDDBC00A338A7 /* Пример.png */; };
+		D83E2EE62B2FDDBC00A338A7 /* Part1Example.png in Resources */ = {isa = PBXBuildFile; fileRef = D83E2EE52B2FDDBC00A338A7 /* Part1Example.png */; };
 		D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6073D2B2F3DE20093F5A4 /* EMSwiftUIApp.swift */; };
 		D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6073F2B2F3DE20093F5A4 /* ContentView.swift */; };
 		D8A607422B2F3DE40093F5A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8A607412B2F3DE40093F5A4 /* Assets.xcassets */; };
@@ -51,9 +51,9 @@
 		D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListViewModel.swift; sourceTree = "<group>"; };
 		D83E2ED02B2FCE6B00A338A7 /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		D83E2ED32B2FD76B00A338A7 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
-		D83E2EE02B2FDB6900A338A7 /* Пример.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Пример.png"; sourceTree = "<group>"; };
+		D83E2EE02B2FDB6900A338A7 /* Part3Example.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Part3Example.png; sourceTree = "<group>"; };
 		D83E2EE22B2FDBC300A338A7 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
-		D83E2EE52B2FDDBC00A338A7 /* Пример.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Пример.png"; sourceTree = "<group>"; };
+		D83E2EE52B2FDDBC00A338A7 /* Part1Example.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Part1Example.png; sourceTree = "<group>"; };
 		D8A6073A2B2F3DE20093F5A4 /* EMSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8A6073D2B2F3DE20093F5A4 /* EMSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMSwiftUIApp.swift; sourceTree = "<group>"; };
 		D8A6073F2B2F3DE20093F5A4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
-				D83E2EE02B2FDB6900A338A7 /* Пример.png */,
+				D83E2EE02B2FDB6900A338A7 /* Part3Example.png */,
 				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
@@ -174,7 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				D8A6074F2B2F3E770093F5A4 /* Readme.md */,
-				D83E2EE52B2FDDBC00A338A7 /* Пример.png */,
+				D83E2EE52B2FDDBC00A338A7 /* Part1Example.png */,
 				D8A6074D2B2F3E1A0093F5A4 /* MainView.swift */,
 				D8A607722B2FB7430093F5A4 /* MangaSectionView.swift */,
 				D8A607782B2FBE6F0093F5A4 /* MangaSectionTitleView.swift */,
@@ -311,7 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8A6076C2B2F4E3D0093F5A4 /* swiftgen.yml in Resources */,
-				D83E2EE62B2FDDBC00A338A7 /* Пример.png in Resources */,
+				D83E2EE62B2FDDBC00A338A7 /* Part1Example.png in Resources */,
 				D8A607672B2F45EE0093F5A4 /* SF-Pro-Text-Semibold.otf in Resources */,
 				D8A607662B2F45EE0093F5A4 /* SF-Pro-Text-Regular.otf in Resources */,
 				D8A607452B2F3DE40093F5A4 /* Preview Assets.xcassets in Resources */,
@@ -322,7 +322,7 @@
 				D8A607622B2F45EE0093F5A4 /* SF-Pro-Text-Ultralight.otf in Resources */,
 				D8A607422B2F3DE40093F5A4 /* Assets.xcassets in Resources */,
 				D8A607652B2F45EE0093F5A4 /* SF-Pro-Text-Heavy.otf in Resources */,
-				D83E2EE12B2FDB6900A338A7 /* Пример.png in Resources */,
+				D83E2EE12B2FDB6900A338A7 /* Part3Example.png in Resources */,
 				D8A607632B2F45EE0093F5A4 /* SF-Pro-Text-Black.otf in Resources */,
 				D8A607642B2F45EE0093F5A4 /* SF-Pro-Text-Medium.otf in Resources */,
 			);

@@ -28,21 +28,3 @@ final class MangaListViewModel: ObservableObject {
         return Endpoint(path: "/statistics/manga/" + manga.id).url
     }
 }
-
-// MARK: - Error Subscriptions
-
-extension MangaListViewModel {
-    func setupErrorSubscriptions() {
-        $state
-            .map { state -> Bool in
-                switch state {
-                case .successfull, .notAvailable:
-                    return false
-                case .failed:
-                    return true
-                }
-            }
-            .assign(to: &$hasError)
-    }
-}
-
