@@ -17,7 +17,9 @@ struct FilterSectionView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Button {
-                isOpened.toggle()
+                withAnimation {
+                    isOpened.toggle()
+                }
             } label: {
                 HStack(alignment: .center, spacing: 8) {
                     Text(sectionName)
@@ -33,16 +35,15 @@ struct FilterSectionView: View {
                 }
             }.foregroundStyle(.foreground)
             if isOpened {
-                FilterOptionsGridView(selectedOptions: $selectedOptions, availibleOptions: availibleOptions)
-                    .transition(
-                        .asymmetric(
-                            insertion: .opacity,
-                            removal: .opacity.animation(.easeIn(duration: 0.1))
-                        )
-                    )
+                if #available(iOS 16.0, *) {
+                    FilterOptionsGridView(selectedOptions: $selectedOptions, availibleOptions: availibleOptions)
+                        .transition(.push(from: .bottom))
+                } else {
+                    FilterOptionsGridView(selectedOptions: $selectedOptions, availibleOptions: availibleOptions)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
             }
         }
-        .animation(.easeInOut, value: isOpened)
     }
 }
 

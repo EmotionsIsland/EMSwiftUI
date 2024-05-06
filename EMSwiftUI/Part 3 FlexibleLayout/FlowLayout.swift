@@ -57,7 +57,9 @@ struct FlowLayout<Id: Hashable, Content: View>: View {
     private func viewHeightReader(_ height: Binding<CGFloat>) -> some View {
         return GeometryReader { geometry -> Color in
             DispatchQueue.main.async {
-                height.wrappedValue = geometry.frame(in: .local).size.height
+                withAnimation {
+                    height.wrappedValue = geometry.frame(in: .local).size.height
+                }
             }
             return .clear
         }
