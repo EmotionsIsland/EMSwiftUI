@@ -189,8 +189,8 @@
 			children = (
 				D8A6077A2B2FC0E20093F5A4 /* Readme.md */,
 				D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */,
-				D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */,
 				D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */,
+				D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */,
 			);
 			path = "Part 2 ViewModel";
 			sourceTree = "<group>";

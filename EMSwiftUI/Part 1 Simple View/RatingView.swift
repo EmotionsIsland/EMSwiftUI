@@ -1,23 +1,12 @@
-//
-//  RatingView.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 18/12/23.
-//
-
 import SwiftUI
 
 struct RatingView: View {
-    let rating: CGFloat
-    let maxRating: Int
-    
     var body: some View {
-        VStack {
-            // TODO: Create star rating View
+        HStack(spacing: 4) {
+            ForEach(0..<Int.random(in: 1..<6), id: \.self) { _ in
+                Image(.starIcon).foregroundStyle(.yellow)
+            }
         }
     }
 }
 
-#Preview {
-    RatingView(rating: 4, maxRating: 5)
-}
