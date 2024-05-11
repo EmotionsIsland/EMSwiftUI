@@ -3,8 +3,7 @@ import SwiftUI
 struct TagsCloudView: View {
     @ObservedObject var viewModel: FilterViewModel
     @State private var totalHeight = CGFloat.zero
-    @State private var isPressed: Bool = false
-    
+
     var isSection: Bool
     var tags: [String] = []
     
@@ -27,7 +26,7 @@ struct TagsCloudView: View {
             case true:
                 ForEach(self.tags, id: \.self) { tag in
                     
-                    self.item(for: tag)
+                    self.item(for: tag, isSec: isSection)
                         .padding(.trailing, 10)
                         .padding(.vertical, 6)
                         .alignmentGuide(.leading, computeValue: { d in
@@ -55,7 +54,7 @@ struct TagsCloudView: View {
             default:
                 ForEach(self.viewModel.mainTags, id: \.self) { tag in
                     
-                    self.item(for: tag)
+                    self.item(for: tag, isSec: isSection)
                         .padding(.trailing, 10)
                         .padding(.vertical, 6)
                         .alignmentGuide(.leading, computeValue: { d in
@@ -85,18 +84,18 @@ struct TagsCloudView: View {
         .background(viewHeightReader($totalHeight))
     }
 
-    @ViewBuilder private func item(for text: String) -> some View {
+    @ViewBuilder private func item(for text: String, isSec: Bool) -> some View {
 
             Button {
                 guard !viewModel.mainTags.contains(text) else { return }
                 self.viewModel.mainTags.append(text)
-                self.isPressed.toggle()
+                
             } label: {
                 HStack {
                         Text(text)
                 }
                 .padding(.all, 8)
-                .background(isPressed ? Color.orangeBase : Color.gray)
+                .background(isSec ? Color.gray : Color.orangeBase)
                 .foregroundStyle(.whiteText)
                 .cornerRadius(8)
             }
@@ -113,3 +112,19 @@ struct TagsCloudView: View {
         }
     }
 }
+
+//extension TagsCloudView {
+//    
+//    func indexSearch(id: UUID) -> Int? {
+//        let arr = self.viewModel.allTags
+//        if let index = arr.firstIndex(where: { $0.id == id }) {
+//            return index
+//        }
+//        return nil
+//    }
+//    func changeVisibility(id: UUID) {
+//        if let index = indexSearch(id: id) {
+//            self.viewModel.allTags[index].isHidden.toggle()
+//        }
+//    }
+//}

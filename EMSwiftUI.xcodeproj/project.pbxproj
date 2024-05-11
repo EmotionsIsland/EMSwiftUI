@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		65BEEEA92BEB8F0B009C3C71 /* TagsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BEEEA82BEB8F0B009C3C71 /* TagsModel.swift */; };
 		65CE34202BEFCD4A00B658EB /* TagsCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CE341F2BEFCD4A00B658EB /* TagsCloudView.swift */; };
+		65CE34222BEFDEE200B658EB /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CE34212BEFDEE200B658EB /* TagCell.swift */; };
 		65E467F72BEF760F00C31363 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E467F62BEF760F00C31363 /* FilterViewModel.swift */; };
 		808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */; };
 		D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */; };
@@ -50,6 +51,7 @@
 		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		65BEEEA82BEB8F0B009C3C71 /* TagsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsModel.swift; sourceTree = "<group>"; };
 		65CE341F2BEFCD4A00B658EB /* TagsCloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsCloudView.swift; sourceTree = "<group>"; };
+		65CE34212BEFDEE200B658EB /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		65E467F62BEF760F00C31363 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListService.swift; sourceTree = "<group>"; };
@@ -118,8 +120,11 @@
 			children = (
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
 				D83E2EE02B2FDB6900A338A7 /* Part3Example.png */,
+				65BEEEA82BEB8F0B009C3C71 /* TagsModel.swift */,
 				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
+				65CE341F2BEFCD4A00B658EB /* TagsCloudView.swift */,
 				65E467F62BEF760F00C31363 /* FilterViewModel.swift */,
+				65CE34212BEFDEE200B658EB /* TagCell.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -187,7 +192,6 @@
 				D8A607782B2FBE6F0093F5A4 /* MangaSectionTitleView.swift */,
 				D8A607742B2FB7740093F5A4 /* MangaSingleGridView.swift */,
 				D8A607762B2FB84E0093F5A4 /* RatingView.swift */,
-				65CE341F2BEFCD4A00B658EB /* TagsCloudView.swift */,
 			);
 			path = "Part 1 Simple View";
 			sourceTree = "<group>";
@@ -196,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				D8A6077A2B2FC0E20093F5A4 /* Readme.md */,
-				65BEEEA82BEB8F0B009C3C71 /* TagsModel.swift */,
 				D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */,
 				D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */,
 				D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */,
@@ -388,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65CE34222BEFDEE200B658EB /* TagCell.swift in Sources */,
 				D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */,
 				D8A6077D2B2FC1F70093F5A4 /* Network.swift in Sources */,
 				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,
