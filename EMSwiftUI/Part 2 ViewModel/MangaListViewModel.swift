@@ -16,6 +16,7 @@ enum SizeFormat: String {
 
 final class MangaListViewModel: ObservableObject {
     @Published var mangaList: MangaListModel?
+    @Published var data: MangaData?
     @Published var state: DataState = .notAvailable
     @Published var hasError: Bool = false
     
