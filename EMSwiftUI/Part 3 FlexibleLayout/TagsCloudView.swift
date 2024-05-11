@@ -1,10 +1,11 @@
 import SwiftUI
 
+// MARK: реализовать измененние цвета ппри нажатии кнопки
 struct TagsCloudView: View {
     @ObservedObject var viewModel: FilterViewModel
     @State private var totalHeight = CGFloat.zero
 
-    var isSection: Bool
+    @State var isSection: Bool
     var tags: [String] = []
     
     var body: some View {
@@ -26,7 +27,7 @@ struct TagsCloudView: View {
             case true:
                 ForEach(self.tags, id: \.self) { tag in
                     
-                    self.item(for: tag, isSec: isSection)
+                    self.item(for: tag)
                         .padding(.trailing, 10)
                         .padding(.vertical, 6)
                         .alignmentGuide(.leading, computeValue: { d in
@@ -54,7 +55,7 @@ struct TagsCloudView: View {
             default:
                 ForEach(self.viewModel.mainTags, id: \.self) { tag in
                     
-                    self.item(for: tag, isSec: isSection)
+                    self.item(for: tag)
                         .padding(.trailing, 10)
                         .padding(.vertical, 6)
                         .alignmentGuide(.leading, computeValue: { d in
@@ -84,18 +85,24 @@ struct TagsCloudView: View {
         .background(viewHeightReader($totalHeight))
     }
 
-    @ViewBuilder private func item(for text: String, isSec: Bool) -> some View {
-
+    @ViewBuilder private func item(for text: String) -> some View {
+       
             Button {
-                guard !viewModel.mainTags.contains(text) else { return }
+                guard !viewModel.mainTags.contains(text) else {
+                    viewModel.mainTags.remove(at: indexSearch(text: text)!)
+                    return
+                }
                 self.viewModel.mainTags.append(text)
                 
             } label: {
                 HStack {
+                    if !isSection {
+                        Image(systemName: "plus")
+                    }
                         Text(text)
                 }
                 .padding(.all, 8)
-                .background(isSec ? Color.gray : Color.orangeBase)
+                .background(isSection ? Color.gray : Color.orangeBase)
                 .foregroundStyle(.whiteText)
                 .cornerRadius(8)
             }
@@ -113,18 +120,18 @@ struct TagsCloudView: View {
     }
 }
 
-//extension TagsCloudView {
-//    
-//    func indexSearch(id: UUID) -> Int? {
-//        let arr = self.viewModel.allTags
-//        if let index = arr.firstIndex(where: { $0.id == id }) {
-//            return index
-//        }
-//        return nil
-//    }
+extension TagsCloudView {
+    
+    func indexSearch(text: String) -> Int? {
+        let arr = self.viewModel.mainTags
+        if let index = arr.firstIndex(where: { $0 == text }) {
+            return index
+        }
+        return nil
+    }
 //    func changeVisibility(id: UUID) {
 //        if let index = indexSearch(id: id) {
 //            self.viewModel.allTags[index].isHidden.toggle()
 //        }
 //    }
-//}
+}
