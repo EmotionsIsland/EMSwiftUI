@@ -36,6 +36,7 @@ struct FilterView: View {
             } label: {
                 VStack {
                     Text("Reset")
+                        .foregroundStyle(.blackBase)
                         .padding(.vertical, 4)
                     Rectangle()
                         .frame(height: 1)

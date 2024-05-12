@@ -58,12 +58,14 @@ struct TagsCloudView: View {
                         .padding(.trailing, 10)
                         .padding(.vertical, 6)
                         .alignmentGuide(.leading, computeValue: { d in
-                            if (abs(width - d.width) > g.size.width)
-                            {
+                            
+                            if (abs(width - d.width) > g.size.width) {
                                 width = 0
                                 height -= d.height
                             }
+                            
                             let result = width
+                            
                             if tag == self.viewModel.mainTags.last! {
                                 width = 0
                             } else {
@@ -84,11 +86,11 @@ struct TagsCloudView: View {
         .background(viewHeightReader($totalHeight))
     }
 
-    @ViewBuilder private func item(for text: String) -> some View {
+    private func item(for text: String) -> some View {
        
             Button {
                 guard !viewModel.mainTags.contains(text) else {
-                    viewModel.mainTags.remove(at: indexSearch(text: text)!)
+                    viewModel.mainTags.remove(at: indexSearchFor(text: text)!)
                     return
                 }
                 self.viewModel.mainTags.append(text)
@@ -119,7 +121,7 @@ struct TagsCloudView: View {
 }
 
 extension TagsCloudView {
-    private func indexSearch(text: String) -> Int? {
+    private func indexSearchFor(text: String) -> Int? {
         let arr = self.viewModel.mainTags
         if let index = arr.firstIndex(where: { $0 == text }) {
             return index

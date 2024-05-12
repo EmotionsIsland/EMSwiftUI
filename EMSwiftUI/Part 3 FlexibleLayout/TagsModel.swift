@@ -5,5 +5,4 @@ struct SectionTags: Identifiable, Hashable {
     var showContent: Bool
     var title: String
     var tags: [String]
-    var isHidden: Bool
 }
