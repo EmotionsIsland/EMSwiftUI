@@ -36,9 +36,7 @@ struct MangaSingleGridView: View {
             
             RatingView(rating: rating, maxRating: 5)
                 .task {
-                    guard let manga = manga else { return }
-                    guard let fetchedRating = await viewModel.getRating(manga: manga) else { return }
-                    rating = fetchedRating
+                    await fetchRating()
                 }
             
             if let tags = manga?.attributes.tags {
@@ -47,7 +45,14 @@ struct MangaSingleGridView: View {
                     .lineLimit(1)
                     .foregroundStyle(.grayBase)
             }
-            
         }
+    }
+}
+
+private extension MangaSingleGridView {
+    func fetchRating() async {
+        guard let manga = manga else { return }
+        guard let fetchedRating = await viewModel.getRating(manga: manga) else { return }
+        rating = fetchedRating
     }
 }

@@ -20,16 +20,18 @@ struct CustomizedTextField: View {
             HStack(alignment: .center, spacing: 4){
                 if let image = placeholderImage {
                     Image(image)
-                        .resizable()
                         .renderingMode(.template)
-                        .frame(width: 24, height: 24)
+                        .resizedToFill(width: 24, height: 24)
                 }
-                if text == "" {
+              
+                if text.isEmpty {
                     Text(placeholder)
                         .font(.custom(FontFamily.SFPro.regular, size: 14))
                 }
-            }.foregroundStyle(.grayBase)
+            }
+                .foregroundStyle(.grayBase)
                 .padding(.horizontal, 4)
+            
             TextField(text: $text) {
                 
             }
@@ -39,11 +41,4 @@ struct CustomizedTextField: View {
         }
             .frame(height: 36)
     }
-}
-
-#Preview {
-    @State var t = ""
-    
-    return CustomizedTextField(text: $t, placeholder: "Search", placeholderImage: .starIcon)
-    
 }

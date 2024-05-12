@@ -12,9 +12,7 @@ protocol MangaListServiceProtocol: AnyObject {
     var network: NetworkProtocol { get }
     
     func getManga() async throws -> MangaListModel
-    
     func getRating(manga: MangaData) async throws -> Double?
-    
     func getFilters() async throws -> FiltersList
 }
 

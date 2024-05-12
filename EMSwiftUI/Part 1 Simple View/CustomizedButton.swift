@@ -16,29 +16,23 @@ struct CustomizedButton: View {
         Button {
             action()
         } label: {
-            HStack(alignment: .center, spacing: 4){
+            HStack(alignment: .center, spacing: 4) {
                 if let image = image {
                     Image(image)
-                        .resizable()
                         .renderingMode(.template)
-                        .frame(width: 24, height: 24)
+                        .resizedToFill(width: 24, height: 24)
                 }
+              
                 if let text = text {
                     Text(text)
                         .font(.custom(FontFamily.SFPro.regular, size: 14))
+                        .font(FontFamily.SFPro.regular.swiftUIFont(size: 14))
                 }
             }
                 .foregroundStyle(.grayBase)
                 .padding(.horizontal, 4)
-                .frame(minHeight: 36)
-                .frame(minWidth: 36)
+                .frame(minWidth: 36, minHeight: 36)
         }
         .background(.whiteText, in: .rect(cornerRadius: 8))
-    }
-}
-
-#Preview {
-    CustomizedButton(image: .filterIcon){
-        
     }
 }

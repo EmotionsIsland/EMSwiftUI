@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct EMSwiftUIApp: App {
     var service = MangaListService(network: Network())
+  
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -19,7 +19,6 @@ struct MangaSectionTitleView: View {
             Spacer()
             
             Button {
-                print("open \(sectionName)")
             } label: {
                 HStack(alignment: .center, spacing: 8) {
                     Text("more")
@@ -32,8 +31,4 @@ struct MangaSectionTitleView: View {
             }
         }
     }
-}
-
-#Preview {
-    MangaSectionTitleView(sectionName: "Popular")
 }

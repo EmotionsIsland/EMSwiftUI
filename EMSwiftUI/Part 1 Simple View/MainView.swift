@@ -12,6 +12,8 @@ struct MainView: View {
     @State private var filterOpened = false
     @State private var filterOptions: [String] = []
     
+    private let sections = ["Popular","Recently Added","Last Updates","Seasonal"]
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 0) {
@@ -22,30 +24,26 @@ struct MainView: View {
                             placeholder: "Search",
                             placeholderImage: .searchIcon
                         )
+                        
                         CustomizedButton(image: .filterIcon) {
                             filterOpened.toggle()
-                            print(filterOpened)
                         }
                     }
-                    .padding(.horizontal, 16)
+                        .padding(.horizontal, 16)
                         .padding(.bottom, 8)
                     
                     Rectangle()
                         .frame(height: 1)
                         .foregroundStyle(.grayBase)
                 }
-                .padding(.bottom, 24)
-
+                    .padding(.bottom, 24)
+                
                 VStack(alignment: .leading, spacing: 16) {
-                    MangaSectionView(sectionName: "Popular")
-                    
-                    MangaSectionView(sectionName: "Recently Added")
-                    
-                    MangaSectionView(sectionName: "Last Updates")
-                    
-                    MangaSectionView(sectionName: "Seasonal")
+                    ForEach(sections, id: \.self) { sectionName in
+                        MangaSectionView(sectionName: LocalizedStringKey(stringLiteral: sectionName))
+                    }
                 }
-                .padding(.horizontal, 16)
+                    .padding(.horizontal, 16)
             }
         }
         .fullScreenCover(isPresented: $filterOpened) {

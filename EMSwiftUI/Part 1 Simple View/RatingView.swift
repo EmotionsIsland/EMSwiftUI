@@ -18,14 +18,10 @@ struct RatingView: View {
     
     var body: some View {
         HStack(spacing: 4) {
-            // интересно почему вариант с просто
-            // 0..<maxRating дает ворнинг,
-            // и хочет принимать только чтото вида 0..<5
             Group {
                 ForEach(Array(1...maxRating), id: \.self) { n in
                     Image(.starIcon)
-                        .resizable()
-                        .frame(width: starWidth, height: starHeight)
+                        .resizedToFill(width: starWidth, height: starHeight)
                         .foregroundStyle(.grayBase)
                         .overlay {
                             Rectangle()
@@ -41,15 +37,16 @@ struct RatingView: View {
                                 )
                                 .mask(
                                     Image(.starIcon)
-                                        .resizable()
-                                        .frame(width: starWidth, height: starHeight)
+                                        .resizedToFill(width: starWidth, height: starHeight)
                                 )
                         }
                 }
             }
         }
     }
-    
+}
+
+private extension RatingView {
     func starWidthFilled(number starNumber: Int) -> CGFloat {
         switch starNumber {
         case 0...Int(rating):
@@ -60,8 +57,4 @@ struct RatingView: View {
             return 0
         }
     }
-}
-
-#Preview {
-    RatingView(rating: 3.25, maxRating: 5)
 }
