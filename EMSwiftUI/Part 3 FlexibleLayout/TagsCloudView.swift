@@ -1,6 +1,5 @@
 import SwiftUI
 
-// MARK: реализовать измененние цвета ппри нажатии кнопки
 struct TagsCloudView: View {
     @ObservedObject var viewModel: FilterViewModel
     @State private var totalHeight = CGFloat.zero
@@ -38,7 +37,7 @@ struct TagsCloudView: View {
                             }
                             let result = width
                             if tag == self.tags.last! {
-                                width = 0 //last item
+                                width = 0
                             } else {
                                 width -= d.width
                             }
@@ -47,7 +46,7 @@ struct TagsCloudView: View {
                         .alignmentGuide(.top, computeValue: { d in
                             let result = height
                             if tag == self.tags.last! {
-                                height = 0 // last item
+                                height = 0
                             }
                             return result
                         })
@@ -66,7 +65,7 @@ struct TagsCloudView: View {
                             }
                             let result = width
                             if tag == self.viewModel.mainTags.last! {
-                                width = 0 //last item
+                                width = 0
                             } else {
                                 width -= d.width
                             }
@@ -75,7 +74,7 @@ struct TagsCloudView: View {
                         .alignmentGuide(.top, computeValue: { d in
                             let result = height
                             if tag == self.viewModel.mainTags.last! {
-                                height = 0 // last item
+                                height = 0
                             }
                             return result
                         })
@@ -96,17 +95,16 @@ struct TagsCloudView: View {
                 
             } label: {
                 HStack {
-                    if !isSection {
+                    if viewModel.mainTags.contains(text) {
                         Image(systemName: "plus")
                     }
                         Text(text)
                 }
                 .padding(.all, 8)
-                .background(isSection ? Color.gray : Color.orangeBase)
+                .background(viewModel.mainTags.contains(text) ? Color.orangeBase : Color.gray)
                 .foregroundStyle(.whiteText)
                 .cornerRadius(8)
             }
-        
     }
 
     private func viewHeightReader(_ binding: Binding<CGFloat>) -> some View {
@@ -121,17 +119,11 @@ struct TagsCloudView: View {
 }
 
 extension TagsCloudView {
-    
-    func indexSearch(text: String) -> Int? {
+    private func indexSearch(text: String) -> Int? {
         let arr = self.viewModel.mainTags
         if let index = arr.firstIndex(where: { $0 == text }) {
             return index
         }
         return nil
     }
-//    func changeVisibility(id: UUID) {
-//        if let index = indexSearch(id: id) {
-//            self.viewModel.allTags[index].isHidden.toggle()
-//        }
-//    }
 }
