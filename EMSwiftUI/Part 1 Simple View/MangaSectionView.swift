@@ -19,7 +19,8 @@ struct MangaSectionView: View {
                 } 
             }
         }
-        .padding(12)
+        .padding(.horizontal)
+        .padding(.vertical, 4)
     }
 }
 

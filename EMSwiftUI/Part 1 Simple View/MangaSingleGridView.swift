@@ -3,6 +3,7 @@ import SwiftUI
 struct MangaSingleGridView: View {
     @ObservedObject var viewModel: MangaListViewModel
     let model: MangaData?
+    let genre = ["Comedy", "Action", "Fantasy", "Drama"]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -21,11 +22,12 @@ struct MangaSingleGridView: View {
             Text(model?.attributes.title.en ?? "No title")
                 .lineLimit(1)
                 .foregroundStyle(.blackBase)
-            Text(["Comedy", "Action", "Fantasy", "Drama"].randomElement()!)
+            RatingView()
+            Text(genre.randomElement()!)
                 .lineLimit(1)
                 .foregroundStyle(.grayBase)
                 .font(.system(size: 14))
-            RatingView()
+            
         }
     }
 }

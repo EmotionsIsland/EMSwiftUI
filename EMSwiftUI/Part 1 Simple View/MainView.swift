@@ -4,6 +4,7 @@ struct MainView: View {
     @StateObject private var viewModel = MangaListViewModel(service: MangaListService(network: Network()))
     @State private var searchString = ""
     @FocusState private var isFocused: Bool
+    let sectionTitles = ["Popular", "Recently Added", "Last updates", "Seasonal"]
     
     var body: some View {
         VStack {
@@ -37,16 +38,13 @@ struct MainView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    MangaSectionView(viewModel: viewModel, sectionTitle: "Popular")
-                    MangaSectionView(viewModel: viewModel, sectionTitle: "Recently added")
-                    MangaSectionView(viewModel: viewModel, sectionTitle: "Last updates")
-                    MangaSectionView(viewModel: viewModel, sectionTitle: "Seasonal")
+                    ForEach(sectionTitles, id: \.self) { title in
+                        MangaSectionView(viewModel: viewModel, sectionTitle: title)
+                    }
                 }
                 .onTapGesture {
                     isFocused = false
-                    
                 }
-                
             }
         }
         .focused($isFocused)

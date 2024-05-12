@@ -6,6 +6,7 @@ struct FilterView: View {
     var body: some View {
         VStack {
             Text("Filters")
+                .font(.headline)
             Rectangle()
                 .frame(height: 1)
                 .foregroundStyle(.grayBase)
@@ -13,8 +14,10 @@ struct FilterView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     Text("Selection")
-                    TagsCloudView(viewModel: viewModel, isSection: false, tags: [])
+                        .font(.headline)
                         .padding(.top)
+                    TagsCloudView(viewModel: viewModel, isSection: false, tags: [])
+                        
                 }
                 .padding(.horizontal)
                 
@@ -36,6 +39,7 @@ struct FilterView: View {
                 } label: {
                     VStack {
                         Text("Reset")
+                            .font(.subheadline)
                             .foregroundStyle(.blackBase)
                             .padding(.vertical, 4)
                         Rectangle()
