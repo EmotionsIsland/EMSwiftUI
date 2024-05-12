@@ -189,9 +189,9 @@
 				D83E2EE52B2FDDBC00A338A7 /* Part1Example.png */,
 				D8A6074D2B2F3E1A0093F5A4 /* MainView.swift */,
 				D8A607722B2FB7430093F5A4 /* MangaSectionView.swift */,
-				D8A607782B2FBE6F0093F5A4 /* MangaSectionTitleView.swift */,
 				D8A607742B2FB7740093F5A4 /* MangaSingleGridView.swift */,
 				D8A607762B2FB84E0093F5A4 /* RatingView.swift */,
+				D8A607782B2FBE6F0093F5A4 /* MangaSectionTitleView.swift */,
 			);
 			path = "Part 1 Simple View";
 			sourceTree = "<group>";

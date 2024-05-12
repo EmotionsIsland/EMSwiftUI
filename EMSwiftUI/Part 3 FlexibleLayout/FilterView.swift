@@ -4,20 +4,20 @@ struct FilterView: View {
     @StateObject var viewModel = FilterViewModel()
     
     var body: some View {
-        
-        Text("Filters")
-        Rectangle()
-            .frame(height: 1)
-            .foregroundStyle(.grayBase)
-
-        ScrollView {
-            VStack(alignment: .leading) {
-                Text("Selection")
-                TagsCloudView(viewModel: viewModel, isSection: false, tags: [])
-                    .padding(.top)
-            }
-            .padding(.horizontal)
+        VStack {
+            Text("Filters")
+            Rectangle()
+                .frame(height: 1)
+                .foregroundStyle(.grayBase)
             
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Text("Selection")
+                    TagsCloudView(viewModel: viewModel, isSection: false, tags: [])
+                        .padding(.top)
+                }
+                .padding(.horizontal)
+                
                 Button {
                     
                 } label: {
@@ -29,22 +29,23 @@ struct FilterView: View {
                             .foregroundStyle(.orangeBase)
                         Text("Apply")
                             .foregroundStyle(.whiteText)
+                    }
                 }
-            }
-            Button {
-                viewModel.mainTags.removeAll()
-            } label: {
-                VStack {
-                    Text("Reset")
-                        .foregroundStyle(.blackBase)
-                        .padding(.vertical, 4)
-                    Rectangle()
-                        .frame(height: 1)
-                        .padding(.horizontal)
-                        .foregroundStyle(.grayBase)
+                Button {
+                    viewModel.mainTags.removeAll()
+                } label: {
+                    VStack {
+                        Text("Reset")
+                            .foregroundStyle(.blackBase)
+                            .padding(.vertical, 4)
+                        Rectangle()
+                            .frame(height: 1)
+                            .padding(.horizontal)
+                            .foregroundStyle(.grayBase)
+                    }
                 }
-            }
                 TagCell(viewModel: viewModel)
+            }
         }
     }
 }

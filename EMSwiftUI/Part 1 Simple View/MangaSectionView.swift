@@ -9,16 +9,17 @@ struct MangaSectionView: View {
     var body: some View {
         VStack(spacing: 0) {
             MangaSectionTitleView(title: $sectionTitle)
-                .padding(.bottom, 16)
+                .padding(.bottom, 12)
             
-            LazyVGrid(columns: columns) {
+            LazyVGrid(columns: columns, spacing: 12) {
                 if let mangaList = viewModel.mangaList {
                     ForEach(mangaList.data, id: \.id) { man in
                         MangaSingleGridView(viewModel: viewModel, model: man)
                     }
                 } 
             }
-        }.padding(.horizontal, 8)
+        }
+        .padding(12)
     }
 }
 
