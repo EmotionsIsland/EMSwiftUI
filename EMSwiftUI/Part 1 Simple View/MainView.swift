@@ -10,12 +10,13 @@ import SwiftUI
 struct MainView: View {
     @ObservedObject var viewModel: MangaListViewModel
     @State var searchText = ""
+    
     var body: some View {
         VStack {
-                    RoundedRectangle(cornerRadius: 7)
-                        .padding(.horizontal)
-                        .frame(height: 36)
-                        .foregroundStyle(.grayBase)
+            RoundedRectangle(cornerRadius: 7)
+                .padding(.horizontal)
+                .frame(height: 36)
+                .foregroundStyle(.grayBase)
             
             Rectangle()
                 .frame(height: 1)
@@ -23,9 +24,9 @@ struct MainView: View {
                 .padding(.bottom, 10)
             
             ScrollView(.vertical, showsIndicators: false) {
-                MangaSectionView(viewModel: viewModel)
-                MangaSectionView(viewModel: viewModel)
-                MangaSectionView(viewModel: viewModel)
+                ForEach(0..<3) { _ in
+                    MangaSectionView(viewModel: viewModel)
+                }
             }
         }
     }

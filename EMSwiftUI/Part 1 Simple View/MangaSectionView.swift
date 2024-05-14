@@ -23,6 +23,7 @@ struct MangaSectionView: View {
                     ForEach(data.data, id: \.id) { manga in
                         MangaSingleGridView(viewModel: viewModel, model: manga)
                             .padding(.horizontal)
+                        
                     }
                 }
             }

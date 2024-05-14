@@ -15,9 +15,9 @@ enum SizeFormat: String {
 }
 
 final class MangaListViewModel: ObservableObject {
-    // MARK: - Variables
     @Published var model: MangaListModel?
     @Published var state: DataState = .notAvailable
+    
     private var mangaService: MangaListServiceProtocol
     private var subscribers = Set<AnyCancellable>()
     
@@ -27,9 +27,9 @@ final class MangaListViewModel: ObservableObject {
         
         getManga()
     }
- 
+    
     // MARK: - Methods
-   private func getManga()  {
+    private func getManga()  {
         mangaService
             .getManga()
             .receive(on: DispatchQueue.main)
@@ -46,7 +46,7 @@ final class MangaListViewModel: ObservableObject {
             .store(in: &subscribers)
     }
     
-    func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
+    func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL? {
         guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" } )?.attributes?.fileName else { return URL(string: "")! }
         
         return Endpoint(path: "/covers/" + manga.id + "/" + fileName + sizeFormat.rawValue).coverURL

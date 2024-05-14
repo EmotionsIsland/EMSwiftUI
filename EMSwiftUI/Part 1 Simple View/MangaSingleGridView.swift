@@ -13,14 +13,15 @@ struct MangaSingleGridView: View {
     
     var body: some View {
         VStack(spacing: 3) {
-             let url = viewModel.getCoverURL(manga: model, sizeFormat: .size512)
-            AsyncImage(url: url) { image in
-                image
-                    .resizable()
-                    .frame(width: 100, height: 144)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-            } placeholder: {
-                ProgressView()
+            if let url = viewModel.getCoverURL(manga: model, sizeFormat: .size512) {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .frame(width: 100, height: 144)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                } placeholder: {
+                    ProgressView()
+                }
             }
             
             Text(model.attributes.title.en ?? "No name")
