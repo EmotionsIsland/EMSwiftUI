@@ -41,6 +41,9 @@
 		D8A6077F2B2FC2010093F5A4 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6077E2B2FC2010093F5A4 /* Endpoint.swift */; };
 		D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A607802B2FC20E0093F5A4 /* NetworkError.swift */; };
 		D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A607822B2FC2150093F5A4 /* DataState.swift */; };
+		FC5DCC862C4D01AB004BBBB6 /* FilterTitleVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC852C4D01AB004BBBB6 /* FilterTitleVIew.swift */; };
+		FC5DCC882C4D01BA004BBBB6 /* FilterGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC872C4D01BA004BBBB6 /* FilterGroupView.swift */; };
+		FC5DCC8A2C4D01C8004BBBB6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC892C4D01C8004BBBB6 /* Filter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +87,9 @@
 		D8A6077E2B2FC2010093F5A4 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		D8A607802B2FC20E0093F5A4 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D8A607822B2FC2150093F5A4 /* DataState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataState.swift; sourceTree = "<group>"; };
+		FC5DCC852C4D01AB004BBBB6 /* FilterTitleVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTitleVIew.swift; sourceTree = "<group>"; };
+		FC5DCC872C4D01BA004BBBB6 /* FilterGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupView.swift; sourceTree = "<group>"; };
+		FC5DCC892C4D01C8004BBBB6 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,6 +119,9 @@
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
 				D83E2EE02B2FDB6900A338A7 /* Part3Example.png */,
 				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
+				FC5DCC852C4D01AB004BBBB6 /* FilterTitleVIew.swift */,
+				FC5DCC872C4D01BA004BBBB6 /* FilterGroupView.swift */,
+				FC5DCC892C4D01C8004BBBB6 /* Filter.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -386,7 +395,9 @@
 				D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
+				FC5DCC8A2C4D01C8004BBBB6 /* Filter.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
+				FC5DCC862C4D01AB004BBBB6 /* FilterTitleVIew.swift in Sources */,
 				D8A6074E2B2F3E1A0093F5A4 /* MainView.swift in Sources */,
 				D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */,
 				D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */,
@@ -396,6 +407,7 @@
 				D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */,
 				D8A6077F2B2FC2010093F5A4 /* Endpoint.swift in Sources */,
 				D8A607702B2FB23C0093F5A4 /* XCAssets+Generated.swift in Sources */,
+				FC5DCC882C4D01BA004BBBB6 /* FilterGroupView.swift in Sources */,
 				D83E2ECF2B2FC7ED00A338A7 /* MangaListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

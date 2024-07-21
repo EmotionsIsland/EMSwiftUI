@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct RatingView: View {
-    let rating: CGFloat
-    let maxRating: Int
     
     var body: some View {
-        VStack {
-            // TODO: Create star rating View
+        HStack(spacing: 4) {
+            ForEach(0..<5) { _ in
+                Image("starIcon")
+                    .resizable()
+                    .frame(width: 17,height: 17)
+                    .foregroundStyle(.yellow)
+            }
         }
     }
-}
-
-#Preview {
-    RatingView(rating: 4, maxRating: 5)
 }

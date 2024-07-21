@@ -34,7 +34,7 @@ extension Network {
               response.statusCode >= 200 && response.statusCode < 300 else {
             throw URLError(.badURL)
         }
-        
+
         return output.data
     }
 }
