@@ -12,7 +12,7 @@ struct MangaSectionView: View {
                                  "Recently Added",
                                  "Last updates",
                                  "Seasonal"]
-    let mangaData: [MangaData]
+    
     let viewModel: MangaListViewModel
     
     var body: some View {
@@ -23,11 +23,8 @@ struct MangaSectionView: View {
                     
                     HStack(spacing: 29) {
                         ForEach(0..<3) { index in
-                            let multiplier = index * 2
-                            let subrange = (0 + multiplier)...(1 + multiplier)
-                            let mangas = Array(mangaData[subrange])
                             MangaSingleGridView(
-                                mangaData: mangas,
+                                mangaData: viewModel.mangasForGridView(with: index),
                                 viewModel: viewModel
                             )
                         }

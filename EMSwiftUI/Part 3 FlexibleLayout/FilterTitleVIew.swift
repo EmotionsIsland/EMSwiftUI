@@ -10,32 +10,41 @@ import SwiftUI
 struct FilterTitleView: View {
     var body: some View {
         VStack {
-            VStack {
-                ZStack {
-                    HStack {
-                        Text("Filters")
-                            .font(FontFamily.SFPro.bold.swiftUIFont(size: 24))
-                            .foregroundStyle(.blackBase)
-                    }
-                    
-                    HStack() {
-                        Spacer()
-                        
-                        Button {
-                        } label: {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 20, height: 20)
-                                .foregroundStyle(.blackBase)
-                        }
-                    }
-                    .padding(.horizontal, 26)
-                }
+            ZStack {
+                titleLabel
                 
-                Divider()
-                    .foregroundStyle(.gray)
+                closeButton
             }
+            
+            divider
         }
+    }
+}
+
+private extension FilterTitleView {
+    var titleLabel: some View {
+        HStack {
+            Text("Filters")
+                .font(FontFamily.SFPro.bold.swiftUIFont(size: 24))
+                .foregroundStyle(.blackBase)
+        }
+    }
+    
+    var closeButton: some View {
+        Button {
+            print("tap")
+        } label: {
+            Image(systemName: "xmark")
+                .resizedToFill(width: 20, height: 20)
+                .scaledToFill()
+                .foregroundStyle(.blackBase)
+        }
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .padding(.horizontal, 26)
+    }
+    
+    var divider: some View {
+        Divider()
+            .foregroundStyle(.gray)
     }
 }

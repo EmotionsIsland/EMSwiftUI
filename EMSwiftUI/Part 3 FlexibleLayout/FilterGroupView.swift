@@ -26,8 +26,10 @@ struct FiltersGroupView: View {
                                     if !isSelectedFiltersView {
                                         if dublicateFilter(with: group[index]) {
                                             selectedFilters.append(group[index])
+                                        } else {
+                                            selectedFilters.remove(at: indexOf(group[index]))
                                         }
-                                        group[index].isSelected = true
+                                        group[index].isSelected.toggle()
                                         updateFilters(with: group[index])
                                     }
                                 }
@@ -50,8 +52,10 @@ struct FiltersGroupView: View {
         }
         .frame(width: UIScreen.main.bounds.width - 32)
     }
-    
-    private func groupFilters(filters: [Filter]) -> [[Filter]] {
+}
+
+private extension FiltersGroupView {
+    func groupFilters(filters: [Filter]) -> [[Filter]] {
         let maxRowLength = UIScreen.main.bounds.width - 35
         var groups: [[Filter]] =  [[]]
         var currentRowLength: CGFloat = 0
@@ -68,7 +72,7 @@ struct FiltersGroupView: View {
         return groups
     }
     
-    private func filterWidth(filter: Filter) -> CGFloat {
+    func filterWidth(filter: Filter) -> CGFloat {
         let font = UIFont.systemFont(ofSize: 17)
         let attributes: [NSAttributedString.Key: Any] = [.font: font]
         let string = NSAttributedString(string: filter.name, attributes: attributes)
@@ -80,13 +84,13 @@ struct FiltersGroupView: View {
         return width
     }
 
-    private func updateFilters(with filter: Filter) {
+    func updateFilters(with filter: Filter) {
         guard let index = filters.firstIndex(of: filter) else { return }
-        let filter = Filter(name: filters[index].name, isSelected: true)
+        let filter = Filter(name: filters[index].name, isSelected: filter.isSelected)
         filters[index] = filter
     }
     
-    private func dublicateFilter(with filter: Filter) -> Bool {
+    func dublicateFilter(with filter: Filter) -> Bool {
         for selectedFilter in selectedFilters {
             if selectedFilter.name == filter.name {
                 return false
@@ -94,20 +98,16 @@ struct FiltersGroupView: View {
         }
         return true
     }
-}
 
-extension NSAttributedString {
-    func height(withConstrainedWidth width: CGFloat) -> CGFloat {
-        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
-    
-        return ceil(boundingBox.height)
-    }
-
-    func width(withConstrainedHeight height: CGFloat) -> CGFloat {
-        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
-    
-        return ceil(boundingBox.width)
+    func indexOf(_ filter: Filter) -> Int {
+        var index = 0
+        for selectedFilter in selectedFilters {
+            if selectedFilter.name == filter.name {
+                return index
+            } else {
+                index += 1
+            }
+        }
+        return index
     }
 }

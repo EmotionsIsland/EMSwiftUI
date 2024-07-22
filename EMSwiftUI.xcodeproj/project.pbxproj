@@ -44,6 +44,9 @@
 		FC5DCC862C4D01AB004BBBB6 /* FilterTitleVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC852C4D01AB004BBBB6 /* FilterTitleVIew.swift */; };
 		FC5DCC882C4D01BA004BBBB6 /* FilterGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC872C4D01BA004BBBB6 /* FilterGroupView.swift */; };
 		FC5DCC8A2C4D01C8004BBBB6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC892C4D01C8004BBBB6 /* Filter.swift */; };
+		FC5DCC8D2C4E7435004BBBB6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC8C2C4E7435004BBBB6 /* SearchView.swift */; };
+		FC5DCC8F2C4E810B004BBBB6 /* FiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC8E2C4E810B004BBBB6 /* FiltersView.swift */; };
+		FC5DCC922C4E8304004BBBB6 /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5DCC912C4E8304004BBBB6 /* NSAttributedString+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +93,9 @@
 		FC5DCC852C4D01AB004BBBB6 /* FilterTitleVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTitleVIew.swift; sourceTree = "<group>"; };
 		FC5DCC872C4D01BA004BBBB6 /* FilterGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupView.swift; sourceTree = "<group>"; };
 		FC5DCC892C4D01C8004BBBB6 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		FC5DCC8C2C4E7435004BBBB6 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		FC5DCC8E2C4E810B004BBBB6 /* FiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersView.swift; sourceTree = "<group>"; };
+		FC5DCC912C4E8304004BBBB6 /* NSAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extension.swift"; sourceTree = "<group>"; };
 		FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -122,6 +128,8 @@
 				FC5DCC852C4D01AB004BBBB6 /* FilterTitleVIew.swift */,
 				FC5DCC872C4D01BA004BBBB6 /* FilterGroupView.swift */,
 				FC5DCC892C4D01C8004BBBB6 /* Filter.swift */,
+				FC5DCC8E2C4E810B004BBBB6 /* FiltersView.swift */,
+				FC5DCC902C4E82DF004BBBB6 /* Extensions */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -189,6 +197,7 @@
 				D8A607782B2FBE6F0093F5A4 /* MangaSectionTitleView.swift */,
 				D8A607742B2FB7740093F5A4 /* MangaSingleGridView.swift */,
 				D8A607762B2FB84E0093F5A4 /* RatingView.swift */,
+				FC5DCC8C2C4E7435004BBBB6 /* SearchView.swift */,
 			);
 			path = "Part 1 Simple View";
 			sourceTree = "<group>";
@@ -257,6 +266,14 @@
 				2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		FC5DCC902C4E82DF004BBBB6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FC5DCC912C4E8304004BBBB6 /* NSAttributedString+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,13 +408,16 @@
 				D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */,
 				D8A6077D2B2FC1F70093F5A4 /* Network.swift in Sources */,
 				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,
+				FC5DCC922C4E8304004BBBB6 /* NSAttributedString+Extension.swift in Sources */,
 				D8A607752B2FB7740093F5A4 /* MangaSingleGridView.swift in Sources */,
 				D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
 				FC5DCC8A2C4D01C8004BBBB6 /* Filter.swift in Sources */,
+				FC5DCC8F2C4E810B004BBBB6 /* FiltersView.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
 				FC5DCC862C4D01AB004BBBB6 /* FilterTitleVIew.swift in Sources */,
+				FC5DCC8D2C4E7435004BBBB6 /* SearchView.swift in Sources */,
 				D8A6074E2B2F3E1A0093F5A4 /* MainView.swift in Sources */,
 				D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */,
 				D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */,

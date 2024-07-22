@@ -49,8 +49,13 @@ final class MangaListViewModel: ObservableObject {
             } receiveValue: { [weak self] data in
                 guard let self else { return }
                 self.mangas = data.data
-                print(mangas)
             }
             .store(in: &cancellables)
+    }
+
+    func mangasForGridView(with index: Int) -> [MangaData] {
+        let multiplier = index * 2
+        let subrange = (0 + multiplier)...(1 + multiplier)
+        return Array(mangas[subrange])
     }
 }

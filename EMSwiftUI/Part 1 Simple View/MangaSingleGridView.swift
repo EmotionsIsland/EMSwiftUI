@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MangaSingleGridView: View {
     let mangaData: [MangaData]
-    let viewModel: MangaListViewModel
+    
+    @ObservedObject var viewModel: MangaListViewModel
 
     var body: some View {
         VStack {
@@ -24,16 +25,12 @@ struct MangaSingleGridView: View {
                         )
                             AsyncImage(url: url) { image in
                                 image
-                                    .resizable()
-                                    .frame(width: 100, height: 144)
+                                    .resizedToFill(width: 100, height: 144)
                                     .clipShape(RoundedRectangle(cornerRadius: 5))
                             } placeholder: {
                                 RoundedRectangle(cornerRadius: 4)
                                     .fill(.orangeBase)
                                     .frame(width: 100, height: 140)
-                            }
-                            .onTapGesture {
-                                print(url)
                             }
                         
                         VStack(alignment: .leading ,spacing: 2) {
@@ -55,3 +52,4 @@ struct MangaSingleGridView: View {
         }
     }
 }
+
