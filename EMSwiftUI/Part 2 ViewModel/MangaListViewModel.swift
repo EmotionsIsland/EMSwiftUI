@@ -15,16 +15,105 @@ enum SizeFormat: String {
 }
 
 final class MangaListViewModel: ObservableObject {
-    // TODO: create Published variables
-    // TODO: create getData func
     
-    func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
+    //MARK: - Public properties
+    
+    private(set) var errorMessage: String = ""
+    
+    @Published public var hasError: Bool = false
+    @Published public var filterPredicate: String = ""
+    @Published private(set) var manga: [MangaData] = []
+    
+    //MARK: - Private properties
+    
+    @Published private var state: DataState = .notAvailable
+   
+    private var cancellable = Set<AnyCancellable>()
+    private let networkManager: MangaListServiceProtocol
+    private var data: [MangaData] = []
+    
+    //MARK: - Initialaizers
+    
+    public init() {
+        let network = Network()
+        
+        self.networkManager = MangaListService(network: network)
+        
+        $filterPredicate.sink { [unowned self] predicate in
+            filter(with: predicate)
+        }.store(in: &cancellable)
+        
+        setupErrorSubscriptions()
+        
+    }
+    
+}
+
+//MARK: - Extension with public methods
+
+extension MangaListViewModel {
+    
+    public func fetchData() {
+       
+        networkManager.getManga()
+            .receive(on: DispatchQueue.main)
+            .sink { [unowned self] completion in
+            
+                switch completion {
+                case .finished:
+                    debugPrint("Fetch data is finished")
+                case .failure(let error):
+                    debugPrint("Fetch data is failure with error: \(error.localizedDescription)")
+                    state = .failed(error: error)
+                }
+            } receiveValue: { [unowned self] data in
+                self.data = data.data
+                manga = data.data
+                state = .successfull
+            }.store(in: &cancellable)
+
+    }
+    
+    public func filter(with predicate: String) {
+        if predicate.isEmpty {
+            manga = data
+            return
+        }
+        
+        manga = data.filter {
+            guard let title = $0.attributes.title.en else { return false }
+            
+            return title.contains(predicate)
+        }
+    }
+    
+    public func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
         guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" } )?.attributes?.fileName else { return URL(string: "")! }
         
         return Endpoint(path: "/covers/" + manga.id + "/" + fileName + sizeFormat.rawValue).coverURL
     }
     
-    func getRating(manga: MangaData) -> URL {
+    public func getRating(manga: MangaData) -> URL {
         return Endpoint(path: "/statistics/manga/" + manga.id).url
     }
+    
 }
+
+// MARK: - Error Subscriptions
+
+extension MangaListViewModel {
+    func setupErrorSubscriptions() {
+        $state
+            .map { [unowned self] state -> Bool in
+                switch state {
+                case .successfull, .notAvailable:
+                    return false
+                case .failed(let error):
+                    errorMessage = error.localizedDescription
+                    return true
+                }
+            }
+            .assign(to: &$hasError)
+    }
+}
+
