@@ -20,22 +20,21 @@ struct MainView: View {
         NavigationView {
             VStack {
                 Divider()
-                ScrollViewReader { scrollView in
-                    ScrollView(.vertical, showsIndicators: false) {
-                        MangaSectionView()
-                            .environmentObject(viewModel)
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    MangaSectionView()
+                        .environmentObject(viewModel)
+                }
+                .refreshable {
+                    viewModel.fetchData()
+                }
+                .alert(StringConstants.networkErrorTitle, isPresented: $viewModel.hasError,
+                       actions: {
+                    Button(StringConstants.okButton) {
+                        viewModel.hasError = false
                     }
-                    .refreshable {
-                        viewModel.fetchData()
-                    }
-                    .alert(StringConstants.networkErrorTitle, isPresented: $viewModel.hasError,
-                           actions: {
-                        Button(StringConstants.okButton) {
-                            viewModel.hasError = false
-                        }
-                    }) {
-                        Text(viewModel.errorMessage)
-                    }
+                }) {
+                    Text(viewModel.errorMessage)
                 }
                 
             }
@@ -46,6 +45,7 @@ struct MainView: View {
             .searchable(text: $viewModel.filterPredicate,
                         prompt: Text(StringConstants.searchBarPlaceholder)
             )
+            
         }
     }
     

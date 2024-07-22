@@ -27,6 +27,7 @@ struct MangaSingleGridView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 4.0))
             } placeholder: {
                 RoundedRectangle(cornerRadius: 4.0).fill( Colors.imagebackground)
+                    .frame(width: 100, height: 144)
             }
             
             VStack(alignment: .leading, spacing: 2){
