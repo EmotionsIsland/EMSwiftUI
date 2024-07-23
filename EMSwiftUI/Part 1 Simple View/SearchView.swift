@@ -45,7 +45,6 @@ private extension SearchView {
             RoundedRectangle(cornerRadius: 8)
                 .fill(.grayBase.opacity(0.3))
         )
-        .padding(.horizontal, 16)
     }
     
     var divider: some View {

@@ -40,7 +40,6 @@ private extension FilterTitleView {
                 .foregroundStyle(.blackBase)
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
-        .padding(.horizontal, 26)
     }
     
     var divider: some View {

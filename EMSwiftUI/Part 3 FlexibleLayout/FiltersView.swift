@@ -18,8 +18,7 @@ struct FiltersView: View {
                 .foregroundStyle(.blackBase)
             
             Image(systemName: isOpened ? "chevron.up" : "chevron.down")
-                .resizable()
-                .frame(width: 12, height: 6)
+                .resizedToFill(width: 12, height: 6)
                 .foregroundStyle(.blackBase)
         }
     }

@@ -22,16 +22,22 @@ struct MangaSectionView: View {
                     MangaSectionTitleView(title: title)
                     
                     HStack(spacing: 29) {
-                        ForEach(0..<3) { index in
-                            MangaSingleGridView(
-                                mangaData: viewModel.mangasForGridView(with: index),
-                                viewModel: viewModel
-                            )
-                        }
+                        buildSection(mangas: viewModel.mangasForGridView(with: 0))
+                        buildSection(mangas: viewModel.mangasForGridView(with: 1))
+                        buildSection(mangas: viewModel.mangasForGridView(with: 2))
                     }
                     .padding(.horizontal, 16)
                 }
             }
         }
+    }
+}
+
+extension MangaSectionView {
+    func buildSection(mangas: [MangaData]) -> some View {
+        MangaSingleGridView(
+            mangaData: mangas,
+            viewModel: viewModel
+        )
     }
 }

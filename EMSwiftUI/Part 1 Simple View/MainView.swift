@@ -13,16 +13,19 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 24) {
-                    SearchView()
-                    
                     if !viewModel.mangas.isEmpty {
                         MangaSectionView(
                             viewModel: viewModel
                         )
                     }
+            }
+            .padding(.top, 20)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    SearchView()
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

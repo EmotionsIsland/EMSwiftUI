@@ -19,39 +19,35 @@ enum FilterOptions: String, CaseIterable {
 
 struct FilterView: View {
     @State private var selectedOption: [FilterOptions] = []
-    @State var filters = [Filter(name: "Shounen", isSelected: false),
-                          Filter(name: "Shoujo", isSelected: false),
-                          Filter(name: "Sheinen", isSelected: false),
-                          Filter(name: "Josei", isSelected: false),
-                          Filter(name: "Nonse", isSelected: false),
-                          Filter(name: "Search", isSelected: false),
-                          Filter(name: "Very long filter", isSelected: false),
-                          Filter(name: "Filter tt", isSelected: false),
-                          Filter(name: "Another very long filter", isSelected: false),
-                          Filter(name: "Note", isSelected: false)]
+    @State var filters = Filter.mockData
     @State var selectedFilters: [Filter] = []
     
     var body: some View {
-        FilterTitleView()
-        
-        ScrollView {
-            VStack {
-                titleLabel
-                
-                FiltersGroupView(
-                    isSelectedFiltersView: true,
-                    filters: $selectedFilters,
-                    selectedFilters: $selectedFilters)
-                
-                applyButton
-                
-                resetButton
-                
-                filterSections
-                
-                Spacer()
+        NavigationView {
+            ScrollView {
+                VStack {
+                    titleLabel
+                    
+                    FiltersGroupView(
+                        isSelectedFiltersView: true,
+                        filters: $selectedFilters,
+                        selectedFilters: $selectedFilters)
+                    
+                    applyButton
+                    
+                    resetButton
+                    
+                    filterSections
+                }
+                .frame(maxHeight: .infinity, alignment: .top)
+                .padding([.horizontal, .top], 16)
             }
-            .padding(.horizontal, 16)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    FilterTitleView()
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
