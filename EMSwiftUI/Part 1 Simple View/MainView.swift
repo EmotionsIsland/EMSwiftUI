@@ -9,12 +9,9 @@ import SwiftUI
 
 struct MainView: View {
     
-    //MARK: - Private properties
-    
-    @StateObject private var viewModel: MangaListViewModel = .init()
+    @StateObject var viewModel: MangaListViewModel = MangaListViewModel(
+        networkManager: MangaListService(network: Network()))
     @State private var animmation = false
-    
-    //MARK: - UI
     
     var body: some View {
         NavigationView {

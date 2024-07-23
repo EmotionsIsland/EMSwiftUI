@@ -16,35 +16,22 @@ enum SizeFormat: String {
 
 final class MangaListViewModel: ObservableObject {
     
-    //MARK: - Public properties
-    
     private(set) var errorMessage: String = ""
     
     @Published public var hasError: Bool = false
     @Published public var filterPredicate: String = ""
     @Published private(set) var manga: [MangaData] = []
-    
-    //MARK: - Private properties
-    
     @Published private var state: DataState = .notAvailable
    
-    private var cancellable = Set<AnyCancellable>()
-    private let networkManager: MangaListServiceProtocol
-    private var data: [MangaData] = []
+    var cancellable = Set<AnyCancellable>()
+    let networkManager: MangaListServiceProtocol
+    var data: [MangaData] = []
     
-    //MARK: - Initialaizers
-    
-    public init() {
-        let network = Network()
+    public init(networkManager: MangaListServiceProtocol) {
+        self.networkManager = networkManager
         
-        self.networkManager = MangaListService(network: network)
-        
-        $filterPredicate.sink { [unowned self] predicate in
-            filter(with: predicate)
-        }.store(in: &cancellable)
-        
+        filterPredicateSubscription()
         setupErrorSubscriptions()
-        
     }
     
 }
@@ -95,6 +82,18 @@ extension MangaListViewModel {
     
     public func getRating(manga: MangaData) -> URL {
         return Endpoint(path: "/statistics/manga/" + manga.id).url
+    }
+    
+}
+
+//MARK: - Extension with private mrthods
+
+private extension MangaListViewModel {
+    
+    func filterPredicateSubscription() {
+        $filterPredicate.sink { [unowned self] predicate in
+            filter(with: predicate)
+        }.store(in: &cancellable)
     }
     
 }

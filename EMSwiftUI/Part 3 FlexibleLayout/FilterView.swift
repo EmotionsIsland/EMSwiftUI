@@ -8,26 +8,10 @@
 import SwiftUI
 
 struct FilterView: View {
-    
-    //MARK: - Private properties
-    
-    private var tags: [FilterModel] = [
-        .init(type: .ContentRaiting, tags: [
-            "Everyone", "Youth", "Teens", "Older Teens", "Mature"
-        ]),
-        .init(type: .PublicationStatus,
-              tags: ["Ongoing", "Finished", "Debut"]),
-        .init(type: .MagazineDemographic,
-              tags: ["Children", "Shonen", "Shojo", "Seinen", "Josei"]),
-        .init(type: .Format, tags: ["Сollection", "In color", "Dojinshi", "Webtoon", "Single"]),
-        .init(type: .Genre, tags: ["Comedy", "Mecha", "Cooking", "Slice", "Isekai"]),
-        .init(type: .Theme, tags: ["Comedies", "Romances", "Adventure stories", "Detective stories", "Historical", "Chivalrous stories"])
-        
-    ]
+
+    var tags = FilterModel.mocks
 
     @State private var selection: [String] = []
-    
-    //MARK: - UI
     
     var body: some View {
         VStack(alignment: .leading) {

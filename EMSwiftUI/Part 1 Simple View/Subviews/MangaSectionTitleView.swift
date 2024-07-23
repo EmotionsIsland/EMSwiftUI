@@ -9,11 +9,7 @@ import SwiftUI
 
 struct MangaSectionTitleView: View {
     
-    //MARK: - Private properties
-    
-    @EnvironmentObject private var viewModel: MangaListViewModel
-    
-    //MARK: - UI
+    @EnvironmentObject var viewModel: MangaListViewModel
     
     var body: some View {
         VStack {

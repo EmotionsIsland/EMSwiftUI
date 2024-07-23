@@ -9,13 +9,9 @@ import SwiftUI
 
 struct NavigationBar<Content: View>: View {
     
-    //MARK: - Private properties
-    
-    private var rightBarItems: (() -> Content)?
-    private var leftBarItems: (() -> Content)?
-    private let title: String
-    
-    //MARK: - UI
+    var rightBarItems: (() -> Content)?
+    var leftBarItems: (() -> Content)?
+    let title: String
     
     var body: some View {
         VStack {
@@ -40,8 +36,6 @@ struct NavigationBar<Content: View>: View {
         }
         Divider()
     }
-    
-    //MARK: - Initialaizers
     
     public init(_ title: String,
                 rightBarItems: (() -> Content)? = nil,

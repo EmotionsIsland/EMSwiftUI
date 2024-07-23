@@ -8,22 +8,19 @@
 import SwiftUI
 
 struct MangaSingleGridView: View {
-    
-    //MARK: - Private property
 
-    private let data: MangaData
     private let image: URL
     private let maxRaiting = 5
     
-    //MARK: - UI
+    @ObservedObject var viewModel: MangaGridViewModel
     
     var body: some View {
         VStack(spacing: 4) {
             AsyncImage(url: image) { image in
                 image
                     .resizable()
-                    .frame(width: 100, height: 144)
                     .scaledToFill()
+                    .frame(width: 100, height: 144)
                     .clipShape(RoundedRectangle(cornerRadius: 4.0))
             } placeholder: {
                 RoundedRectangle(cornerRadius: 4.0).fill( Colors.imagebackground)
@@ -31,7 +28,7 @@ struct MangaSingleGridView: View {
             }
             
             VStack(alignment: .leading, spacing: 2){
-                Text(data.attributes.title.en ?? StringConstants.unknownTitle)
+                Text(viewModel.data.attributes.title.en ?? StringConstants.unknownTitle)
                     .font(Fonts.title)
                     .lineLimit(1)
                     .foregroundStyle(Colors.title)
@@ -39,10 +36,7 @@ struct MangaSingleGridView: View {
                 RatingView(rating: CGFloat.random(in: 0...4),
                            maxRating: maxRaiting)
                 
-                Text(data.attributes.tags
-                    .compactMap { $0.attributes.name.en }
-                    .joined(separator: ",")
-                )
+                Text(viewModel.getTags())
                     .font(Fonts.genres)
                     .lineLimit(1)
                     .foregroundStyle(Colors.genres)
@@ -51,12 +45,10 @@ struct MangaSingleGridView: View {
             }
         }
     }
-    
-    //MARK: - Initialaizers
-    
-    public init(image: URL, data: MangaData) {
+
+    public init(image: URL, viewModel: MangaGridViewModel) {
         self.image = image
-        self.data = data
+        self.viewModel = viewModel
     }
     
 }
@@ -82,38 +74,10 @@ private extension MangaSingleGridView {
     
 }
 
-extension MangaData {
-    
-    public static var mock: MangaData {
-        MangaData(id: "1234",
-                  type: "Manga",
-                  attributes: .init(
-                    title: .init(en: "Monster"),
-                    altTitles: [],
-                    description: .init(en: "",
-                                       ru: nil),
-                    isLocked: false,
-                    originalLanguage: "",
-                    publicationDemographic: "",
-                    status: "",
-                    year: 2005,
-                    contentRating: "",
-                    tags: [.init(id: "1234", 
-                                 type: "Type",
-                                 attributes: .init(name: .init(en: "Tag"),
-                                                                            group: "Group"))],
-                    state: "",
-                    createdAt: "",
-                    updatedAt: "",
-                    version: 4,
-                    availableTranslatedLanguages: []),
-                  relationships: [])
-    }
-    
-}
-
 #Preview {
-    MangaSingleGridView(image: URL(string: "")!, data: MangaData.mock)
+    MangaSingleGridView(image: URL(string: "")!,
+                        viewModel: MangaGridViewModel(data: MangaData.mock)
+    )
     .frame(width: 100)
 }
 

@@ -23,6 +23,36 @@ struct MangaData: Decodable, Identifiable {
     let relationships: [Relationship]
 }
 
+extension MangaData {
+    
+    public static var mock: MangaData {
+        MangaData(id: "1234",
+                  type: "Manga",
+                  attributes: .init(
+                    title: .init(en: "Monster"),
+                    altTitles: [],
+                    description: .init(en: "",
+                                       ru: nil),
+                    isLocked: false,
+                    originalLanguage: "",
+                    publicationDemographic: "",
+                    status: "",
+                    year: 2005,
+                    contentRating: "",
+                    tags: [.init(id: "1234",
+                                 type: "Type",
+                                 attributes: .init(name: .init(en: "Tag"),
+                                                                            group: "Group"))],
+                    state: "",
+                    createdAt: "",
+                    updatedAt: "",
+                    version: 4,
+                    availableTranslatedLanguages: []),
+                  relationships: [])
+    }
+    
+}
+
 struct Attributes: Decodable {
     let title: Title
     let altTitles: [AlternativeTitle]

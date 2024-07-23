@@ -9,12 +9,8 @@ import SwiftUI
 
 struct RatingView: View {
     
-    //MARK: - Private properties
-    
     private let rating: CGFloat
     private let maxRating: Int
-    
-    //MARK: - UI
     
     var body: some View {
         VStack {
@@ -41,8 +37,6 @@ struct RatingView: View {
             }
         }
     }
-    
-    //MARK: - Initialaizers
     
     public init(rating: CGFloat, maxRating: Int) {
         self.rating = rating

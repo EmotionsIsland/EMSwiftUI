@@ -9,18 +9,14 @@ import SwiftUI
 
 struct TagsView<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
     
-    //MARK: - Private properties
-    
     @State private var elementSize: [Data.Element : CGSize] = [:]
     @State private var availavleWidth: CGFloat = .zero
 
-    private let columns: [GridItem]
-    private let rows: [GridItem]
-    private let data: Data
-    private let content: (Data.Element) -> Content
-    private let spacing = 8.0
-
-    //MARK: - UI
+    let columns: [GridItem]
+    let rows: [GridItem]
+    let data: Data
+    let content: (Data.Element) -> Content
+    let spacing = 8.0
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
@@ -46,8 +42,6 @@ struct TagsView<Data: RandomAccessCollection, Content: View>: View where Data.El
             
         }
     }
-    
-    //MARK: - Initialaizers
     
     public init(data: Data, @ViewBuilder content: @escaping (Data.Element) -> Content) {
         self.data = data

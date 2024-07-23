@@ -9,19 +9,15 @@ import SwiftUI
 
 struct DropDownView: View {
     
-    //MARK: - Private properties
-    
     @State private var selectionSection: Set<Int> = []
     @State private var rotation: Double = 0
-    @Binding private var selection: [String]
+    @Binding var selection: [String]
     
-    private var data: [FilterModel]
+    var data: [FilterModel]
     
-    private let columns = [
+    let columns = [
         GridItem(.flexible(minimum: 100))
     ]
-    
-    //MARK: - UI
     
     var body: some View {
         LazyVGrid(columns: columns, alignment: .leading, spacing: 8) {
@@ -54,9 +50,7 @@ struct DropDownView: View {
         }
         .padding(.horizontal)
     }
-    
-    //MARK: - Initialaizers
-    
+
     public init(data: [FilterModel], selection: Binding<[String]>) {
         self.data = data
         self._selection = selection
@@ -70,6 +64,7 @@ private extension DropDownView {
     
     func tapOnSection(at index: Int) {
         let isSelected = isSectionSelected(section: index)
+        
         if !isSelected {
             selectionSection.insert(index)
         } else {
@@ -93,18 +88,15 @@ private extension DropDownView {
     
     struct DropDownSubList: View {
 
-        //MARK: - Private properties
+        @Binding var selection: [String]
         
-        @Binding private var selection: [String]
-        private let section: Int
-        private let tags: [String]
-        private var isHidden: Bool
+        let section: Int
+        let tags: [String]
+        var isHidden: Bool
         
-        private let columns = [
+        let columns = [
             GridItem(.flexible(minimum: 20))
         ]
-        
-        //MARK: - UI
         
         var body: some View {
             VStack {
@@ -128,8 +120,6 @@ private extension DropDownView {
             }
             
         }
-        
-        //MARK: - Initialaizers
         
         public init(section: Int, tags: [String],  isHidden: Bool, selection: Binding<[String]>) {
             self.isHidden = isHidden

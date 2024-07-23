@@ -9,18 +9,13 @@ import SwiftUI
 
 struct MangaSectionView: View {
     
-    //MARK: - Private properties
+    @EnvironmentObject var viewModel: MangaListViewModel
     
-    @EnvironmentObject private var viewModel: MangaListViewModel
-    
-    private let columns: [GridItem] = [
-        GridItem(.fixed(100), spacing: 29),
-        GridItem(.fixed(100), spacing: 29),
-        GridItem(.fixed(100), spacing: 29)
-    ]
-    
-    //MARK: - UI
-    
+    private let columns: [GridItem] = Array(
+        repeating: GridItem(.fixed(100), spacing: 29),
+        count: 3
+    )
+
     var body: some View {
         VStack {
             MangaSectionTitleView()
@@ -30,7 +25,9 @@ struct MangaSectionView: View {
                     NavigationLink {
                         EmptyView()
                     } label: {
-                        MangaSingleGridView(image: viewModel.getCoverURL(manga: item, sizeFormat: .size256),data: item)
+                        MangaSingleGridView(image: viewModel.getCoverURL(
+                            manga: item, sizeFormat: .size256),
+                        viewModel: MangaGridViewModel(data: item))
                     }
                 }
             }
