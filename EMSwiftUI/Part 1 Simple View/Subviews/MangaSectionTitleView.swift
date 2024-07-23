@@ -57,5 +57,5 @@ private extension MangaSectionTitleView {
 
 #Preview {
     MangaSectionTitleView()
-        .environmentObject(MangaListViewModel())
+        .environmentObject(MangaListViewModel(networkManager: MangaListService(network: Network())))
 }

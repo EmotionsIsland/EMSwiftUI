@@ -38,5 +38,5 @@ struct MangaSectionView: View {
 
 #Preview {
     MangaSectionView()
-        .environmentObject(MangaListViewModel())
+        .environmentObject(MangaListViewModel(networkManager: MangaListService(network: Network())))
 }
