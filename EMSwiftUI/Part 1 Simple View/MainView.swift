@@ -12,27 +12,39 @@ struct MainView: View {
     @ObservedObject private var viewModel = MangaListViewModel(mangaListService: MangaListService(network: Network()))
     
     var body: some View {
-        VStack(spacing: 8) {
-            
-            switch viewModel.state {
-            case .successfull:
-                mockSearchBar
-                Divider()
-                loadedView
-            case .failed(let error):
-                errorView(error)
-            case .notAvailable:
-                ProgressView()
+        NavigationView {
+            VStack(spacing: 8) {
+                
+                switch viewModel.state {
+                case .successfull:
+                    mockSearchBar
+                    Divider()
+                    loadedView
+                case .failed(let error):
+                    errorView(error)
+                case .notAvailable:
+                    ProgressView()
+                }
             }
+            .onAppear {
+                viewModel.getData()
+            }
+            .navigationTitle("Manga List")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: filterButton)
         }
-        .onAppear {
-            viewModel.getData()
-        }
-        
     }
 }
 
 private extension MainView {
+    
+    private var filterButton: some View {
+        NavigationLink(destination: FilterView()) {
+            Image(systemName: "slider.horizontal.3")
+                .frame(width: 24, height: 24)
+                .foregroundColor(.blackBase)
+        }
+    }
     
     var loadedView: some View {
         ScrollView(.vertical, showsIndicators: false) {
