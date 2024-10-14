@@ -39,7 +39,7 @@ struct Attributes: Decodable {
     let updatedAt: String
     let version: Int
     let availableTranslatedLanguages: [String?]
-
+    
 }
 
 struct Title: Decodable {
@@ -79,4 +79,11 @@ struct Relationship: Decodable {
 
 struct CoverAttributes: Decodable {
     let fileName: String
+}
+
+struct CustomMangaModel: Identifiable {
+    let id: UUID
+    let title: String
+    let imageURL: URL
+    let tags: [String]
 }
