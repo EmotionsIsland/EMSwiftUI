@@ -32,8 +32,16 @@ internal enum Asset {
     internal static let whiteText = ColorAsset(name: "whiteText")
   }
   internal enum Icons {
+    internal static let emptyStarIcon = ImageAsset(name: "emptyStarIcon")
+    internal static let halfStarIcon = ImageAsset(name: "halfStarIcon")
     internal static let moreIcon = ImageAsset(name: "moreIcon")
     internal static let starIcon = ImageAsset(name: "starIcon")
+  }
+  internal enum TabBarIcons {
+    internal static let book = ImageAsset(name: "Book")
+    internal static let home = ImageAsset(name: "home")
+    internal static let person = ImageAsset(name: "person")
+    internal static let search = ImageAsset(name: "search")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

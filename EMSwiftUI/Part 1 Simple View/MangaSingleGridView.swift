@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct MangaSingleGridView: View {
+    let items: [MangaData]
+    
     var body: some View {
-        VStack {
-            // TODO: Create single grid View
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 29) {
+            ForEach(items) { item in
+                MangaSectionView(item: item)
+                    .frame(height: 208)
+            }
         }
+        .padding(.horizontal, 16)
     }
-}
-
-#Preview {
-    MangaSingleGridView()
 }
