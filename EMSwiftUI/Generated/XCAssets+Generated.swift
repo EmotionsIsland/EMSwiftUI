@@ -38,7 +38,7 @@ internal enum Asset {
     internal static let starIcon = ImageAsset(name: "starIcon")
   }
   internal enum TabBarIcons {
-    internal static let book = ImageAsset(name: "Book")
+    internal static let book = ImageAsset(name: "book")
     internal static let home = ImageAsset(name: "home")
     internal static let person = ImageAsset(name: "person")
     internal static let search = ImageAsset(name: "search")

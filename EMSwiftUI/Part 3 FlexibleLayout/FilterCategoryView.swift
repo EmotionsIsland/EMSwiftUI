@@ -16,8 +16,9 @@ struct FilterCategoryView: View {
     var toggleTag: (String) -> Void
     
     var body: some View {
+        
         DisclosureGroup(title) {
-            FlexibleGridView(selectedTags: $selectedTags, items: tags, toggleTag: toggleTag)
+            FlexibleTagView(selectedTags: $selectedTags, items: tags, toggleTag: toggleTag)
         }
         .font(.custom(FontFamily.SFPro.regular, size: 16))
         .accentColor(.blackBase)

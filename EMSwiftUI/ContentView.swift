@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    init() {
+        UITabBar.appearance().unselectedItemTintColor = .grayBase
+    }
+    
     var body: some View {
         TabView {
             MainView()
@@ -26,15 +31,15 @@ struct ContentView: View {
                         .font(.custom(FontFamily.SFPro.regular, size: 14))
                 }
             
-            EmptyView()
+            FirstMockScreen()
                 .tabItem {
                     Image("book")
                         .renderingMode(.template)
-                    Text("Empty")
+                    Text("Book")
                         .font(.custom(FontFamily.SFPro.regular, size: 14))
                 }
             
-            EmptyView()
+            SecondMockScreen()
                 .tabItem {
                     Image("person")
                         .renderingMode(.template)
@@ -43,13 +48,5 @@ struct ContentView: View {
                 }
         }
         .accentColor(.orangeBase)
-        .onAppear {
-            UITabBar.appearance().unselectedItemTintColor = UIColor(Color.grayBase)
-        }
     }
-}
-
-
-#Preview {
-    ContentView()
 }

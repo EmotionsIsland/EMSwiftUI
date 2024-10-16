@@ -13,11 +13,13 @@ struct SelectionView: View {
     var toggleTag: (String) -> Void
     
     var body: some View {
+        
         VStack(alignment: .leading) {
             Text("Selection")
-                .font(.headline)
+                .font(.custom(FontFamily.SFPro.bold, size: 20))
+                .foregroundColor(.blackBase)
             
-            FlexibleGridView(selectedTags: $selectedTags, items: selectedTags, isSelectable: false, toggleTag: toggleTag)
+            FlexibleTagView(selectedTags: $selectedTags, items: selectedTags, isSelectable: false, toggleTag: toggleTag)
         }
     }
 }

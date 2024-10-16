@@ -11,11 +11,11 @@ struct MangaView: View {
     let items: [MangaData]
     
     var body: some View {
-        VStack() {
+        
+        VStack {
             MangaSectionTitleView(title: title)
-                .padding(.horizontal, 16)
+                .padding(.horizontal)
                 .padding(.top, 24)
-                .padding(.bottom, 16)
             
             if !items.isEmpty {
                 MangaSingleGridView(items: items)

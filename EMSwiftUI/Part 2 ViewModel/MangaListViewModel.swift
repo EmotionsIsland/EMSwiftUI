@@ -20,6 +20,12 @@ final class MangaListViewModel: ObservableObject {
     @Published var hasError: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
+    private let service: MangaListService
+    
+    init(service: MangaListService = MangaListService(network: Network())) {
+        self.service = service
+        getData()
+    }
     
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
         guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" } )?.attributes?.fileName else { return URL(string: "")! }
@@ -32,8 +38,6 @@ final class MangaListViewModel: ObservableObject {
     }
     
     func getData() {
-        let service = MangaListService(network: Network())
-        
         service.getManga()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -44,8 +48,8 @@ final class MangaListViewModel: ObservableObject {
                     self.state = .successfull
                 }
             }, receiveValue: { [weak self] mangaListModel in
-                self?.mangaList = mangaListModel.data
-                print(mangaListModel.data.count)
+                guard let self else { return }
+                self.mangaList = mangaListModel.data
             })
             .store(in: &cancellables)
     }

@@ -11,6 +11,7 @@ struct MangaSectionTitleView: View {
     var title: String
     
     var body: some View {
+        
         HStack(alignment: .center) {
             Text(title)
                 .font(.custom(FontFamily.SFPro.bold, size: 20))
