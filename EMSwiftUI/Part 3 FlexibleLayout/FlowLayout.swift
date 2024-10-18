@@ -16,12 +16,14 @@ struct FlowLayout: View {
     var toggleTag: (String) -> Void
     
     var body: some View {
-        VStack {
-            GeometryReader { geometry in
-                self.generateContent(in: geometry)
+        if !items.isEmpty {
+            VStack {
+                GeometryReader { geometry in
+                    self.generateContent(in: geometry)
+                }
             }
+            .frame(height: totalHeight)
         }
-        .frame(height: totalHeight) 
     }
     
     private func generateContent(in geometry: GeometryProxy) -> some View {

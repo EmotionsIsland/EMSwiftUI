@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var viewModel = MangaListViewModel()
+    @StateObject private var viewModel = MangaListViewModel(service: MangaListService(network: Network()))
     @State private var searchText = ""
     
     var body: some View {
