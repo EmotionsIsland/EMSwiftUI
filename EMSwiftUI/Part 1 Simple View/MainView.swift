@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
-    @StateObject var viewModel = MangaListViewModel()
+    @StateObject var viewModel = MangaListViewModel(mangaListService: MangaListService(network: Network()))
     
     @State private var isFilterShown = false
     @State private var searchText = ""
@@ -23,33 +23,39 @@ struct MainView: View {
                 
                 Divider()
                 
-                ScrollView(.vertical, showsIndicators: false) {
-                    MangaSectionView(
-                        sectionTitle: "Popular",
-                        mangaListViewModel: viewModel
-                    )
-                    MangaSectionView(
-                        sectionTitle: "Recently Added",
-                        mangaListViewModel: viewModel
-                    )
-                    MangaSectionView(
-                        sectionTitle: "Last updates",
-                        mangaListViewModel: viewModel
-                    )
-                    
-                    MangaSectionView(
-                        sectionTitle: "Seasonal",
-                        mangaListViewModel: viewModel
-                    )
+                switch viewModel.state {
+                case .successfull, .notAvailable:
+                    ScrollView(.vertical, showsIndicators: false) {
+                        MangaSectionView(
+                            sectionTitle: "Popular",
+                            viewModel: viewModel
+                        )
+                        MangaSectionView(
+                            sectionTitle: "Recently Added",
+                            viewModel: viewModel
+                        )
+                        MangaSectionView(
+                            sectionTitle: "Last updates",
+                            viewModel: viewModel
+                        )
+                        
+                        MangaSectionView(
+                            sectionTitle: "Seasonal",
+                            viewModel: viewModel
+                        )
+                    }
+                    .padding()
+                case .failed(let error):
+                    Text("Error: \(error.localizedDescription)")
+                        .frame(alignment: .center)
                 }
-                .padding()
             }
         }
     }
 }
 
 #Preview {
-    MainView(viewModel: MangaListViewModel())
+    MainView(viewModel: MangaListViewModel(mangaListService: MangaListService(network: Network())))
 }
 
 private extension MainView {

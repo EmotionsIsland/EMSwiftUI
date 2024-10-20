@@ -11,7 +11,7 @@ struct MangaSectionView: View {
     
     @State var sectionTitle: String
         
-    var mangaListViewModel: MangaListViewModel
+    var viewModel: MangaListViewModel
     
     private let columns: [GridItem] = [
         GridItem(.fixed(100), spacing: 29),
@@ -26,8 +26,8 @@ struct MangaSectionView: View {
         ) {
             Section(
                 content: {
-                    ForEach(0 ..< ( 1 )) { item in
-                        MangaSingleGridView()
+                    ForEach(viewModel.mangaList?.data ?? []) { item in
+                        MangaSingleGridView(mangaData: item, viewModel: viewModel)
                     }
                 },
                 header: { MangaSectionTitleView(title: sectionTitle)}
