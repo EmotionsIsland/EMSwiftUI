@@ -14,7 +14,7 @@ struct MangaSectionTitleView: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.custom(FontFamily.SFProText.black, size: 20))
+                .font(.custom(FontFamily.SFPro.bold, size: 20))
             
             Spacer()
             
@@ -31,6 +31,5 @@ struct MangaSectionTitleView: View {
             .buttonStyle(.plain)
             .frame(width: 67, height: 24)
         }
-        .padding(.top, 25)
     }
 }

@@ -27,10 +27,11 @@ struct MangaSingleGridView: View {
                         .frame(width: 100, height: 144)
                         .foregroundStyle(.grayBase)
                 @unknown default:
-                    Rectangle()
+                    EmptyView()
                         .frame(width: 100, height: 144)
                 }
             }
+            .clipShape(RoundedRectangle(cornerRadius: 4))
             
             Text(mangaData.attributes.title.en ?? "Unknown")
                 .frame(maxWidth: 100, alignment: .leading)

@@ -33,6 +33,7 @@ struct MangaSectionView: View {
                 header: { MangaSectionTitleView(title: sectionTitle)}
             )
         }
+        .padding(.top, 25)
     }
 }
 
