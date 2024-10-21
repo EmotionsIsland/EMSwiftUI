@@ -51,6 +51,9 @@ struct MainView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $isFilterShown) {
+            FilterView()
+        }
     }
 }
 
@@ -61,16 +64,23 @@ struct MainView: View {
 private extension MainView {
     var searchField: some View {
         HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(.gray)
-                .padding(.leading, 4)
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.gray)
+                    .padding(.leading, 4)
+                
+                TextField("Search", text: $searchText)
+                    .frame(height: 36)
+                    .padding(.leading, 4)
+            }
+            .background(.grayBase)
+            .cornerRadius(8)
             
-            TextField("Search", text: $searchText)
-                .frame(height: 36)
-                .padding(.leading, 4)
+            Button("Filter") {
+                isFilterShown.toggle()
+            }
+            .foregroundStyle(.blackBase)
         }
-        .background(.grayBase)
-        .cornerRadius(8)
         .frame(maxWidth: .infinity)
     }
 }
