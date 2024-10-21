@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MangaSectionView: View {
     @ObservedObject var viewModel: MangaListViewModel
-    private let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
     
     var body: some View {
         VStack(spacing: 0) {
@@ -19,6 +18,8 @@ struct MangaSectionView: View {
             }
         }
     }
+    private let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
+
 }
 
 private extension MangaSectionView {

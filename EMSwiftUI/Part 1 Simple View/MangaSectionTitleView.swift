@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MangaSectionTitleView: View {
     var title: String
+    
     var body: some View {
         HStack {
                 Text(title)

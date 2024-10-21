@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MangaSingleGridView: View {
     @ObservedObject var viewModel: MangaListViewModel
+    
     let data: MangaData
     
     var body: some View {
@@ -19,10 +20,11 @@ struct MangaSingleGridView: View {
             tagsView
         }
     }
-    
-    private var coverImageView: some View {
-        let url = viewModel.getCoverURL(manga: data, sizeFormat: .size512)
-        return AsyncImage(url: url) { image in
+}
+
+private extension MangaSingleGridView {
+    var coverImageView: some View {
+        AsyncImage(url: viewModel.getCoverURL(manga: data, sizeFormat: .size512)) { image in
             image
                 .resizable()
                 .frame(width: 100, height: 144)
@@ -32,21 +34,24 @@ struct MangaSingleGridView: View {
         }
     }
     
-    private var titleView: some View {
+    var titleView: some View {
         Text(data.attributes.title.en ?? "No eng title")
             .lineLimit(1)
             .font(.custom(FontFamily.SFPro.bold, size: 16))
     }
     
-    private var tagsView: some View {
-        let tagsName = data.attributes.tags.compactMap {
-            $0.attributes.name.en
-        }
-        return Text(tagsName.joined(separator: ", "))
+    var tagsView: some View {
+        Text(getTags())
             .lineLimit(1)
             .font(.custom(FontFamily.SFPro.light, size: 15))
             .foregroundStyle(.grayBase)
     }
+    
+    func getTags() -> String {
+        let tagsName = data.attributes.tags.compactMap {
+            $0.attributes.name.en
+        }
+        return tagsName.joined(separator: ", ")
+    }
 }
-
 
