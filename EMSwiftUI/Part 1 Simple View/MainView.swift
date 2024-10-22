@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct MainView: View {
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+            MangaSectionView()
         }
     }
 }
