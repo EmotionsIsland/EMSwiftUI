@@ -18,6 +18,7 @@ struct TagChipView: View {
                 Image(systemName: "plus")
             }
             Text(tag.title)
+                .font(FontFamily.SFProText.regular.swiftUIFont(fixedSize: 16))
         }
         .frame(maxHeight: 22)
         .fixedSize()

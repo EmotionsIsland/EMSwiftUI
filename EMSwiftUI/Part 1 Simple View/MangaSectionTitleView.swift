@@ -15,7 +15,9 @@ struct MangaSectionTitleView: View {
     var body: some View {
         HStack {
             sectionTitle
+            
             Spacer()
+            
             sectionButton
         }
     }
@@ -25,8 +27,8 @@ private extension MangaSectionTitleView {
     
     var sectionTitle: some View {
         Text(title)
-            .foregroundStyle(.blackBase)
             .font(FontFamily.SFProText.bold.swiftUIFont(size: 20))
+            .foregroundStyle(.blackBase)
     }
     
     var sectionButton: some View {
@@ -36,6 +38,7 @@ private extension MangaSectionTitleView {
             HStack(alignment: .center, spacing: 8) {
                 Text("more")
                     .font(FontFamily.SFPro.regular.swiftUIFont(size: 16))
+                
                 Image(.moreIcon)
             }
             .foregroundStyle(.blackBase)

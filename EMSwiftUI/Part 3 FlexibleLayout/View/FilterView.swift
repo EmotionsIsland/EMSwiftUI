@@ -41,7 +41,8 @@ private extension FilterView {
             .font(FontFamily.SFProText.semibold.swiftUIFont(size: 20))
     }
     
-    @ViewBuilder func selectedTags(width: CGFloat) -> some View {
+    @ViewBuilder
+    func selectedTags(width: CGFloat) -> some View {
         VStack {
             switch viewModel.selectedTags.isEmpty {
             case true:
@@ -96,8 +97,8 @@ private extension FilterView {
         return ScrollView {
             ForEach(categories, id: \.0) { (title, tags) in
                 DropDownTagsView(
-                    title: title,
                     tags: tags,
+                    title: title,
                     availableWidth: width
                 ) { tag, isSelected in
                     if isSelected {
@@ -110,8 +111,4 @@ private extension FilterView {
         }
     }
     
-}
-
-#Preview {
-    FilterView()
 }

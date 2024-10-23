@@ -18,40 +18,34 @@ final class FilterViewModel: ObservableObject {
     func addTagToSelected(_ tag: TagChipModel) {
         if !selectedTags.contains(tag) {
             selectedTags.append(tag)
-            updateTagSelectionState(tag: tag, isSelected: true)
+            updateTagSelectionState(for: [tag], isSelected: true)
         }
     }
     
     func resetSelectedTags() {
         selectedTags.removeAll()
-        
-        updateTagSelectionState(for: &genresTags, isSelected: false)
-        updateTagSelectionState(for: &statusTags, isSelected: false)
-        updateTagSelectionState(for: &formatTags, isSelected: false)
+        updateTagSelectionState(for: genresTags + statusTags + formatTags, isSelected: false)
     }
     
     func removeTagFromSelected(_ tag: TagChipModel) {
         if let index = selectedTags.firstIndex(of: tag) {
             selectedTags.remove(at: index)
-            updateTagSelectionState(tag: tag, isSelected: false)
+            updateTagSelectionState(for: [tag], isSelected: false)
         }
     }
     
-    private func updateTagSelectionState(tag: TagChipModel, isSelected: Bool) {
-        if let index = genresTags.firstIndex(of: tag) {
-            genresTags[index].isSelected = isSelected
-        }
-        if let index = statusTags.firstIndex(of: tag) {
-            statusTags[index].isSelected = isSelected
-        }
-        if let index = formatTags.firstIndex(of: tag) {
-            formatTags[index].isSelected = isSelected
-        }
+    private func updateTagSelectionState(for tags: [TagChipModel], isSelected: Bool) {
+        updateTags(&genresTags, for: tags, isSelected: isSelected)
+        updateTags(&statusTags, for: tags, isSelected: isSelected)
+        updateTags(&formatTags, for: tags, isSelected: isSelected)
     }
     
-    private func updateTagSelectionState(for tags: inout [TagChipModel], isSelected: Bool) {
-        for index in tags.indices {
-            tags[index].isSelected = isSelected
+    private func updateTags(_ sourceTags: inout [TagChipModel], for tags: [TagChipModel], isSelected: Bool) {
+        for tag in tags {
+            if let index = sourceTags.firstIndex(of: tag) {
+                sourceTags[index].isSelected = isSelected
+            }
         }
     }
 }
+

@@ -10,6 +10,7 @@ import SwiftUI
 struct TagContainerView: View {
     
     @Binding var tags: [TagChipModel]
+    
     let availableWidth: CGFloat
     let onSelectTag: (TagChipModel, Bool) -> Void
     
@@ -30,6 +31,9 @@ struct TagContainerView: View {
                 }
             }
         }
+}
+
+private extension TagContainerView {
     
     func calculateRows(for items: [TagChipModel], availableWidth: CGFloat) -> [[TagChipModel]] {
         var rows: [[TagChipModel]] = []

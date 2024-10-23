@@ -9,10 +9,10 @@ import SwiftUI
 
 struct DropDownTagsView: View {
     
-    let title: String
     @State private var isExpanded = false
     @Binding var tags: [TagChipModel]
     
+    let title: String
     var availableWidth: CGFloat
     let onSelectTag: (TagChipModel, Bool) -> Void
     
@@ -22,11 +22,13 @@ struct DropDownTagsView: View {
                 Text(title)
                     .font(FontFamily.SFProText.regular.swiftUIFont(size: 20))
                 dropButton
+                
                 Spacer()
             }
             expandedView
         }
         .padding(.vertical, 12)
+        .animation(.easeInOut(duration: 0.3), value: isExpanded)
     }
 }
 
@@ -38,21 +40,21 @@ private extension DropDownTagsView {
                 isExpanded.toggle()
             }
         } label: {
-            switch self.isExpanded {
-                case true: Image(systemName: "chevron.down")
-                case false: Image(systemName: "chevron.up")
-            }
+            Image(systemName: "chevron.up")
+                .rotationEffect(.degrees(isExpanded ? 0 : 180))
+                .animation(.easeInOut(duration: 0.3), value: isExpanded)
         }
         .foregroundStyle(.black)
-
+        
     }
     
-    @ViewBuilder var expandedView: some View {
-        switch isExpanded {
-        case true: TagContainerView(tags: $tags,
-                                      availableWidth: availableWidth,
-                                      onSelectTag: onSelectTag)
-        case false: EmptyView()
+    @ViewBuilder
+    var expandedView: some View {
+        if isExpanded {
+            TagContainerView(tags: $tags,
+                             availableWidth: availableWidth,
+                             onSelectTag: onSelectTag)
+            .transition(.move(edge: .top).combined(with: .opacity))
         }
     }
 }

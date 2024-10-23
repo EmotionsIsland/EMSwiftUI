@@ -14,7 +14,6 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 8) {
-                
                 switch viewModel.state {
                 case .successfull:
                     mockSearchBar
@@ -25,9 +24,6 @@ struct MainView: View {
                 case .notAvailable:
                     ProgressView()
                 }
-            }
-            .onAppear {
-                viewModel.getData()
             }
             .navigationTitle("Manga List")
             .navigationBarTitleDisplayMode(.inline)
@@ -67,9 +63,8 @@ private extension MainView {
     
     func errorView(_ error: Error) -> some View {
         Text(error.localizedDescription)
-            .multilineTextAlignment(.center)
-            .frame(alignment: .center)
             .font(FontFamily.SFProText.medium.swiftUIFont(size: 22))
+            .multilineTextAlignment(.center)
     }
     
 }

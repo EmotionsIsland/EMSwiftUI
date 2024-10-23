@@ -22,17 +22,6 @@ struct TagChipModel: Identifiable, Hashable {
     }
 }
 
-//extension TagChipModel {
-//    
-//    static func == (lhs: TagChipModel, rhs: TagChipModel) -> Bool {
-//        return lhs.id == rhs.id
-//    }
-//    
-//    func hash(into hasher: inout Hasher) {
-//        hasher.combine(id)
-//    }
-//}
-
 extension TagChipModel {
     
     static let mockPulicationStatusTags = [TagChipModel(title: "Ongoing"),

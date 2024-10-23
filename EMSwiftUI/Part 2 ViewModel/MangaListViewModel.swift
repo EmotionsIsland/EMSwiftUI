@@ -27,6 +27,7 @@ final class MangaListViewModel: ObservableObject {
     
     init(mangaListService: MangaListService) {
         self.mangaListService = mangaListService
+        getData()
         setupErrorSubscriptions()
     }
     
@@ -39,16 +40,18 @@ final class MangaListViewModel: ObservableObject {
             .sink { [weak self] completion in
                 switch completion {
                 case .failure(let error):
-                    self?.state = .failed(error: error)
-                    self?.dataIsLoading = false
+                    guard let self else { return }
+                    self.state = .failed(error: error)
+                    self.dataIsLoading = false
                 case .finished:
                     break
                 }
             } receiveValue: { [weak self] mangaList in
-                let mappedManga = mangaList.data.compactMap { self?.convertManga(manga: $0)}
-                self?.mangaData = mappedManga
-                self?.state = .successfull
-                self?.dataIsLoading = false
+                guard let self else { return }
+                let mappedManga = mangaList.data.compactMap { self.convertManga(manga: $0)}
+                self.mangaData = mappedManga
+                self.state = .successfull
+                self.dataIsLoading = false
             }
             .store(in: &subscriber)
         
