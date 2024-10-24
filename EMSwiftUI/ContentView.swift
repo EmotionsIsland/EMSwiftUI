@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel = MangaListViewModel(mangaService: MangaListService(network: Network()))
-
     var body: some View {
-        MainView(viewModel: viewModel)
+        MainView(viewModel: MangaListViewModel(mangaService: MangaListService(network: Network())))
     }
 }
 

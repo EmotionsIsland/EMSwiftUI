@@ -30,7 +30,13 @@ private extension MangaSingleGridView {
                 .frame(width: 100, height: 144)
                 .clipShape(RoundedRectangle(cornerRadius: 4))
         } placeholder: {
-            ProgressView()
+            ZStack {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 100, height: 144)
+                
+                ProgressView()
+            }
         }
     }
     

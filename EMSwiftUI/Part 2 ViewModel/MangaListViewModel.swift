@@ -15,11 +15,11 @@ enum SizeFormat: String {
 }
 
 final class MangaListViewModel: ObservableObject {
-    @Published var state: DataState = .notAvailable
-    @Published var mangaModel: MangaListModel?
+    @Published private(set) var state: DataState = .notAvailable
+    @Published private(set) var mangaModel: MangaListModel?
     
-    private var mangaService: MangaListServiceProtocol
     private var subscribers = Set<AnyCancellable>()
+    private let mangaService: MangaListServiceProtocol
     
     init(mangaService: MangaListServiceProtocol) {
         self.mangaService = mangaService
@@ -45,15 +45,17 @@ private extension MangaListViewModel {
             .sink { [weak self] completion in
                 switch completion {
                 case .failure(let error):
-                    self?.state = .failed(error: error)
+                    guard let self else { return }
+                    self.state = .failed(error: error)
                 default:
                     break
                 }
             } receiveValue: { [weak self] mangaList in
-                self?.state = .successfull
-                self?.mangaModel = mangaList
+                guard let self else { return }
+                self.state = .successfull
+                self.mangaModel = mangaList
             }
             .store(in: &subscribers)
-
+        
     }
 }

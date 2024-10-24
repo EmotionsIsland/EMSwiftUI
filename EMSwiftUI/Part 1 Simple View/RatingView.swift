@@ -30,10 +30,6 @@ struct RatingView: View {
     }
 }
 
-#Preview {
-    RatingView(rating: 3.5, maxRating: 5)
-}
-
 private extension RatingView {
     func getWidthForRating(_ index: Int) -> CGFloat {
         return CGFloat(min(rating - Double(index - 1), 1)) * 17
