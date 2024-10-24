@@ -7,10 +7,20 @@
 
 import SwiftUI
 
+// MARK: - MangaSectionView
 struct MangaSectionView: View {
+    
+    let columns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+        
     var body: some View {
-        VStack {
-            // TODO: Create section View
+        LazyVGrid(columns: columns) {
+            ForEach(0..<25) { _ in
+                MangaSingleGridView()
+            }
         }
     }
 }
