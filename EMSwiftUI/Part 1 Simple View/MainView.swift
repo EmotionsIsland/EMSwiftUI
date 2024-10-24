@@ -9,22 +9,32 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var viewModel: MangaListViewModel
+    @StateObject var filterViewModel = FilterViewModel()
     
     var body: some View {
-        VStack {
-            searchBarView
-            Divider()
+        NavigationView {
             VStack {
-                mangaSections
+                HStack {
+                    searchBarView
+                    
+                    NavigationLink {
+                        FilterView()
+                            .environmentObject(filterViewModel)
+                            .navigationTitle("Filters")
+                    } label: {
+                        filterButton
+                    }
+                }
+                
+                Divider()
+                
+                VStack {
+                    mangaSections
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        
     }
-}
-
-#Preview {
-    MainView(viewModel: MangaListViewModel(mangaService: MangaListService(network: Network())))
 }
 
 private extension MainView {
@@ -69,6 +79,12 @@ private extension MainView {
             .font(.headline)
             .foregroundColor(.grayBase)
             .padding()
+    }
+    
+    var filterButton: some View {
+        Text("Filter")
+            .foregroundColor(.blackBase)
+            .padding(.trailing, 16)
     }
     
     func showError(_ error: Error) -> some View {

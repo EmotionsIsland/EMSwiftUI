@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 @main
 struct EMSwiftUIApp: App {
     var body: some Scene {
