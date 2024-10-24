@@ -8,8 +8,8 @@
 import SwiftUI
 
 final class FilterViewModel: ObservableObject {
-    @Published var selectedTags: [String] = []
-    @Published var tags: [FilterType: [String]] = [:]
+    @Published private(set) var selectedTags: [String] = []
+    @Published private(set) var tags: [FilterType: [String]] = [:]
     
     init() {
         loadTags()
