@@ -9,34 +9,39 @@ import SwiftUI
 
 // MARK: - MangaSingleGridView
 struct MangaSingleGridView: View {
+    
+    // MARK: - Properties
+    let manga: MangaData
+    let viewModel: MangaListViewModel
+    
+    // MARK: - Body
     var body: some View {
         VStack {
-            MangaCover()
+            MangaCover(imageURL: viewModel.getCoverURL(manga: manga, sizeFormat: .size256))
             
-            MangaTitle(title: "Manga")
-
-            RatingView(rating: 2.3, maxRating: 5)
-
-            MangaGenre(genres: ["Action", "Sci-Fi", "Horror"])
+            MangaTitle(title: manga.attributes.title.en ?? "No title")
+            
+            RatingView(rating: 3.6, maxRating: 5)
+            
+            MangaGenre(genres: manga.attributes.tags.map { $0.attributes.name.en ?? "No genre" })
         }
     }
-}
-
-#Preview {
-    MangaSingleGridView()
 }
 
 // MARK: - MangaCover
 struct MangaCover: View {
     
+    let imageURL: URL
+    
     var body: some View {
-        Image(systemName: "lock.document")
-            .resizable()
-            .scaledToFit()
-            .scaleEffect(0.5)
-            .frame(width: 100, height: 144)
-            .background(Color.grayBase)
-            .cornerRadius(4)
+        AsyncImage(url: imageURL) { image in
+            image.resizable().scaledToFill()
+        } placeholder: {
+            ProgressView()
+        }
+        .frame(width: 100, height: 144)
+        .background(Color.grayBase)
+        .cornerRadius(4)
     }
 }
 
