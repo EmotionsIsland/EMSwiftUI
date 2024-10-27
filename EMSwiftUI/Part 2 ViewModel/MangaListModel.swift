@@ -52,7 +52,7 @@ struct Description: Decodable {
 }
 
 struct AlternativeTitle: Decodable {
-    let ru: String?
+    let en: String?
 }
 
 struct AttributesDescription: Decodable {

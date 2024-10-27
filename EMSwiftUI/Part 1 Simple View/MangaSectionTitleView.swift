@@ -9,12 +9,13 @@ import SwiftUI
 
 struct MangaSectionTitleView: View {
 
-    let title: String = "Temporary title"
-    
+    let title: String = "Popular"
+
     var body: some View {
         HStack {
             Text(title)
                 .labelStyle(.titleOnly)
+                
         }
     }
 }

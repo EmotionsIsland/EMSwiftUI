@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MangaSectionView: View {
 
-    let items = Array(1...6)
+    @StateObject private var mangaListViewModel = MangaListViewModel(mangaListService: MangaListService(network: Network()))
+
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -34,14 +35,22 @@ struct MangaSectionView: View {
 
             .frame(alignment: .topLeading)
         LazyVGrid(columns: columns, spacing: 8) {
-            ForEach(items, id: \.self) { item in
-                MangaSingleGridView()
+            ForEach(mangaListViewModel.mangaData, id: \.id) { item in
+                MangaSingleGridView(
+                    mangaListViewModel: mangaListViewModel, 
+                    mangaData: item,
+                    imageURL: mangaListViewModel.getCoverURL(
+                        manga: item, sizeFormat: SizeFormat.size256
+                    )
+                )
             }
+        }.onAppear { [weak mangaListViewModel] in
+            mangaListViewModel?.loadData()
         }
         Spacer()
     }
 }
 
-#Preview {
-    MangaSectionView()
-}
+//#Preview {
+//    MangaSectionView(viewModel: MangaListViewModel())
+//}
