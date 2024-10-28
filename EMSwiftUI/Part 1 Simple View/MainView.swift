@@ -9,42 +9,20 @@ import SwiftUI
 
 struct MainView: View {
     
-    @StateObject var viewModel = MangaListViewModel(mangaListService: MangaListService(network: Network()))
+    @StateObject private var viewModel = MangaListViewModel(
+        mangaListService: MangaListService(network: Network()))
     
     @State private var isFilterShown = false
     @State private var searchText = ""
     
     var body: some View {
         NavigationView {
-        
-            VStack(spacing: 8) {
-                searchField
-                    .padding()
-                
-                Divider()
-                
+            VStack {
                 switch viewModel.state {
                 case .successfull, .notAvailable:
-                    ScrollView(.vertical, showsIndicators: false) {
-                        MangaSectionView(
-                            sectionTitle: "Popular",
-                            viewModel: viewModel
-                        )
-                        MangaSectionView(
-                            sectionTitle: "Recently Added",
-                            viewModel: viewModel
-                        )
-                        MangaSectionView(
-                            sectionTitle: "Last updates",
-                            viewModel: viewModel
-                        )
-                        
-                        MangaSectionView(
-                            sectionTitle: "Seasonal",
-                            viewModel: viewModel
-                        )
-                    }
-                    .padding()
+                    searchField
+                    Divider()
+                    contentView
                 case .failed(let error):
                     Text("Error: \(error.localizedDescription)")
                         .frame(alignment: .center)
@@ -58,7 +36,7 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(viewModel: MangaListViewModel(mangaListService: MangaListService(network: Network())))
+    MainView()
 }
 
 private extension MainView {
@@ -81,6 +59,21 @@ private extension MainView {
             }
             .foregroundStyle(.blackBase)
         }
+        .padding(.horizontal, 16)
         .frame(maxWidth: .infinity)
+    }
+    
+    var contentView: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 24) {
+                ForEach(viewModel.categories, id: \.self) { title in
+                    MangaSectionView(
+                        sectionTitle: title,
+                        viewModel: viewModel
+                    )
+                }
+            }
+            .padding()
+        }
     }
 }

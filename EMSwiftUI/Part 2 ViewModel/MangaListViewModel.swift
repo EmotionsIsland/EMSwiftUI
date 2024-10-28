@@ -16,35 +16,17 @@ enum SizeFormat: String {
 
 final class MangaListViewModel: ObservableObject {
     
-    @Published var mangaList: MangaListModel?
-        
+    @Published private(set) var mangaList: MangaListModel?
     @Published private(set) var state: DataState = .notAvailable
+    @Published private(set) var categories = MangaData.categoriesMock
 
-    let mangaListService: MangaListServiceProtocol
+    private let mangaListService: MangaListServiceProtocol
     
     private var cancellable = Set<AnyCancellable>()
     
     init(mangaListService: MangaListServiceProtocol) {
         self.mangaListService = mangaListService
         getData()
-    }
-    
-    func getData() {
-        mangaListService
-            .getManga()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    self?.state = .failed(error: error)
-                }
-            }) { [weak self] mangaList in
-                self?.mangaList = mangaList
-                self?.state = .successfull
-            }
-            .store(in: &cancellable)
     }
     
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
@@ -56,11 +38,30 @@ final class MangaListViewModel: ObservableObject {
     func getRating(manga: MangaData) -> URL {
         return Endpoint(path: "/statistics/manga/" + manga.id).url
     }
+    
+    private func getData() {
+        mangaListService
+            .getManga()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self = self else { return }
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    self.state = .failed(error: error)
+                }
+            }) { [weak self] mangaList in
+                guard let self = self else { return }
+                self.mangaList = mangaList
+                self.state = .successfull
+            }
+            .store(in: &cancellable)
+    }
 }
 
 extension MangaListViewModel {
     func getTagsArray(mangaData: MangaData) -> [String] {
-        let tags = mangaData.attributes.tags.compactMap({ $0.attributes.name.en })
-        return tags
+        mangaData.attributes.tags.compactMap({ $0.attributes.name.en })
     }
 }

@@ -80,3 +80,7 @@ struct Relationship: Decodable {
 struct CoverAttributes: Decodable {
     let fileName: String
 }
+
+extension MangaData {
+    static let categoriesMock = ["Popular", "Recently Added", "Last Updated", "Seasonal"]
+}

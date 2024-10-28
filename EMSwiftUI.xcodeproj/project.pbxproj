@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */; };
+		61A525BE4A0E65E4EDABAC3D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5168E73FE202256126153AD /* Pods_EMSwiftUI.framework */; };
 		D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */; };
 		D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */; };
 		D83E2ECF2B2FC7ED00A338A7 /* MangaListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */; };
@@ -41,16 +41,17 @@
 		D8A6077F2B2FC2010093F5A4 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6077E2B2FC2010093F5A4 /* Endpoint.swift */; };
 		D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A607802B2FC20E0093F5A4 /* NetworkError.swift */; };
 		D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A607822B2FC2150093F5A4 /* DataState.swift */; };
+		F01C146F2CCA5D7F008DC4E8 /* FiterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01C146E2CCA5D7F008DC4E8 /* FiterModel.swift */; };
 		F09E66A72CC5599B007809B3 /* FlexibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09E66A62CC5599B007809B3 /* FlexibleView.swift */; };
 		F09E66A92CC559FF007809B3 /* FlexibleGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09E66A82CC559FF007809B3 /* FlexibleGridView.swift */; };
 		F09E66AB2CC55B9B007809B3 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09E66AA2CC55B9B007809B3 /* FilterViewModel.swift */; };
 		F09E66AD2CC57C00007809B3 /* SizeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09E66AC2CC57C00007809B3 /* SizeReader.swift */; };
-		F09E66B12CC63FFA007809B3 /* FilterViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09E66B02CC63FFA007809B3 /* FilterViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
-		99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
+		95301E3EFA6451C2E4EE8603 /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
+		A5168E73FE202256126153AD /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6AB271237AFFE2468AB58A3 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListService.swift; sourceTree = "<group>"; };
 		D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListModel.swift; sourceTree = "<group>"; };
 		D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListViewModel.swift; sourceTree = "<group>"; };
@@ -89,12 +90,11 @@
 		D8A6077E2B2FC2010093F5A4 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		D8A607802B2FC20E0093F5A4 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D8A607822B2FC2150093F5A4 /* DataState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataState.swift; sourceTree = "<group>"; };
+		F01C146E2CCA5D7F008DC4E8 /* FiterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiterModel.swift; sourceTree = "<group>"; };
 		F09E66A62CC5599B007809B3 /* FlexibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleView.swift; sourceTree = "<group>"; };
 		F09E66A82CC559FF007809B3 /* FlexibleGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleGridView.swift; sourceTree = "<group>"; };
 		F09E66AA2CC55B9B007809B3 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		F09E66AC2CC57C00007809B3 /* SizeReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeReader.swift; sourceTree = "<group>"; };
-		F09E66B02CC63FFA007809B3 /* FilterViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewExtension.swift; sourceTree = "<group>"; };
-		FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,17 +102,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */,
+				61A525BE4A0E65E4EDABAC3D /* Pods_EMSwiftUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7858FB117C86FDC565D9C2E4 /* Frameworks */ = {
+		A562223446DF3EDC35D5444A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */,
+				A5168E73FE202256126153AD /* Pods_EMSwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -126,8 +126,8 @@
 				F09E66A62CC5599B007809B3 /* FlexibleView.swift */,
 				F09E66A82CC559FF007809B3 /* FlexibleGridView.swift */,
 				F09E66AA2CC55B9B007809B3 /* FilterViewModel.swift */,
-				F09E66B02CC63FFA007809B3 /* FilterViewExtension.swift */,
 				F09E66AC2CC57C00007809B3 /* SizeReader.swift */,
+				F01C146E2CCA5D7F008DC4E8 /* FiterModel.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -146,7 +146,7 @@
 				D8A6073C2B2F3DE20093F5A4 /* EMSwiftUI */,
 				D8A6073B2B2F3DE20093F5A4 /* Products */,
 				E69F4A6B4C86BB557C514CC9 /* Pods */,
-				7858FB117C86FDC565D9C2E4 /* Frameworks */,
+				A562223446DF3EDC35D5444A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -259,8 +259,8 @@
 		E69F4A6B4C86BB557C514CC9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */,
-				2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */,
+				95301E3EFA6451C2E4EE8603 /* Pods-EMSwiftUI.debug.xcconfig */,
+				C6AB271237AFFE2468AB58A3 /* Pods-EMSwiftUI.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -272,7 +272,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D8A607482B2F3DE40093F5A4 /* Build configuration list for PBXNativeTarget "EMSwiftUI" */;
 			buildPhases = (
-				00C38972BD64B79E51B37CFB /* [CP] Check Pods Manifest.lock */,
+				587C970C6F6FC6FBBDBEAC51 /* [CP] Check Pods Manifest.lock */,
 				D8A607362B2F3DE20093F5A4 /* Sources */,
 				D8A607372B2F3DE20093F5A4 /* Frameworks */,
 				D8A607382B2F3DE20093F5A4 /* Resources */,
@@ -346,7 +346,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		00C38972BD64B79E51B37CFB /* [CP] Check Pods Manifest.lock */ = {
+		587C970C6F6FC6FBBDBEAC51 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -400,9 +400,9 @@
 				F09E66A92CC559FF007809B3 /* FlexibleGridView.swift in Sources */,
 				D8A607752B2FB7740093F5A4 /* MangaSingleGridView.swift in Sources */,
 				D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */,
+				F01C146F2CCA5D7F008DC4E8 /* FiterModel.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
 				F09E66AB2CC55B9B007809B3 /* FilterViewModel.swift in Sources */,
-				F09E66B12CC63FFA007809B3 /* FilterViewExtension.swift in Sources */,
 				F09E66A72CC5599B007809B3 /* FlexibleView.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
@@ -544,7 +544,7 @@
 		};
 		D8A607492B2F3DE40093F5A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */;
+			baseConfigurationReference = 95301E3EFA6451C2E4EE8603 /* Pods-EMSwiftUI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -577,7 +577,7 @@
 		};
 		D8A6074A2B2F3DE40093F5A4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */;
+			baseConfigurationReference = C6AB271237AFFE2468AB58A3 /* Pods-EMSwiftUI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
