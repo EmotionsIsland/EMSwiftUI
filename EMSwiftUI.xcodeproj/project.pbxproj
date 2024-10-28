@@ -3,17 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36B9208A2CCE849500D2D0EC /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B920892CCE849500D2D0EC /* View+Extensions.swift */; };
 		808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */; };
 		D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */; };
 		D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */; };
 		D83E2ECF2B2FC7ED00A338A7 /* MangaListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */; };
 		D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ED02B2FCE6B00A338A7 /* ImageExtension.swift */; };
 		D83E2EE12B2FDB6900A338A7 /* Part3Example.png in Resources */ = {isa = PBXBuildFile; fileRef = D83E2EE02B2FDB6900A338A7 /* Part3Example.png */; };
-		D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2EE22B2FDBC300A338A7 /* FilterView.swift */; };
 		D83E2EE62B2FDDBC00A338A7 /* Part1Example.png in Resources */ = {isa = PBXBuildFile; fileRef = D83E2EE52B2FDDBC00A338A7 /* Part1Example.png */; };
 		D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6073D2B2F3DE20093F5A4 /* EMSwiftUIApp.swift */; };
 		D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6073F2B2F3DE20093F5A4 /* ContentView.swift */; };
@@ -45,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
+		36B920892CCE849500D2D0EC /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListService.swift; sourceTree = "<group>"; };
 		D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListModel.swift; sourceTree = "<group>"; };
@@ -52,7 +53,6 @@
 		D83E2ED02B2FCE6B00A338A7 /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		D83E2ED32B2FD76B00A338A7 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		D83E2EE02B2FDB6900A338A7 /* Part3Example.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Part3Example.png; sourceTree = "<group>"; };
-		D83E2EE22B2FDBC300A338A7 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		D83E2EE52B2FDDBC00A338A7 /* Part1Example.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Part1Example.png; sourceTree = "<group>"; };
 		D8A6073A2B2F3DE20093F5A4 /* EMSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8A6073D2B2F3DE20093F5A4 /* EMSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMSwiftUIApp.swift; sourceTree = "<group>"; };
@@ -87,6 +87,12 @@
 		FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		36B9207F2CCE751B00D2D0EC /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
+		36B9208D2CCF817400D2D0EC /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
+		36B9208E2CCF818500D2D0EC /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		D8A607372B2F3DE20093F5A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -110,9 +116,11 @@
 		D83E2ED22B2FD74E00A338A7 /* Part 3 FlexibleLayout */ = {
 			isa = PBXGroup;
 			children = (
+				36B9208E2CCF818500D2D0EC /* ViewModel */,
+				36B9208D2CCF817400D2D0EC /* View */,
+				36B9207F2CCE751B00D2D0EC /* Model */,
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
 				D83E2EE02B2FDB6900A338A7 /* Part3Example.png */,
-				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -121,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				D83E2ED02B2FCE6B00A338A7 /* ImageExtension.swift */,
+				36B920892CCE849500D2D0EC /* View+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -267,6 +276,11 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				36B9207F2CCE751B00D2D0EC /* Model */,
+				36B9208D2CCF817400D2D0EC /* View */,
+				36B9208E2CCF818500D2D0EC /* ViewModel */,
+			);
 			name = EMSwiftUI;
 			productName = EMSwiftUI;
 			productReference = D8A6073A2B2F3DE20093F5A4 /* EMSwiftUI.app */;
@@ -383,8 +397,8 @@
 				D8A6077D2B2FC1F70093F5A4 /* Network.swift in Sources */,
 				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,
 				D8A607752B2FB7740093F5A4 /* MangaSingleGridView.swift in Sources */,
-				D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
+				36B9208A2CCE849500D2D0EC /* View+Extensions.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
 				D8A6074E2B2F3E1A0093F5A4 /* MainView.swift in Sources */,
