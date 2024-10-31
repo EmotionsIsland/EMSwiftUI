@@ -46,25 +46,6 @@ final class MangaListViewModel: ObservableObject {
         .store(in: &subscriber)
     }
 
-//    func loadCover(mangaData: MangaData, sizeFormat: SizeFormat) {
-//            let url = getCoverURL(manga: mangaData, sizeFormat: sizeFormat)
-//
-//            URLSession.shared.dataTaskPublisher(for: url)
-//                .map { $0.data }
-//                .receive(on: operationQueue)
-//                .sink(receiveCompletion: { completion in
-//                    switch completion {
-//                    case .finished:
-//                        break
-//                    case .failure(let error):
-//                        print("Error fetching users: \(error)")
-//                    }
-//                }, receiveValue: { [weak self] cover in
-//                    self?.cover = cover
-//                })
-//                .store(in: &cancellables)
-//        }
-
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
         guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" } )?.attributes?.fileName else { return URL(string: "")! }
         

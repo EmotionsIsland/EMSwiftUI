@@ -32,8 +32,8 @@ struct MangaSectionView: View {
                     .foregroundStyle(.gray)
             })
         }.padding([.leading, .trailing], 16)
-
             .frame(alignment: .topLeading)
+
         LazyVGrid(columns: columns, spacing: 8) {
             ForEach(mangaListViewModel.mangaData, id: \.id) { item in
                 MangaSingleGridView(

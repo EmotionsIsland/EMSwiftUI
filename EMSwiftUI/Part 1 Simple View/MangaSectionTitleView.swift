@@ -15,7 +15,8 @@ struct MangaSectionTitleView: View {
         HStack {
             Text(title)
                 .labelStyle(.titleOnly)
-                
+                .bold()
+
         }
     }
 }

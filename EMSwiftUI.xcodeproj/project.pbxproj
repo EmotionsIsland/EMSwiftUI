@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		A30264B36E7C3D7526D07930 /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B29341A0636A7513F31D99 /* Pods_EMSwiftUI.framework */; };
+		C1026E7B2CDB780100624B01 /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1026E7A2CDB780100624B01 /* FilterModel.swift */; };
+		C13A62EF2CCFEB1B000DB462 /* FilterSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13A62EE2CCFEB1B000DB462 /* FilterSectionView.swift */; };
+		C16213BF2CD10BBE00DFB41B /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16213BE2CD10BBE00DFB41B /* Separator.swift */; };
+		C16306B12CD7F81300210861 /* ExpandableButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16306B02CD7F81300210861 /* ExpandableButtonView.swift */; };
+		C1E1088D2CD3C82F00A7EE75 /* ExpandableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E1088C2CD3C82F00A7EE75 /* ExpandableListView.swift */; };
 		D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */; };
 		D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */; };
 		D83E2ECF2B2FC7ED00A338A7 /* MangaListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */; };
@@ -47,6 +52,11 @@
 		4D7CCE0121DC2505E6380BDD /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		85CF0F2F70812B634B4E64BE /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		A5B29341A0636A7513F31D99 /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1026E7A2CDB780100624B01 /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
+		C13A62EE2CCFEB1B000DB462 /* FilterSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSectionView.swift; sourceTree = "<group>"; };
+		C16213BE2CD10BBE00DFB41B /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		C16306B02CD7F81300210861 /* ExpandableButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonView.swift; sourceTree = "<group>"; };
+		C1E1088C2CD3C82F00A7EE75 /* ExpandableListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableListView.swift; sourceTree = "<group>"; };
 		D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListService.swift; sourceTree = "<group>"; };
 		D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListModel.swift; sourceTree = "<group>"; };
 		D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListViewModel.swift; sourceTree = "<group>"; };
@@ -113,6 +123,11 @@
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
 				D83E2EE02B2FDB6900A338A7 /* Part3Example.png */,
 				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
+				C13A62EE2CCFEB1B000DB462 /* FilterSectionView.swift */,
+				C1E1088C2CD3C82F00A7EE75 /* ExpandableListView.swift */,
+				C16306B02CD7F81300210861 /* ExpandableButtonView.swift */,
+				C16213BE2CD10BBE00DFB41B /* Separator.swift */,
+				C1026E7A2CDB780100624B01 /* FilterModel.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -361,7 +376,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$PROJECT_DIR/$TARGET_NAME/swiftgen.yml",
+				$PROJECT_DIR/$TARGET_NAME/swiftgen.yml,
 			);
 			name = Swiftgen;
 			outputFileListPaths = (
@@ -383,18 +398,23 @@
 				D8A6077D2B2FC1F70093F5A4 /* Network.swift in Sources */,
 				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,
 				D8A607752B2FB7740093F5A4 /* MangaSingleGridView.swift in Sources */,
+				C13A62EF2CCFEB1B000DB462 /* FilterSectionView.swift in Sources */,
 				D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
 				D8A6074E2B2F3E1A0093F5A4 /* MainView.swift in Sources */,
+				C16306B12CD7F81300210861 /* ExpandableButtonView.swift in Sources */,
+				C1E1088D2CD3C82F00A7EE75 /* ExpandableListView.swift in Sources */,
 				D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */,
 				D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */,
 				D8A607712B2FB23C0093F5A4 /* Fonts+Generated.swift in Sources */,
+				C1026E7B2CDB780100624B01 /* FilterModel.swift in Sources */,
 				D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */,
 				D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */,
 				D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */,
 				D8A6077F2B2FC2010093F5A4 /* Endpoint.swift in Sources */,
+				C16213BF2CD10BBE00DFB41B /* Separator.swift in Sources */,
 				D8A607702B2FB23C0093F5A4 /* XCAssets+Generated.swift in Sources */,
 				D83E2ECF2B2FC7ED00A338A7 /* MangaListViewModel.swift in Sources */,
 			);
@@ -541,7 +561,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -574,7 +594,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
