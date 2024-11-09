@@ -43,34 +43,37 @@ struct SelectionView: View {
     SelectionView(viewModel: viewModel)
 }
 
-// MARK: - SelectionButtonsView
-struct SelectionButtonsView: View {
+private extension SelectionView {
     
-    @ObservedObject var viewModel: FilterViewModel
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            Button {
-                viewModel.applyFilters()
-            } label : {
-                Text("Apply")
-                    .frame(maxWidth: 550, maxHeight: 44)
-                    .font(.custom(FontFamily.SFPro.bold, size: 16))
-                    .foregroundStyle(.whiteText)
-                    .background(.orangeBase)
-                    .cornerRadius(8)
+    // MARK: - SelectionButtonsView
+    struct SelectionButtonsView: View {
+        
+        @ObservedObject var viewModel: FilterViewModel
+        
+        var body: some View {
+            VStack(spacing: 0) {
+                Button {
+                    viewModel.applyFilters()
+                } label : {
+                    Text("Apply")
+                        .frame(maxWidth: 550, maxHeight: 44)
+                        .font(.custom(FontFamily.SFPro.bold, size: 16))
+                        .foregroundStyle(.whiteText)
+                        .background(.orangeBase)
+                        .cornerRadius(8)
+                }
+                
+                Button {
+                    viewModel.resetFilters()
+                } label : {
+                    Text("Reset")
+                        .frame(maxWidth: 550, maxHeight: 44)
+                        .font(.custom(FontFamily.SFPro.medium, size: 16))
+                        .foregroundStyle(.blackBase)
+                        .background(.white)
+                }
             }
-            
-            Button {
-                viewModel.resetFilters()
-            } label : {
-                Text("Reset")
-                    .frame(maxWidth: 550, maxHeight: 44)
-                    .font(.custom(FontFamily.SFPro.medium, size: 16))
-                    .foregroundStyle(.blackBase)
-                    .background(.white)
-            }
+            .padding(.horizontal, 16)
         }
-        .padding(.horizontal, 16)
     }
 }

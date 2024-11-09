@@ -19,12 +19,10 @@ final class FilterViewModel: ObservableObject {
     
     // MARK: - Public Methods
     func toggleTag(_ tag: String) {
-        if !activeFilters.contains(tag) {
-            activeFilters.append(tag)
-        } else {
             if let tagIndex = activeFilters.firstIndex(of: tag) {
                 activeFilters.remove(at: tagIndex)
-            }
+            } else {
+                activeFilters.append(tag)
         }
     }
     

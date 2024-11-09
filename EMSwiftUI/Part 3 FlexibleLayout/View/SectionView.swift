@@ -10,10 +10,9 @@ import SwiftUI
 // MARK: - Section View
 struct SectionView: View {
     
-    var section: SectionModel
+    let section: SectionModel
     
     @ObservedObject var viewModel: FilterViewModel
-
     @State private var isExpanded: Bool = false
     
     var body: some View {
@@ -29,7 +28,6 @@ struct SectionView: View {
                     Spacer()
                 }
                 .padding(.horizontal, 16)
-
             }
         }
     }

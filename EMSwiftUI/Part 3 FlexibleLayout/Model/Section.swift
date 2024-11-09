@@ -16,3 +16,8 @@ enum Section: CaseIterable {
     case genre
     case theme
 }
+
+extension Section: Identifiable {
+    
+    var id: String { String(describing: self) }
+}

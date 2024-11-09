@@ -17,11 +17,11 @@ enum SizeFormat: String {
 final class MangaListViewModel: ObservableObject {
 
     // MARK: - Properties
-    @Published var mangaData: [MangaData] = []
-    @Published var dataState: DataState = .notAvailable
+    @Published private(set) var mangaData: [MangaData] = []
+    @Published private(set) var dataState: DataState = .notAvailable
     
     private var cancellables: Set<AnyCancellable> = []
-    private var mangaService: MangaListServiceProtocol
+    private let mangaService: MangaListServiceProtocol
     
     // MARK: - Initialization
     init(service: MangaListServiceProtocol) {
@@ -38,14 +38,16 @@ final class MangaListViewModel: ObservableObject {
         
         mangaService.getManga()
             .receive(on: OperationQueue.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self else { return }
                 switch completion {
                 case .finished:
                     self.dataState = .successfull
                 case .failure(let error):
                     self.dataState = .failed(error: error)
                 }
-            }, receiveValue: { mangaListModel in
+            }, receiveValue: { [weak self] mangaListModel in
+                guard let self else { return }
                 self.mangaData = mangaListModel.data
             })
             .store(in: &cancellables)

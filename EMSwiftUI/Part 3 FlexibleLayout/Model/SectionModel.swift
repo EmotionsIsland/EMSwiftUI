@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct SectionModel {
+struct SectionModel: Identifiable {
     
+    let id = UUID()
     let title: String
     let tags: [String]
 }

@@ -13,11 +13,10 @@ struct MangaSectionView: View {
     // MARK: - Properties
     @StateObject private var viewModel = MangaListViewModel()
     
-    let columns: [GridItem] = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
+    let columns: [GridItem] = Array(
+        repeating: .init(.flexible()),
+        count: 3
+    )
     
     // MARK: - Body
     var body: some View {

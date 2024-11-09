@@ -19,7 +19,7 @@ struct FilterView: View {
             Divider()
             
             ScrollView {
-                ForEach(Section.allCases, id: \.self) { section in
+                ForEach(Section.allCases) { section in
                     SectionView(
                         section: SectionModel(section: section),
                         viewModel: viewModel
