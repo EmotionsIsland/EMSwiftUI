@@ -30,6 +30,7 @@ internal enum Asset {
     internal static let grayBase = ColorAsset(name: "grayBase")
     internal static let orangeBase = ColorAsset(name: "orangeBase")
     internal static let whiteText = ColorAsset(name: "whiteText")
+    internal static let yellowStar = ColorAsset(name: "yellowStar")
   }
   internal enum Icons {
     internal static let moreIcon = ImageAsset(name: "moreIcon")

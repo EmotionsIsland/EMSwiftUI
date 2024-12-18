@@ -44,7 +44,7 @@ extension Endpoint {
 
 extension Endpoint {
     static var mangaList: Self {
-        let queryItems = [URLQueryItem(name: "limit", value: "6"),
+        let queryItems = [URLQueryItem(name: "limit", value: "16"),
                           URLQueryItem(name: "contentRating[]", value: "safe"),
                           URLQueryItem(name: "order[followedCount]", value: "desc"),
                           URLQueryItem(name: "includes[]", value: "cover_art")]
