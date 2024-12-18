@@ -20,11 +20,12 @@ final class MangaListViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var error: Error? = nil
     
-    private var cancellables = Set<AnyCancellable>()
+    private(set) var cancellables = Set<AnyCancellable>()
     private let mangaService: MangaListServiceProtocol
     
     init(service: MangaListServiceProtocol = MangaListService(network: Network())) {
         self.mangaService = service
+        self.getData()
     }
     
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
@@ -45,9 +46,14 @@ final class MangaListViewModel: ObservableObject {
             .map { $0.data }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
-                self?.isLoading = false
-                if case let .failure(err) = completion {
-                    self?.error = err
+                guard let self else { return }
+                
+                switch completion {
+                case .finished:
+                    self.isLoading = false
+                case .failure(let error):
+                    self.error = error
+                    self.isLoading = false
                 }
             } receiveValue: { [weak self] data in
                 self?.mangaList = data

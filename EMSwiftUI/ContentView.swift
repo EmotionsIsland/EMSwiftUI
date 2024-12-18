@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
+
 struct ContentView: View {
     var body: some View {
-        MainView()
+        if true {
+            MainView()
+        } else {
+            FilterView()
+        }
     }
 }
 
-//#Preview {
-//    ContentView()
-//}

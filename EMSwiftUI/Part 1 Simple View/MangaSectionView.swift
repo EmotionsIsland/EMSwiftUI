@@ -10,7 +10,7 @@ import SwiftUI
 struct MangaSectionView: View {
     let mangaSection: String
     let mangaList: [MangaData]
-    var onMoreTapped: () -> ()
+    let onMoreTapped: () -> ()
     
     var body: some View {
         VStack {
@@ -22,6 +22,3 @@ struct MangaSectionView: View {
     }
 }
 
-//#Preview {
-//    MangaSectionView()
-//}

@@ -8,11 +8,10 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct CollapsibleSection: View {
-    var title: String
+    let title: String
     @Binding var tags: [SelectedTag]
-    var onSelect: (SelectedTag) -> Void
+    let onSelect: (SelectedTag) -> Void
     
     @State private var isExpanded = false
     
@@ -22,7 +21,6 @@ struct CollapsibleSection: View {
                 Text(title)
                     .font(FontFamily.SFProText.regular.swiftUIFont(fixedSize: 20))
                 Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                
             }
             .onTapGesture {
                 withAnimation {
@@ -31,12 +29,8 @@ struct CollapsibleSection: View {
             }
             
             if isExpanded {
-                TagLayout(alignment: .leading, spacing: 8) {
-                    ForEach($tags, id: \.self) { $tag in
-                        TagView(tag: $tag) { selectTag in
-                            onSelect(selectTag)
-                        }
-                    }
+                TagLayoutView(selectedTags: $tags) { selectTag in
+                    onSelect(selectTag)
                 }
             }
         }

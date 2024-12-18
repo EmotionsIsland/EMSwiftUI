@@ -18,13 +18,11 @@ struct TabBarItem: View {
         Button(action: {
             selectedTab = tab
         }) {
-            VStack(spacing: 0) {  // Убираем отступы между элементами
+            VStack(spacing: 0) {
                 Image(asset: icon)
-                    .resizable()
-                    .scaledToFill()  // Масштабирование изображения без искажения
-                    .frame(width: 40, height: 40)  // Фиксированные размеры
+                    .resizedToFill(width: 40, height: 40)
                     .clipped()
-                if !title.isEmpty {  // Показываем текст только если он есть
+                if !title.isEmpty {
                     Text(title)
                         .font(FontFamily.SFPro.regular.swiftUIFont(size: 14))
                         .foregroundColor(Asset.Colors.orangeBase.swiftUIColor)

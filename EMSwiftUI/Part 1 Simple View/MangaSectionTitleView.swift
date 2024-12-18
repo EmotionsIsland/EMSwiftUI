@@ -8,9 +8,16 @@
 import SwiftUI
 
 struct MangaSectionTitleView: View {
-    var title: String
-    var onMoreTapped: () -> ()
+    let title: String
+    let onMoreTapped: () -> ()
+    
     var body: some View {
+        mainView
+    }
+}
+
+private extension MangaSectionTitleView {
+    var mainView: some View {
         HStack {
             Text(title)
                 .font(FontFamily.SFPro.bold.swiftUIFont(size: 20))
@@ -32,7 +39,3 @@ struct MangaSectionTitleView: View {
 }
 
 
-//
-//#Preview {
-//    MangaSectionTitleView()
-//}

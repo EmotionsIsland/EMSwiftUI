@@ -17,12 +17,10 @@ struct RatingView: View {
                 Image(asset: Asset.Icons.starIcon)
                     .foregroundColor( index < Int(rating) ? .yellow : Asset.Colors.grayBase.swiftUIColor)
             }
-            // MARK: -- Если мы хотим чтобы звезды были прибиты к левому углу, но так они не по центру
-            //  Spacer()
+         
         }
     }
 }
 
-#Preview {
-    RatingView(rating: 4, maxRating: 5)
-}
+
+
