@@ -17,7 +17,7 @@ enum SizeFormat: String {
 final class MangaListViewModel: ObservableObject {
     @Published var mangaList: [MangaData] = []
     @Published var state: DataState = .notAvailable
-    @Published var dataIsLoading: Bool = false
+    @Published private var dataIsLoading: Bool = false
     
     private let mangaListService: MangaListServiceProtocol
     private var cancellables = Set<AnyCancellable>()

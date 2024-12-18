@@ -23,6 +23,4 @@ struct MangaSectionView: View {
     }
 }
 
-//#Preview {
-//    MangaSectionView()
-//}
+

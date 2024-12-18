@@ -57,6 +57,3 @@ struct MangaGridItemView: View {
     }
 }
 
-//#Preview {
-//    MangaSingleGridView(coverURL: "")
-//}
