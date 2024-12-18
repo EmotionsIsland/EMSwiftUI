@@ -11,7 +11,7 @@ struct FlexibleGridView<Content: View>: View {
     let items: [SectionTag]
     let content: (SectionTag) -> Content
     
-    let columns = [
+    private let columns = [
         GridItem(.adaptive(minimum: 140), spacing: 0),
     ]
     
