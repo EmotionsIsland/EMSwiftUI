@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65104A8A2D10217B0084258C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65104A892D10217B0084258C /* SearchBarView.swift */; };
+		65104A8C2D11895B0084258C /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65104A8B2D11895B0084258C /* SectionData.swift */; };
+		65104A8E2D118D9D0084258C /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65104A8D2D118D9D0084258C /* FilterViewModel.swift */; };
+		65104A902D1192C00084258C /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65104A8F2D1192C00084258C /* TagView.swift */; };
+		65104A922D1199C10084258C /* FlexibleGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65104A912D1199C10084258C /* FlexibleGridView.swift */; };
+		65104A992D119A790084258C /* SectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65104A982D119A790084258C /* SectionsView.swift */; };
 		808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */; };
 		D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */; };
 		D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */; };
@@ -45,6 +51,12 @@
 
 /* Begin PBXFileReference section */
 		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
+		65104A892D10217B0084258C /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		65104A8B2D11895B0084258C /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
+		65104A8D2D118D9D0084258C /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
+		65104A8F2D1192C00084258C /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		65104A912D1199C10084258C /* FlexibleGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleGridView.swift; sourceTree = "<group>"; };
+		65104A982D119A790084258C /* SectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionsView.swift; sourceTree = "<group>"; };
 		99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListService.swift; sourceTree = "<group>"; };
 		D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListModel.swift; sourceTree = "<group>"; };
@@ -99,6 +111,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65104A932D1199D70084258C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				65104A8B2D11895B0084258C /* SectionData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		65104A962D1199F00084258C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				65104A8D2D118D9D0084258C /* FilterViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		65104A972D1199FC0084258C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
+				65104A8F2D1192C00084258C /* TagView.swift */,
+				65104A912D1199C10084258C /* FlexibleGridView.swift */,
+				65104A982D119A790084258C /* SectionsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7858FB117C86FDC565D9C2E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,9 +149,11 @@
 		D83E2ED22B2FD74E00A338A7 /* Part 3 FlexibleLayout */ = {
 			isa = PBXGroup;
 			children = (
+				65104A972D1199FC0084258C /* View */,
+				65104A962D1199F00084258C /* ViewModel */,
+				65104A932D1199D70084258C /* Model */,
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
 				D83E2EE02B2FDB6900A338A7 /* Part3Example.png */,
-				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -180,6 +221,7 @@
 				D8A607782B2FBE6F0093F5A4 /* MangaSectionTitleView.swift */,
 				D8A607742B2FB7740093F5A4 /* MangaSingleGridView.swift */,
 				D8A607762B2FB84E0093F5A4 /* RatingView.swift */,
+				65104A892D10217B0084258C /* SearchBarView.swift */,
 			);
 			path = "Part 1 Simple View";
 			sourceTree = "<group>";
@@ -379,6 +421,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65104A992D119A790084258C /* SectionsView.swift in Sources */,
 				D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */,
 				D8A6077D2B2FC1F70093F5A4 /* Network.swift in Sources */,
 				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,
@@ -386,11 +429,16 @@
 				D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
+				65104A8E2D118D9D0084258C /* FilterViewModel.swift in Sources */,
+				65104A8C2D11895B0084258C /* SectionData.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
 				D8A6074E2B2F3E1A0093F5A4 /* MainView.swift in Sources */,
 				D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */,
 				D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */,
+				65104A902D1192C00084258C /* TagView.swift in Sources */,
 				D8A607712B2FB23C0093F5A4 /* Fonts+Generated.swift in Sources */,
+				65104A922D1199C10084258C /* FlexibleGridView.swift in Sources */,
+				65104A8A2D10217B0084258C /* SearchBarView.swift in Sources */,
 				D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */,
 				D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */,
 				D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */,
@@ -531,7 +579,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EMSwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = W8E6UD5535;
+				DEVELOPMENT_TEAM = N8RUQWB87H;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -564,7 +612,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EMSwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = W8E6UD5535;
+				DEVELOPMENT_TEAM = N8RUQWB87H;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;

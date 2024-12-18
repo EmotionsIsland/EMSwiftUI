@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct MangaSectionView: View {
+    let mangaSection: String
+    let mangas: [MangaData]
+    var moreButton: () -> Void
+    var coverURL: (MangaData) -> URL
+    
     var body: some View {
         VStack {
-            // TODO: Create section View
+            MangaSectionTitleView(title: mangaSection, moreButton: moreButton)
+                .padding(.top, 24)
+            MangaSingleGridView(mangas: mangas, coverURL: coverURL)
         }
+        .padding(.horizontal, 16)
     }
 }
 
-#Preview {
-    MangaSectionView()
-}
+//#Preview {
+//    MangaSectionView()
+//}

@@ -15,8 +15,38 @@ enum SizeFormat: String {
 }
 
 final class MangaListViewModel: ObservableObject {
-    // TODO: create Published variables
-    // TODO: create getData func
+    @Published var mangaList: [MangaData] = []
+    @Published var state: DataState = .notAvailable
+    @Published var dataIsLoading: Bool = false
+    
+    private let mangaListService: MangaListServiceProtocol
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(mangaListService: MangaListService) {
+        self.mangaListService = mangaListService
+        getData()
+    }
+    
+     func getData() {
+        dataIsLoading = true
+        mangaListService.getManga()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.state = .failed(error: error)
+                    self?.dataIsLoading = false
+                    print("*** Error in \(#function): \(error)")
+                default: break
+                }
+            } receiveValue: { [weak self] mangaListModel in
+                self?.mangaList = mangaListModel.data
+                self?.state = .successfull
+                self?.dataIsLoading = false
+               
+            }
+            .store(in: &cancellables)
+    }
     
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
         guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" } )?.attributes?.fileName else { return URL(string: "")! }
