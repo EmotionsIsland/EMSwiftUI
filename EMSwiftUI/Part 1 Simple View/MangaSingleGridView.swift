@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MangaSingleGridView: View {
     
+    @EnvironmentObject var viewModel: MangaListViewModel
     let manga: MangaData
     
     var body: some View {
@@ -47,9 +48,7 @@ extension MangaSingleGridView {
     }
     
     private var mangaTagsView: some View {
-        Text(manga.attributes.tags
-            .compactMap { $0.attributes.name.en }
-            .joined(separator: ", "))
+        Text(viewModel.getTags(for: manga))
             .font(.custom(FontFamily.SFProText.thin, size: 14))
             .foregroundStyle(.grayBase)
     }

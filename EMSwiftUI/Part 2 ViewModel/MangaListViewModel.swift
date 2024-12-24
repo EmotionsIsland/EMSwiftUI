@@ -35,12 +35,12 @@ final class MangaListViewModel: ObservableObject {
             .map { $0.data }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
-                self?.isLoading = false
+                guard let self else { return }
+                self.isLoading = false
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
-                    guard let self else { return }
                     self.dataState = .failed(error: error)
                 }
             } receiveValue: { [weak self] data in
@@ -60,5 +60,13 @@ final class MangaListViewModel: ObservableObject {
     
     func getRating(manga: MangaData) -> URL {
         return Endpoint(path: "/statistics/manga/" + manga.id).url
+    }
+}
+
+extension MangaListViewModel {
+    func getTags(for manga: MangaData) -> String {
+        return manga.attributes.tags
+            .compactMap { $0.attributes.name.en }
+            .joined(separator: ", ")
     }
 }

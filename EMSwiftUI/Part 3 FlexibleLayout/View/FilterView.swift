@@ -46,42 +46,19 @@ struct FilterView: View {
 
 extension FilterView {
     
-    @ViewBuilder
-    private func CategoryTitleView(for section: FilterSection) -> some View {
-        Button {
-            withAnimation(.snappy) {
-                viewModel.toggleSection(section)
-            }
-        } label: {
-            HStack {
-                Text(section.title)
-                    .font(.custom(FontFamily.SFProText.regular, size: 20))
-                Image(systemName: section.isExpanded ? "chevron.up" : "chevron.down")
-            }
-            .foregroundStyle(.blackBase)
-            .hSpacing(.leading)
-        }
-    }
-    
     private var categoryFilterView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 26) {
                 ForEach(viewModel.sections) { section in
-                    VStack(alignment: .leading, spacing: 16) {
-                        
-                        CategoryTitleView(for: section)
-                        
-                        if section.isExpanded {
-                            TagCollectionView(data: section.tags, spacing: 10, alignment: .leading) { tag in
-                                FilterTagView(tag: tag)
-                                    .onTapGesture {
-                                        withAnimation(.snappy) {
-                                            viewModel.addTag(tag)
-                                        }
-                                    }
-                            }
+                    CategorySectionView(
+                        section: section,
+                        onTagTap: { tag in
+                            viewModel.addTag(tag)
+                        },
+                        toggleSection: {
+                            viewModel.toggleSection(section)
                         }
-                    }
+                    )
                 }
             }
         }

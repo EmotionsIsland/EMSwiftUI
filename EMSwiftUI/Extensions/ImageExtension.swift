@@ -14,6 +14,4 @@ extension Image {
             .aspectRatio(contentMode: .fill)
             .frame(width: width, height: height)
     }
-    
-    
 }

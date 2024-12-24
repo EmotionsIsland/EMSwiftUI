@@ -49,6 +49,7 @@
 		FC7D8E502D12A3BA00AAECF5 /* FilterTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D8E4F2D12A3BA00AAECF5 /* FilterTagView.swift */; };
 		FC7D8E532D12B22900AAECF5 /* FilterNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D8E522D12B22900AAECF5 /* FilterNavigationView.swift */; };
 		FC9083312D0C82DC005BE35A /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9083302D0C82DC005BE35A /* ViewExtension.swift */; };
+		FCD2B35F2D1A856600116861 /* CategorySectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD2B35E2D1A856600116861 /* CategorySectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		FC7D8E4F2D12A3BA00AAECF5 /* FilterTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTagView.swift; sourceTree = "<group>"; };
 		FC7D8E522D12B22900AAECF5 /* FilterNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterNavigationView.swift; sourceTree = "<group>"; };
 		FC9083302D0C82DC005BE35A /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		FCD2B35E2D1A856600116861 /* CategorySectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySectionView.swift; sourceTree = "<group>"; };
 		FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -286,6 +288,7 @@
 				FC0110F12D1210BF00640FF7 /* TagCollectionView.swift */,
 				FC7D8E4F2D12A3BA00AAECF5 /* FilterTagView.swift */,
 				FC7D8E522D12B22900AAECF5 /* FilterNavigationView.swift */,
+				FCD2B35E2D1A856600116861 /* CategorySectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				FC0110F22D1210BF00640FF7 /* TagCollectionView.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
+				FCD2B35F2D1A856600116861 /* CategorySectionView.swift in Sources */,
 				FC7D8E532D12B22900AAECF5 /* FilterNavigationView.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
 				FC0110EE2D11C12000640FF7 /* FilterViewModel.swift in Sources */,

@@ -58,6 +58,7 @@ extension MainView {
             ScrollView(.vertical, showsIndicators: false) {
                 MangaSectionTitleView(title: "Popular")
                 MangaSectionView(mangaData: viewModel.mangaList)
+                    .environmentObject(viewModel)
             }
         }
         .padding(.horizontal, 16)

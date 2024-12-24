@@ -5,7 +5,6 @@
 //  Created by Максим Шишлов on 13.12.2024.
 //
 
-import Foundation
 import SwiftUI
 
 extension View {
