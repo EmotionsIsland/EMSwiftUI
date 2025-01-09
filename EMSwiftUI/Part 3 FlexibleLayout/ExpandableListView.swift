@@ -2,25 +2,30 @@
 import SwiftUI
 
 struct ExpandableListView: View {
-    @ObservedObject var model: FilterModel
+    @ObservedObject var filterItems: FilterItems
     var onItemTapped: (String) -> Void
+    private let expandableButtonViewItems: [(label: String, items: [String])] = [
+        ("Genre", ["Campfire", "Beatch", "SummerKiss", "Hogokan", "Bacuman", "Pikachu"]),
+        ("Another", ["Bibop", "Plate", "SeasonPass"]),
+        ("Attak on Titan", ["Tracker", "Kabuta", "Sorrow"])
+    ]
 
     var body: some View {
         ScrollView(.vertical) {
             HStack {
-                VStack(alignment: .leading, spacing: 0, content: {
-                    ExpandableButtonView(model: _model, label: "Genre", expandableButtonViewitems: ["Campfire", "Beatch", "SummerKiss", "Hogokan", "Bacuman", "Pikachu"], onItemTapped: onItemTapped)
-                    ExpandableButtonView(model: _model, label: "Another", expandableButtonViewitems: ["Bibop", "Plate", "SeasonPass"], onItemTapped: onItemTapped)
-                    ExpandableButtonView(model: _model, label: "Attak on Titan", expandableButtonViewitems: ["Tracker", "Kabuta", "Sorrow"], onItemTapped: onItemTapped)
-                }).padding([.leading], 16)
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(expandableButtonViewItems, id: \.label) { section in
+                        ExpandableButtonView(
+                            filterItems: _filterItems,
+                            label: section.label,
+                            expandableButtonViewitems: section.items,
+                            onItemTapped: onItemTapped
+                        )
+                    }
+                }
+                .padding([.leading], 16)
                 Spacer()
             }
         }
     }
 }
-
-//#Preview {
-//    ExpandableListView { _ in
-//
-//    }
-//}

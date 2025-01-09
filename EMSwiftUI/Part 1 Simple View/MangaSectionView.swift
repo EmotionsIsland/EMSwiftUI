@@ -11,11 +11,7 @@ struct MangaSectionView: View {
 
     @StateObject private var mangaListViewModel = MangaListViewModel(mangaListService: MangaListService(network: Network()))
 
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
+    let columns = Array(repeating: GridItem(.flexible()), count: 3)
 
     var body: some View {
         HStack {
@@ -31,7 +27,8 @@ struct MangaSectionView: View {
                 Image(systemName: "chevron.right")
                     .foregroundStyle(.gray)
             })
-        }.padding([.leading, .trailing], 16)
+        }
+        .padding([.leading, .trailing], 16)
             .frame(alignment: .topLeading)
 
         LazyVGrid(columns: columns, spacing: 8) {
@@ -44,13 +41,7 @@ struct MangaSectionView: View {
                     )
                 )
             }
-        }.onAppear { [weak mangaListViewModel] in
-            mangaListViewModel?.loadData()
         }
         Spacer()
     }
 }
-
-//#Preview {
-//    MangaSectionView(viewModel: MangaListViewModel())
-//}

@@ -8,29 +8,22 @@
 import SwiftUI
 import Combine
 
-let title = "Selection"
+private let title = "Selection"
 
 struct FilterView: View {
-    @StateObject private var model = FilterModel()
+    @StateObject private var filterItems = FilterItems()
 
     var body: some View {
-        print("🍎", #function, "VIEW UPDATED")
-        Self._printChanges()
         return VStack {
-            HStack {
-                Text(title)
-                    .labelStyle(.titleOnly)
-                    .bold()
-                    .font(.system(size: 20))
-                    .padding([.leading, .trailing, .bottom], 16)
-                Spacer()
-            }.padding([.bottom], -30)
+            Text(title)
+                .labelStyle(.titleOnly)
+                .bold()
+                .font(.system(size: 20))
+                .padding([.leading, .trailing, .bottom], 16)
 
             ScrollView(.vertical) {
-                FilterSectionView(items: model.items, model: model) { item in
-                    model.items.removeAll(where: { $0 == item })
-                    print("😈", #function, item)
-                    print("😈", #function, model.items)
+                FilterSectionView(items: filterItems.items, filterItems: filterItems) { item in
+                    filterItems.items.removeAll(where: { $0 == item })
                 }
             }.padding([.bottom], 8)
                 .frame(minHeight: 50 ,maxHeight: 220)
@@ -51,7 +44,7 @@ struct FilterView: View {
             })
 
             Button(action: {
-                model.items.removeAll()
+                filterItems.items.removeAll()
             }, label: {
                 Text("Reset")
                     .foregroundStyle(.black)
@@ -59,15 +52,12 @@ struct FilterView: View {
             })
 
             Separator()
-            ExpandableListView(model: model) { item in
-                    if model.items.contains(item) {
-                        return
-                    }
-                    model.items.append(item)
-                    print("😈", #function, item)
-                    print("😈", #function, model.items)
+            ExpandableListView(filterItems: filterItems) { item in
+                if !filterItems.items.contains(item) {
+                    filterItems.items.append(item)
                 }
-                Spacer()
+            }
+            Spacer()
         }
     }
 }

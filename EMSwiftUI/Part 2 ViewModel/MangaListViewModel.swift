@@ -17,23 +17,21 @@ enum SizeFormat: String {
 final class MangaListViewModel: ObservableObject {
     // TODO: create Published variables
     // TODO: create getData func
-    @Published var mangaData: [MangaData] = []
-    @Published var cover: Data?
+    @Published private(set) var mangaData: [MangaData] = []
+    @Published private(set) var cover: Data?
 
-    let mangaListService: MangaListService
-    let operationQueue = OperationQueue.main
+    private let mangaListService: MangaListService
     private var subscriber = Set<AnyCancellable>()
-    var cancellables = Set<AnyCancellable>()
 
     init(mangaListService: MangaListService) {
         self.mangaListService = mangaListService
-
+        loadData()
     }
 
     func loadData() {
         mangaListService
         .getManga()
-        .receive(on: operationQueue)
+        .receive(on: DispatchQueue.main)
         .sink { [weak self] completion in
           switch completion {
           case .failure(let error):
@@ -41,7 +39,8 @@ final class MangaListViewModel: ObservableObject {
           default: break
           }
         } receiveValue: { [weak self] mangaList in
-            self?.mangaData = mangaList.data
+            guard let self else { return }
+            self.mangaData = mangaList.data
         }
         .store(in: &subscriber)
     }
@@ -54,5 +53,13 @@ final class MangaListViewModel: ObservableObject {
     
     func getRating(manga: MangaData) -> URL {
         return Endpoint(path: "/statistics/manga/" + manga.id).url
+    }
+
+    func getTitle(for mangaData: MangaData) -> String {
+        return mangaData.attributes.title.en ?? mangaData.attributes.altTitles.first?.en ?? ""
+    }
+
+    func getGenre(for mangaData: MangaData) -> String {
+        return mangaData.attributes.tags.first(where: { $0.attributes.group == "genre" })?.attributes.name.en ?? ""
     }
 }

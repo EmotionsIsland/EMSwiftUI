@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MangaSingleGridView: View {
 
-    let rating = 3.2
+    private let rating = 3.2
 
     @ObservedObject var mangaListViewModel: MangaListViewModel
 
@@ -38,22 +38,16 @@ struct MangaSingleGridView: View {
                     EmptyView()
                 }
             }
-            let title = mangaData.attributes.title.en ?? mangaData.attributes.altTitles.first?.en ?? ""
-            Text(title)
+            Text(mangaListViewModel.getTitle(for: mangaData))
                 .font(.system(size: 14, weight: .bold))
                 .frame(width: 100, height: 20, alignment: .leading )
 
             RatingView(rating: rating)
 
-            let genre = mangaData.attributes.tags.first(where: { $0.attributes.group == "genre" })?.attributes.name.en ?? ""
-            Text(genre)
+            Text(mangaListViewModel.getGenre(for: mangaData))
                 .font(.system(size: 14, weight: .light))
                 .frame(width: 100, height: 20, alignment: .leading )
                 .foregroundStyle(.grayBase)
         }
     }
 }
-
-//#Preview {
-//    MangaSingleGridView(mangaListViewModel: <#MangaListViewModel#>, mangaData: <#MangaData#>, imageURL: <#URL#>mangaListViewModel:
-//}
