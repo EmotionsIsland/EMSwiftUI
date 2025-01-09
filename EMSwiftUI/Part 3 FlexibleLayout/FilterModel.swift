@@ -1,6 +1,6 @@
 
 import Foundation
 
-class FilterModel: ObservableObject {
+class FilterItems: ObservableObject {
     @Published var items: [String] = []
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MangaSingleGridView: View {
 
-    let rating = 3.2
+    private let rating = 3.2
 
     @ObservedObject var mangaListViewModel: MangaListViewModel
 
@@ -53,7 +53,3 @@ struct MangaSingleGridView: View {
         }
     }
 }
-
-//#Preview {
-//    MangaSingleGridView(mangaListViewModel: <#MangaListViewModel#>, mangaData: <#MangaData#>, imageURL: <#URL#>mangaListViewModel:
-//}

@@ -2,17 +2,17 @@
 import SwiftUI
 
 struct ExpandableButtonView: View {
-    @ObservedObject var model: FilterModel
-    @State var buttonExpand = false
+    @ObservedObject var filterItems: FilterItems
+    @State private var buttonExpand = false
     var label: String = ""
     @State private var expandableButtonViewItems: [String]
-    var onItemTapped: (String) -> Void
+    let onItemTapped: (String) -> Void
 
-    init(model: ObservedObject<FilterModel>, label: String, expandableButtonViewitems: [String], onItemTapped: @escaping (String) -> Void) {
+    init(filterItems: ObservedObject<FilterItems>, label: String, expandableButtonViewitems: [String], onItemTapped: @escaping (String) -> Void) {
         self.label = label
         self.expandableButtonViewItems = expandableButtonViewitems
         self.onItemTapped = onItemTapped
-        self._model = model
+        self._filterItems = filterItems
     }
 
     var body: some View {
@@ -22,29 +22,29 @@ struct ExpandableButtonView: View {
             }, label: {
                 HStack {
                     Label(
-                        title: { Text(label)
+                        title: {
+                            Text(label)
                                 .font(.system(size: 20))
-                            .foregroundStyle(Color.black)},
-                        icon: {}).labelStyle(.titleOnly)
+                                .foregroundStyle(Color.black)
+                        },
+                        icon: {}
+                    )
+                    .labelStyle(.titleOnly)
                     Label(
                         title: {},
                         icon: {
                             Image(systemName: buttonExpand ? "chevron.down" : "chevron.right")
                                 .foregroundStyle(Color.black)
                         }
-                    ).labelStyle(.iconOnly)
+                    )
+                    .labelStyle(.iconOnly)
                 }
             })
         })
 
-        if buttonExpand == true {
-            FilterSectionView(items: expandableButtonViewItems, model: model, onItemTapped: onItemTapped, rowsCount: 0)
+        if buttonExpand {
+            FilterSectionView(items: expandableButtonViewItems, filterItems: filterItems, onItemTapped: onItemTapped, rowsCount: 0)
                 .padding([.bottom], 20)
         }
     }
 }
-
-
-//#Preview {
-//    ExpandableButtonView(label: "Some label", items: <#Binding<[String]>#>)
-//}
