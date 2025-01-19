@@ -23,6 +23,9 @@ struct TagView: View {
         .foregroundStyle(isSelected ? Asset.Colors.whiteText.swiftUIColor : Asset.Colors.blackBase.swiftUIColor)
         .background(isSelected ? Asset.Colors.orangeBase.swiftUIColor : Asset.Colors.grayBase.swiftUIColor)
         .clipShape(RoundedRectangle(cornerRadius: 8))
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
+        .truncationMode(.tail)
 }
     
 }

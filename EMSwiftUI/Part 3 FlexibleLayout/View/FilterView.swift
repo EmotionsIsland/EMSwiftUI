@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FilterView: View {
     @StateObject var viewModel = FilterViewModel()
-    
+    @State private var availableWidth: CGFloat = 0
     var body: some View {
         NavigationView {
             ScrollView {
@@ -17,15 +17,15 @@ struct FilterView: View {
                     // Selection Section
                     VStack(alignment: .leading) {
                         selectionTitle
-                        FlexibleGridView(items: viewModel.selectedTags) { tag in
+                        FlexibleGridView(items: viewModel.selectedTags, availableWidth: availableWidth) { tag in
                             TagView(tag: tag.name, isSelected: true)
                                 .onTapGesture {
                                     if let section = viewModel.sections.first(where: { $0.tags.contains(where: { $0.id == tag.id }) }) {
                                         viewModel.toggleTagSelection(section: section, tag: tag)
                                     }
-                                }
+                            }
+                            .padding(.horizontal, 16)
                         }
-                        .padding(.horizontal, 16)
                     }
                     
                     applyButton
@@ -34,11 +34,15 @@ struct FilterView: View {
                     // Sections with Tags
                     ForEach(viewModel.sections) { section in
                         ExpandableSectionView(
-                            section: section,
+                            section: section, availableWidth: availableWidth,
                             toggleTagSelection: viewModel.toggleTagSelection,
                             selectedTags: $viewModel.selectedTags
                         )
                     }
+                    
+                }
+                .readSize { size in
+                    availableWidth = size.width - 32
                 }
                 
             }
@@ -51,10 +55,9 @@ struct FilterView: View {
             }
             
         }
-        
     }
-    
 }
+
 
 //MARK: - UI
 
@@ -104,3 +107,21 @@ private extension FilterView {
 #Preview {
     FilterView()
 }
+
+
+extension View {
+     func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
+         background(
+           GeometryReader { geometryProxy in
+             Color.clear
+               .preference(key: SizePreferenceKey.self, value: geometryProxy.size)
+           }
+         )
+         .onPreferenceChange(SizePreferenceKey.self, perform: onChange)
+       }
+ }
+
+ private struct SizePreferenceKey: PreferenceKey {
+     static var defaultValue: CGSize = .zero
+     static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
+ }

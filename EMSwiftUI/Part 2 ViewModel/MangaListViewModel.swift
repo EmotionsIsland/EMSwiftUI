@@ -22,7 +22,7 @@ final class MangaListViewModel: ObservableObject {
     private let mangaListService: MangaListServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
-    init(mangaListService: MangaListService) {
+    init(mangaListService: MangaListServiceProtocol =  MangaListService(network: Network())) {
         self.mangaListService = mangaListService
         getData()
     }

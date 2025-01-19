@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct MangaSingleGridView: View {
-    let mangas: [MangaData]
+    let manga: MangaData
     var coverURL: (MangaData) -> URL
-    let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 25), count: 3)
+   
     
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 25) {
-            ForEach(mangas) { manga in
-                MangaGridItemView(manga: manga, coverURL: coverURL)
-            }
+        VStack {
+            MangaGridItemView(manga: manga, coverURL: coverURL)
         }
     }
 }

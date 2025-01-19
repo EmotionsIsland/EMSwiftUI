@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExpandableSectionView: View {
     let section: SectionData
+    var availableWidth: CGFloat
     let toggleTagSelection: (SectionData, SectionTag) -> Void
     @Binding var selectedTags: [SectionTag]
     @State private var isExpanded: Bool = false
@@ -29,17 +30,18 @@ struct ExpandableSectionView: View {
             }
             .padding(.horizontal, 16)
 
-            if isExpanded {
-                FlexibleGridView(items: section.tags) { tag in
-                    TagView(tag: tag.name, isSelected: tag.isSelected)
-                        .onTapGesture {
-                            toggleTagSelection(section, tag)
-                        }
+                if isExpanded {
+                    FlexibleGridView(items: section.tags, availableWidth: availableWidth) { tag in
+                        TagView(tag: tag.name, isSelected: tag.isSelected)
+                            .onTapGesture {
+                                toggleTagSelection(section, tag)
+                            }
+                    }
+                    .padding(.horizontal, 16)
+                    
                 }
-                
-            }
             
+           
         }
-       
     }
 }

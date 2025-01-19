@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject var viewModel: MangaListViewModel
+    @StateObject var viewModel = MangaListViewModel()
     @State var inputText: String = ""
     
     var body: some View {
@@ -37,9 +37,7 @@ struct MainView: View {
                 
             }
         }
-        .onAppear {
-            viewModel.getData()
-        }
+ 
     }
 }
 
