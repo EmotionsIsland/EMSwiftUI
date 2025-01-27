@@ -2,17 +2,17 @@
 import SwiftUI
 
 struct ExpandableButtonView: View {
-    @ObservedObject var filterItems: FilterItems
+    @Binding var filteredItems: [String]
     @State private var buttonExpand = false
     var label: String = ""
     @State private var expandableButtonViewItems: [String]
     let onItemTapped: (String) -> Void
 
-    init(filterItems: ObservedObject<FilterItems>, label: String, expandableButtonViewitems: [String], onItemTapped: @escaping (String) -> Void) {
+    init(filteredItems: Binding<[String]>, label: String, expandableButtonViewitems: [String], onItemTapped: @escaping (String) -> Void) {
         self.label = label
         self.expandableButtonViewItems = expandableButtonViewitems
         self.onItemTapped = onItemTapped
-        self._filterItems = filterItems
+        self._filteredItems = filteredItems
     }
 
     var body: some View {
@@ -43,7 +43,7 @@ struct ExpandableButtonView: View {
         })
 
         if buttonExpand {
-            FilterSectionView(items: expandableButtonViewItems, filterItems: filterItems, onItemTapped: onItemTapped, rowsCount: 0)
+            FilterSectionView(items: expandableButtonViewItems, filteredItems: $filteredItems, onItemTapped: onItemTapped, rowsCount: 0)
                 .padding([.bottom], 50)
         }
     }

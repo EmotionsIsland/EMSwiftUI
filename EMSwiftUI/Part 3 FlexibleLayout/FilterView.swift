@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
-import Combine
 
 private let title = "Selection"
 
 struct FilterView: View {
-    @StateObject private var filterItems = FilterItems()
+    @State private var filteredItems: [String] = []
+    @State private var items: [String] = []
 
     var body: some View {
         return VStack {
@@ -22,8 +22,8 @@ struct FilterView: View {
                 .padding([.leading, .trailing, .bottom], 16)
 
             ScrollView(.vertical) {
-                FilterSectionView(items: filterItems.items, filterItems: filterItems) { item in
-                    filterItems.items.removeAll(where: { $0 == item })
+                FilterSectionView(items: filteredItems, filteredItems: $filteredItems) { item in
+                    filteredItems.removeAll(where: { $0 == item })
                 }
             }.padding([.bottom], 8)
                 .frame(minHeight: 50 ,maxHeight: 220)
@@ -44,7 +44,8 @@ struct FilterView: View {
             })
 
             Button(action: {
-                filterItems.items.removeAll()
+                filteredItems.removeAll()
+                items.removeAll()
             }, label: {
                 Text("Reset")
                     .foregroundStyle(.black)
@@ -52,9 +53,9 @@ struct FilterView: View {
             })
 
             Separator()
-            ExpandableListView(filterItems: filterItems) { item in
-                if !filterItems.items.contains(item) {
-                    filterItems.items.append(item)
+            ExpandableListView(filteredItems: $filteredItems) { item in
+                if !filteredItems.contains(item) {
+                    filteredItems.append(item)
                 }
             }
             Spacer()

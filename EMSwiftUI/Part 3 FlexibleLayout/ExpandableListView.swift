@@ -2,7 +2,7 @@
 import SwiftUI
 
 struct ExpandableListView: View {
-    @ObservedObject var filterItems: FilterItems
+    @Binding var filteredItems: [String]
     var onItemTapped: (String) -> Void
     private let expandableButtonViewItems: [(label: String, items: [String])] = [
         ("Genre", ["Campfire", "Beatch", "SummerKiss", "Hogokan", "Bacuman", "Pikachu"]),
@@ -16,7 +16,7 @@ struct ExpandableListView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(expandableButtonViewItems, id: \.label) { section in
                         ExpandableButtonView(
-                            filterItems: _filterItems,
+                            filteredItems: $filteredItems, 
                             label: section.label,
                             expandableButtonViewitems: section.items,
                             onItemTapped: onItemTapped

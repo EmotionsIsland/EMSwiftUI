@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A30264B36E7C3D7526D07930 /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B29341A0636A7513F31D99 /* Pods_EMSwiftUI.framework */; };
-		C1026E7B2CDB780100624B01 /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1026E7A2CDB780100624B01 /* FilterModel.swift */; };
 		C13A62EF2CCFEB1B000DB462 /* FilterSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13A62EE2CCFEB1B000DB462 /* FilterSectionView.swift */; };
 		C16213BF2CD10BBE00DFB41B /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16213BE2CD10BBE00DFB41B /* Separator.swift */; };
 		C16306B12CD7F81300210861 /* ExpandableButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16306B02CD7F81300210861 /* ExpandableButtonView.swift */; };
@@ -52,7 +51,6 @@
 		4D7CCE0121DC2505E6380BDD /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		85CF0F2F70812B634B4E64BE /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		A5B29341A0636A7513F31D99 /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C1026E7A2CDB780100624B01 /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		C13A62EE2CCFEB1B000DB462 /* FilterSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSectionView.swift; sourceTree = "<group>"; };
 		C16213BE2CD10BBE00DFB41B /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 		C16306B02CD7F81300210861 /* ExpandableButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonView.swift; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 				C1E1088C2CD3C82F00A7EE75 /* ExpandableListView.swift */,
 				C16306B02CD7F81300210861 /* ExpandableButtonView.swift */,
 				C16213BE2CD10BBE00DFB41B /* Separator.swift */,
-				C1026E7A2CDB780100624B01 /* FilterModel.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -409,7 +406,6 @@
 				D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */,
 				D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */,
 				D8A607712B2FB23C0093F5A4 /* Fonts+Generated.swift in Sources */,
-				C1026E7B2CDB780100624B01 /* FilterModel.swift in Sources */,
 				D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */,
 				D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */,
 				D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */,

@@ -3,7 +3,7 @@ import SwiftUI
 
 struct FilterSectionView: View {
     var items: [String]
-    @ObservedObject var filterItems: FilterItems
+    @Binding var filteredItems: [String]
     let onItemTapped: (String) -> Void
     @State var rowsCount: Int = 0
     @State private var itemWidths: [String: CGFloat] = [:]
@@ -47,7 +47,7 @@ struct FilterSectionView: View {
                         Button(action: {
                             onItemTapped(item)
                         }, label: {
-                            if filterItems.items.contains(item) {
+                            if filteredItems.contains(item) {
                                 Label(item, systemImage: "plus").labelStyle(.titleAndIcon)
                                     .padding(8)
                                     .scaledToFill()
