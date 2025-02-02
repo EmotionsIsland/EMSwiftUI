@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */; };
 		D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */; };
 		D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */; };
 		D83E2ECF2B2FC7ED00A338A7 /* MangaListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */; };
@@ -41,11 +40,12 @@
 		D8A6077F2B2FC2010093F5A4 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6077E2B2FC2010093F5A4 /* Endpoint.swift */; };
 		D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A607802B2FC20E0093F5A4 /* NetworkError.swift */; };
 		D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A607822B2FC2150093F5A4 /* DataState.swift */; };
+		DF27E8BF830A76064B812219 /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE1FD4985ABF03D21F5A4A7E /* Pods_EMSwiftUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
-		99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
+		1090F017ECAF31CAB69EF534 /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
+		C858AD84EE54C94097829688 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListService.swift; sourceTree = "<group>"; };
 		D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListModel.swift; sourceTree = "<group>"; };
 		D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListViewModel.swift; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 		D8A6077E2B2FC2010093F5A4 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		D8A607802B2FC20E0093F5A4 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D8A607822B2FC2150093F5A4 /* DataState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataState.swift; sourceTree = "<group>"; };
-		FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE1FD4985ABF03D21F5A4A7E /* Pods_EMSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EMSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,21 +92,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */,
+				DF27E8BF830A76064B812219 /* Pods_EMSwiftUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7858FB117C86FDC565D9C2E4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		D83E2ED22B2FD74E00A338A7 /* Part 3 FlexibleLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,7 +123,7 @@
 				D8A6073C2B2F3DE20093F5A4 /* EMSwiftUI */,
 				D8A6073B2B2F3DE20093F5A4 /* Products */,
 				E69F4A6B4C86BB557C514CC9 /* Pods */,
-				7858FB117C86FDC565D9C2E4 /* Frameworks */,
+				F6E39537D934A6B62CDDF02B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -244,10 +236,18 @@
 		E69F4A6B4C86BB557C514CC9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */,
-				2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */,
+				1090F017ECAF31CAB69EF534 /* Pods-EMSwiftUI.debug.xcconfig */,
+				C858AD84EE54C94097829688 /* Pods-EMSwiftUI.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F6E39537D934A6B62CDDF02B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DE1FD4985ABF03D21F5A4A7E /* Pods_EMSwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +257,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D8A607482B2F3DE40093F5A4 /* Build configuration list for PBXNativeTarget "EMSwiftUI" */;
 			buildPhases = (
-				00C38972BD64B79E51B37CFB /* [CP] Check Pods Manifest.lock */,
+				D0CE3603CAAEA16D0D7279B9 /* [CP] Check Pods Manifest.lock */,
 				D8A607362B2F3DE20093F5A4 /* Sources */,
 				D8A607372B2F3DE20093F5A4 /* Frameworks */,
 				D8A607382B2F3DE20093F5A4 /* Resources */,
@@ -331,7 +331,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		00C38972BD64B79E51B37CFB /* [CP] Check Pods Manifest.lock */ = {
+		D0CE3603CAAEA16D0D7279B9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -524,7 +524,7 @@
 		};
 		D8A607492B2F3DE40093F5A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */;
+			baseConfigurationReference = 1090F017ECAF31CAB69EF534 /* Pods-EMSwiftUI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -557,7 +557,7 @@
 		};
 		D8A6074A2B2F3DE40093F5A4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */;
+			baseConfigurationReference = C858AD84EE54C94097829688 /* Pods-EMSwiftUI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
