@@ -1,10 +1,3 @@
-//
-//  MangaListService.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 18/12/23.
-//
-
 import Foundation
 import Combine
 

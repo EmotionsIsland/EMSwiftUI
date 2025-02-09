@@ -1,36 +1,31 @@
-//
-//  MangaSingleGridView.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 18/12/23.
-//
-
 import SwiftUI
 
 struct MangaSingleGridView: View {
-    let manga: MangaData
-    let viewModel: MangaListViewModel
+    @ObservedObject var viewModel: MangaListViewModel
+    let mangaID: String  
 
     var body: some View {
         VStack(alignment: .leading) {
-            AsyncImage(url: viewModel.getCoverURL(manga: manga, sizeFormat: .size256)) { image in
-                image.resizable()
-            } placeholder: {
-                ProgressView()
-            }
-            .scaledToFit()
-            .frame(width: 100, height: 150)
-            .cornerRadius(10)
+            if let manga = viewModel.getManga(by: mangaID) {
+                AsyncImage(url: viewModel.getCoverURL(manga: manga, sizeFormat: .size256)) { image in
+                    image.resizable()
+                } placeholder: {
+                    ProgressView()
+                }
+                .scaledToFit()
+                .frame(width: 100, height: 150)
+                .cornerRadius(10)
 
-            Text(manga.attributes.title.en ?? "Unknown")
-                .font(.headline)
-                .lineLimit(2)
+                Text(manga.attributes.title.en ?? "")
+                    .font(.headline)
+                    .lineLimit(2)
 
-            RatingView(rating: viewModel.getRating(manga: manga), maxRating: 5)
+                RatingView(rating: 4.0, maxRating: 5)
 
-            Text(manga.attributes.publicationDemographic ?? "Unknown Genre")
-                .font(.subheadline)
-                .foregroundColor(.gray)
+                Text(manga.type)
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            } 
         }
         .frame(width: 120)
     }

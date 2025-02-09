@@ -1,10 +1,3 @@
-//
-//  MainView.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 17/12/23.
-//
-
 import SwiftUI
 
 struct MainView: View {
@@ -23,41 +16,19 @@ struct MainView: View {
 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
-                        ForEach(viewModel.mangaList, id: \.id) { manga in
-                            let sectionTitle = manga.attributes.tags.first?.attributes.name.en ?? "Unknown"
-                            MangaSectionView(
-                                title: sectionTitle,
-                                manga: viewModel.mangaList,
-                                viewModel: viewModel
-                            )
+                        ForEach(viewModel.mangaData) { manga in
+                            MangaSectionView(viewModel: viewModel, title: manga.attributes.tags.first?.attributes.name.en ?? "")
                         }
-                        .padding()
                     }
                 }
                 .ignoresSafeArea(edges: .bottom)
             }
             .navigationBarHidden(true)
+            .onAppear {
+                viewModel.fetchManga()
+            }
         }
     }
 }
 
-struct SearchBar: View {
-    @Binding var isSearching: Bool
-    
-    var body: some View {
-        HStack {
-            Text("Seach")
-                .foregroundColor(.gray)
-                .padding(.leading, 10)
-            
-            Spacer()
-        }
-        .frame(height: 40)
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
-        .padding()
-        .onTapGesture {
-            isSearching = true
-        }
-    }
-}
+

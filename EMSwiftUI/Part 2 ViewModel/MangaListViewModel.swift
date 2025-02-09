@@ -1,10 +1,3 @@
-//
-//  MangaListViewModel.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 18/12/23.
-//
-
 import Foundation
 import Combine
 
@@ -15,7 +8,8 @@ enum SizeFormat: String {
 }
 
 final class MangaListViewModel: ObservableObject {
-    @Published var mangaList: [MangaData] = []
+    @Published var mangaData: [MangaData] = []
+    
     private let service: MangaListServiceProtocol
     private var cancellables = Set<AnyCancellable>()
 
@@ -35,9 +29,14 @@ final class MangaListViewModel: ObservableObject {
                     break
                 }
             }, receiveValue: { [weak self] response in
-                self?.mangaList = response.data
+                guard let self = self else { return }
+                self.mangaData = response.data
             })
             .store(in: &cancellables)
+    }
+    
+    func getManga(by id: String) -> MangaData? {
+        return mangaData.first { $0.id == id }
     }
 
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
@@ -47,7 +46,7 @@ final class MangaListViewModel: ObservableObject {
         return Endpoint(path: "/covers/" + manga.id + "/" + fileName + sizeFormat.rawValue).coverURL
     }
 
-    func getRating(manga: MangaData) -> CGFloat {
-        return [4.2, 4.5, 3.0].randomElement() ?? 5.0
+    func getRating(manga: MangaData) -> URL {
+        return Endpoint(path: "/statistics/manga/" + manga.id).url
     }
 }

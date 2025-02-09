@@ -1,26 +1,17 @@
-//
-//  MangaSectionView.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 18/12/23.
-//
-
 import SwiftUI
 
 struct MangaSectionView: View {
+    @ObservedObject var viewModel: MangaListViewModel
     let title: String
-    let manga: [MangaData]
-    let viewModel: MangaListViewModel
+    let rows = Array(repeating: GridItem(.fixed(200), spacing: 25), count: 2)
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             MangaSectionTitleView(title: title)
-            LazyHGrid(
-                rows: Array(repeating: GridItem(.fixed(200), spacing: 25), count: 2),
-                spacing: 25
-            ) {
-                ForEach(manga) { manga in
-                    MangaSingleGridView(manga: manga, viewModel: viewModel)
+
+            LazyHGrid(rows: rows, spacing: 25) {
+                ForEach(viewModel.mangaData) { manga in
+                    MangaSingleGridView(viewModel: viewModel, mangaID: manga.id)
                         .frame(width: 100, height: 200)
                 }
             }

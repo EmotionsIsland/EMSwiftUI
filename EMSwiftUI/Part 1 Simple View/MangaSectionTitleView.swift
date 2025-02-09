@@ -1,10 +1,3 @@
-//
-//  MangaSectionTitleView.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 18/12/23.
-//
-
 import SwiftUI
 
 struct MangaSectionTitleView: View {
@@ -15,7 +8,9 @@ struct MangaSectionTitleView: View {
             Text(title)
                 .font(.title2)
                 .fontWeight(.bold)
+            
             Spacer()
+            
             Button(action: {
                 print("Show more \(title)")
             }) {
