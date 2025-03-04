@@ -12,9 +12,16 @@ struct RatingView: View {
     let maxRating: Int
     
     var body: some View {
-        VStack {
-            // TODO: Create star rating View
+        HStack(spacing: 4) {
+            ForEach(0..<maxRating, id: \.self) { index in
+                Image(systemName: index < Int(rating) ? "star.fill" : "star")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 17, height: 16)
+                    .foregroundColor(index < Int(rating) ? .yellow : .gray)
+            }
         }
+        .frame(maxWidth: 100)
     }
 }
 

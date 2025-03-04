@@ -8,13 +8,29 @@
 import SwiftUI
 
 struct MangaSectionTitleView: View {
+    let title: String
+    
     var body: some View {
-        VStack {
-            // TODO: Create section title View
+        HStack {
+            Text(title)
+                .font(.custom(FontFamily.SFProText.bold, size: 20))
+                .foregroundColor(.black)
+            Spacer()
+            Button(action: {}) {
+                HStack {
+                    Text("more")
+                        .font(.custom(FontFamily.SFProText.light, size: 16))
+                        .foregroundColor(.black)
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14))
+                        .foregroundColor(.black)
+                }
+            }
         }
     }
 }
 
 #Preview {
-    MangaSectionTitleView()
+    MangaSectionTitleView(title: "Popular")
 }

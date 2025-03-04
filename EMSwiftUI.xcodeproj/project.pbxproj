@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */; };
+		855253AB2D75BA3000863F52 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855253AA2D75BA3000863F52 /* FilterViewModel.swift */; };
+		855253AD2D75BA4F00863F52 /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855253AC2D75BA4F00863F52 /* FilterModel.swift */; };
+		855253AF2D75BE4E00863F52 /* FlexibleGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855253AE2D75BE4E00863F52 /* FlexibleGridView.swift */; };
+		855253B32D75C8CD00863F52 /* FilterSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855253B22D75C8CD00863F52 /* FilterSelectionView.swift */; };
+		855253B52D75D7F100863F52 /* FiltersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855253B42D75D7F100863F52 /* FiltersButton.swift */; };
+		855253B72D75ED2300863F52 /* FlexibleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855253B62D75ED2300863F52 /* FlexibleLayout.swift */; };
+		859B6FC22D76EEF40054F244 /* FilterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B6FC12D76EEF40054F244 /* FilterData.swift */; };
+		859B6FC42D76F1580054F244 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B6FC32D76F1580054F244 /* TitleView.swift */; };
 		D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */; };
 		D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */; };
 		D83E2ECF2B2FC7ED00A338A7 /* MangaListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECE2B2FC7ED00A338A7 /* MangaListViewModel.swift */; };
@@ -45,6 +53,14 @@
 
 /* Begin PBXFileReference section */
 		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
+		855253AA2D75BA3000863F52 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilterViewModel.swift; path = /Users/pnastusevich/FilterViewModel.swift; sourceTree = "<absolute>"; };
+		855253AC2D75BA4F00863F52 /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilterModel.swift; path = /Users/pnastusevich/FilterModel.swift; sourceTree = "<absolute>"; };
+		855253AE2D75BE4E00863F52 /* FlexibleGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FlexibleGridView.swift; path = /Users/pnastusevich/FlexibleGridView.swift; sourceTree = "<absolute>"; };
+		855253B22D75C8CD00863F52 /* FilterSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilterSelectionView.swift; path = /Users/pnastusevich/FilterSelectionView.swift; sourceTree = "<absolute>"; };
+		855253B42D75D7F100863F52 /* FiltersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FiltersButton.swift; path = /Users/pnastusevich/FiltersButton.swift; sourceTree = "<absolute>"; };
+		855253B62D75ED2300863F52 /* FlexibleLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FlexibleLayout.swift; path = /Users/pnastusevich/FlexibleLayout.swift; sourceTree = "<absolute>"; };
+		859B6FC12D76EEF40054F244 /* FilterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilterData.swift; path = /Users/pnastusevich/FilterData.swift; sourceTree = "<absolute>"; };
+		859B6FC32D76F1580054F244 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TitleView.swift; path = /Users/pnastusevich/TitleView.swift; sourceTree = "<absolute>"; };
 		99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListService.swift; sourceTree = "<group>"; };
 		D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListModel.swift; sourceTree = "<group>"; };
@@ -107,12 +123,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		855253B02D75C39F00863F52 /* FilterViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				855253AA2D75BA3000863F52 /* FilterViewModel.swift */,
+				859B6FC12D76EEF40054F244 /* FilterData.swift */,
+				855253AC2D75BA4F00863F52 /* FilterModel.swift */,
+			);
+			path = FilterViewModel;
+			sourceTree = "<group>";
+		};
+		855253B12D75C3AF00863F52 /* FilterView */ = {
+			isa = PBXGroup;
+			children = (
+				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
+				859B6FC32D76F1580054F244 /* TitleView.swift */,
+				855253B42D75D7F100863F52 /* FiltersButton.swift */,
+				855253B22D75C8CD00863F52 /* FilterSelectionView.swift */,
+				855253AE2D75BE4E00863F52 /* FlexibleGridView.swift */,
+				855253B62D75ED2300863F52 /* FlexibleLayout.swift */,
+			);
+			path = FilterView;
+			sourceTree = "<group>";
+		};
 		D83E2ED22B2FD74E00A338A7 /* Part 3 FlexibleLayout */ = {
 			isa = PBXGroup;
 			children = (
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
 				D83E2EE02B2FDB6900A338A7 /* Part3Example.png */,
-				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
+				855253B12D75C3AF00863F52 /* FilterView */,
+				855253B02D75C39F00863F52 /* FilterViewModel */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -384,15 +424,23 @@
 				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,
 				D8A607752B2FB7740093F5A4 /* MangaSingleGridView.swift in Sources */,
 				D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */,
+				855253B32D75C8CD00863F52 /* FilterSelectionView.swift in Sources */,
+				859B6FC22D76EEF40054F244 /* FilterData.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
+				855253AB2D75BA3000863F52 /* FilterViewModel.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
+				859B6FC42D76F1580054F244 /* TitleView.swift in Sources */,
 				D8A6074E2B2F3E1A0093F5A4 /* MainView.swift in Sources */,
 				D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */,
 				D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */,
 				D8A607712B2FB23C0093F5A4 /* Fonts+Generated.swift in Sources */,
+				855253AF2D75BE4E00863F52 /* FlexibleGridView.swift in Sources */,
 				D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */,
+				855253B72D75ED2300863F52 /* FlexibleLayout.swift in Sources */,
+				855253B52D75D7F100863F52 /* FiltersButton.swift in Sources */,
 				D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */,
+				855253AD2D75BA4F00863F52 /* FilterModel.swift in Sources */,
 				D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */,
 				D8A6077F2B2FC2010093F5A4 /* Endpoint.swift in Sources */,
 				D8A607702B2FB23C0093F5A4 /* XCAssets+Generated.swift in Sources */,

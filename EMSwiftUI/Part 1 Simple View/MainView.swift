@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @StateObject private var viewModel = MangaListViewModel(service: MangaListService(network: Network()))
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+            if viewModel.isLoading {
+                ProgressView()
+            } else if let error = viewModel.errorMessage {
+                Text("Ошибка: \(error)")
+                    .foregroundColor(.red)
+            } else {
+                MangaSectionView(viewModel: viewModel)
+            }
+        }
+        .onAppear {
+            viewModel.getData()
         }
     }
 }
