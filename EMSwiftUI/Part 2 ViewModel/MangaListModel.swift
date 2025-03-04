@@ -16,11 +16,31 @@ struct MangaListModel: Decodable {
     let total: Int
 }
 
+extension MangaListModel{
+    static let mock: MangaListModel =
+    MangaListModel(
+        result: "",
+        response: "",
+        data: [],
+        limit: 0,
+        offset: 0,
+        total: 0)
+}
+
 struct MangaData: Decodable, Identifiable {
     let id: String
     let type: String
     let attributes: Attributes
     let relationships: [Relationship]
+}
+
+extension MangaData{
+    static let mock: MangaData =
+    MangaData(
+        id: "",
+        type: "",
+        attributes: Attributes.mock,
+        relationships: [])
 }
 
 struct Attributes: Decodable {
@@ -40,6 +60,26 @@ struct Attributes: Decodable {
     let version: Int
     let availableTranslatedLanguages: [String?]
 
+}
+
+extension Attributes{
+    static let mock : Attributes =
+    Attributes(
+        title: Title(en: "Title Title Title Title Title Title Title"),
+        altTitles: [],
+        description: AttributesDescription(en: "Description Description Description Description", ru: "Описание Описание Описание Описание"),
+        isLocked: false,
+        originalLanguage: "",
+        publicationDemographic: "",
+        status: "status",
+        year: 2025,
+        contentRating: "4.5",
+        tags: [],
+        state: "",
+        createdAt: "",
+        updatedAt: "",
+        version: 0,
+        availableTranslatedLanguages: [])
 }
 
 struct Title: Decodable {
