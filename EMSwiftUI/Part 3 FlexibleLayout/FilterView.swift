@@ -11,77 +11,19 @@ struct FilterView: View {
     
     @State private var selectedTags: [String] = []
     
-    let contentTags = ContentTags()
+    private let contentTags = ContentTags()
     
     var body: some View {
         ScrollView{
             VStack {
                 // TODO: Create View
-                ZStack{
-                    Text("Filters")
-                        .foregroundStyle(Color(red: 56/255, green: 56/255, blue: 56/255))
-                        .font(.custom(FontFamily.SFPro.bold, size: 24))
-                    HStack{
-                        Spacer()
-                        Button(action: {
-                            
-                        }, label: {
-                            Image(systemName: "xmark")
-                                .foregroundStyle(.blackBase)
-                        })
-                    }
-                }
-                .padding(.horizontal, 20)
+                filtersView()
                 
                 Divider()
                     .padding(.bottom, 20)
                 
-                HStack{
-                    Text("Selection")
-                        .foregroundStyle(Color(red: 56/255, green: 56/255, blue: 56/255))
-                        .font(.custom(FontFamily.SFPro.bold, size: 20))
-                    Spacer()
-                }
-                .padding(.horizontal, 20)
+                selectionView()
                 
-                if(selectedTags.isEmpty){
-                    Text("No selected tags")
-                        .foregroundStyle(Color(red: 106/255, green: 106/255, blue: 106/255))
-                        .font(.custom(FontFamily.SFPro.light, size: 20))
-                }
-                
-                FlowLayout{
-                    ForEach(selectedTags, id: \.self){ tag in
-                        TagView(tag){
-                            removeTag(tag: tag)
-                        }
-                        .padding(5)
-                    }
-                }
-                .padding(.horizontal, 20)
-                
-                Button {
-                    buttonApplyWasTapped()
-                } label: {
-                    Text("Apply")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color(red: 255/255, green: 103/255, blue: 64/255))
-                        .foregroundStyle(.white)
-                        .font(.custom(FontFamily.SFPro.medium, size: 16))
-                        .cornerRadius(8)
-                }
-                .padding(.vertical, 10)
-                .padding(.horizontal, 20)
-                
-                Button {
-                    buttonResetWasTapped()
-                } label: {
-                    Text("Reset")
-                        .foregroundStyle(Color(red: 56/255, green: 56/255, blue: 56/255))
-                        .font(.custom(FontFamily.SFPro.medium, size: 16))
-                }
-
                 Divider()
                     .padding(.bottom, 20)
                 
@@ -120,6 +62,84 @@ struct FilterView: View {
     private func buttonResetWasTapped(){
         withAnimation{
             selectedTags.removeAll()
+        }
+    }
+}
+
+private extension FilterView {
+    
+    private func filtersView() -> some View {
+        ZStack{
+            Text("Filters")
+                .foregroundStyle(Color(red: 56/255, green: 56/255, blue: 56/255))
+                .font(.custom(FontFamily.SFPro.bold, size: 24))
+            HStack{
+                Spacer()
+                Button(action: {
+                    
+                }, label: {
+                    Image(systemName: "xmark")
+                        .foregroundStyle(.blackBase)
+                })
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+    
+    private func selectionView() -> some View {
+        VStack{
+            HStack{
+                Text("Selection")
+                    .foregroundStyle(Color(red: 56/255, green: 56/255, blue: 56/255))
+                    .font(.custom(FontFamily.SFPro.bold, size: 20))
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            
+            if(selectedTags.isEmpty){
+                Text("No selected tags")
+                    .foregroundStyle(Color(red: 106/255, green: 106/255, blue: 106/255))
+                    .font(.custom(FontFamily.SFPro.light, size: 20))
+            }
+            
+            FlowLayout{
+                ForEach(selectedTags, id: \.self){ tag in
+                    TagView(tag){
+                        removeTag(tag: tag)
+                    }
+                    .padding(5)
+                }
+            }
+            .padding(.horizontal, 20)
+            
+            applyButton()
+            resetButton()
+        }
+    }
+    
+    private func applyButton() -> some View {
+        Button {
+            buttonApplyWasTapped()
+        } label: {
+            Text("Apply")
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color(red: 255/255, green: 103/255, blue: 64/255))
+                .foregroundStyle(.white)
+                .font(.custom(FontFamily.SFPro.medium, size: 16))
+                .cornerRadius(8)
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 20)
+    }
+    
+    private func resetButton() -> some View {
+        Button {
+            buttonResetWasTapped()
+        } label: {
+            Text("Reset")
+                .foregroundStyle(Color(red: 56/255, green: 56/255, blue: 56/255))
+                .font(.custom(FontFamily.SFPro.medium, size: 16))
         }
     }
 }

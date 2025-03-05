@@ -9,13 +9,13 @@ import SwiftUI
 
 struct FilterSection: View {
     
-    @State var sectionName: String
+    let sectionName: String
     
-    @State var tags: [String]
-    
-    @State private var isHide: Bool = true
+    let tags: [String]
     
     let action: (String) -> ()
+    
+    @State private var isHide: Bool = true
     
     var body: some View {
         VStack{

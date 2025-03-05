@@ -8,12 +8,8 @@
 import Foundation
 
 struct ContentTags {
-    let tags: [ContentTag]
     
-    init() {
-        // Преобразуем словарь в массив структур ContentTag
-        self.tags = contentTagsDict.map { ContentTag(name: $0.key, tags: $0.value) }
-    }
+    let tags: [ContentTag]
     
     // Исходный словарь с тегами
     private let contentTagsDict: [String: [String]] = [
@@ -36,6 +32,11 @@ struct ContentTags {
             "School Life", "Isekai", "Post-Apocalyptic", "Cyberpunk", "Mecha", "Sports", "Music", "Cooking", "Martial Arts", "Time Travel", "Vampires", "Zombies"
         ]
     ]
+    
+    init() {
+        // Преобразуем словарь в массив структур ContentTag
+        self.tags = contentTagsDict.map { ContentTag(name: $0.key, tags: $0.value) }
+    }
 }
 
 struct ContentTag: Identifiable{

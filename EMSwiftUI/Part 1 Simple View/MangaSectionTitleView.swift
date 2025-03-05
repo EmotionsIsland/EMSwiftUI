@@ -9,11 +9,7 @@ import SwiftUI
 
 struct MangaSectionTitleView: View {
     
-    @State var title: String
-    
-    init(_ title: String) {
-        self.title = title
-    }
+    let title: String
     
     var body: some View {
         VStack {
@@ -41,5 +37,5 @@ struct MangaSectionTitleView: View {
 }
 
 #Preview {
-    MangaSectionTitleView("Popular")
+    MangaSectionTitleView(title: "Popular")
 }

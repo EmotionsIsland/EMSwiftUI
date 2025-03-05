@@ -9,19 +9,17 @@ import SwiftUI
 
 struct MangaSectionView: View {
     
-    @State var title: String
     @StateObject private var viewModel = MangaListViewModel(mangaService: MangaListService(network: Network()))
     
+    let title: String
+    
     // Строки сетки
-    private let rows = [
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25)
-    ]
+    private let rows = Array(repeating: GridItem(.flexible(), spacing: 25), count: 2)
     
     var body: some View {
         VStack {
             // TODO: Create section View
-            MangaSectionTitleView(title)
+            MangaSectionTitleView(title: title)
                 .padding(.bottom, 20)
             LazyHGrid(rows: rows, spacing: 25) {
                 ForEach(viewModel.manga.data) { mangaItem in

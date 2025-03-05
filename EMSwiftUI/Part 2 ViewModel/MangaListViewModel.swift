@@ -21,10 +21,10 @@ final class MangaListViewModel: ObservableObject {
     private let mangaService: MangaListServiceProtocol
     private var subscriber = Set<AnyCancellable>()
     
-    @Published var state: DataState = .notAvailable
-    @Published var hasError: Bool = false
-    @Published var dataIsLoading: Bool = false
-    @Published var manga: MangaListModel = MangaListModel.mock
+    @Published private(set) var state: DataState = .notAvailable
+    @Published private(set) var hasError: Bool = false
+    @Published private(set) var dataIsLoading: Bool = false
+    @Published private(set) var manga: MangaListModel = MangaListModel.mock
     
     init(mangaService: MangaListServiceProtocol){
         self.mangaService = mangaService
@@ -38,21 +38,44 @@ final class MangaListViewModel: ObservableObject {
             .getManga()
             .receive(on: OperationQueue.main)
             .sink { [weak self] completion in
+                guard let self else { return }
                 switch completion{
                 case .finished:
                     print("Success!")
                     break
                 case .failure(let error):
-                    self?.state = .failed(error: error)
-                    self?.dataIsLoading = false
+                    self.state = .failed(error: error)
+                    self.dataIsLoading = false
                     print("*** Error in \(#function): \(error)")
                 }
             } receiveValue: { [weak self] manga in
-                self?.manga = manga
-                self?.state = .successfull
-                self?.dataIsLoading = false
+                guard let self else { return }
+                self.manga = manga
+                self.state = .successfull
+                self.dataIsLoading = false
             }
             .store(in: &subscriber)
+    }
+    
+    func getTitle(mangaData: MangaData) -> String {
+        if let title = mangaData.attributes.title.en {
+            return title
+        }else if let title = mangaData.attributes.altTitles.first(where: { altTitle in
+            altTitle.ru != nil
+        })?.ru {
+            return title
+        }else{
+            return "No name"
+        }
+    }
+    
+    func getTags(mangaData: MangaData) -> String {
+        let tags = mangaData.attributes.tags.compactMap(\.self.attributes.name.en).joined(separator: ", ")
+        return tags
+    }
+    
+    func mangaWasTapped(mangaData: MangaData){
+        
     }
     
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL? {

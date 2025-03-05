@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    private let titles: [String] = ["Popular", "Recently Added", "Last Updates", "Seasonal"]
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             // TODO: Create main view
             SearchBar()
             Divider()
                 .padding(.bottom, 20)
-            MangaSectionView(title: "Popular")
-            MangaSectionView(title: "Recently Added")
-            MangaSectionView(title: "Last Updates")
-            MangaSectionView(title: "Seasonal")
+            ForEach(titles, id: \.self){ title in
+                MangaSectionView(title: title)
+            }
         }
     }
 }

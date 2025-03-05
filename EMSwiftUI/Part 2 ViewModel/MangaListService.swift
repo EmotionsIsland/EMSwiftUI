@@ -10,11 +10,11 @@ import Combine
 
 protocol MangaListServiceProtocol: AnyObject {
     var network: NetworkProtocol { get }
-    
     func getManga() -> AnyPublisher<MangaListModel, Error>
 }
 
 final class MangaListService: MangaListServiceProtocol {
+    
     let network: NetworkProtocol
     
     init(network: NetworkProtocol) {

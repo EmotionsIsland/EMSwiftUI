@@ -9,14 +9,13 @@ import SwiftUI
 
 struct TagView: View {
     
-    @State var tagName: String
+    let tagName: String
+    let action: () -> ()
     
     init(_ tagName: String, action: @escaping () -> ()) {
         self.tagName = tagName
         self.action = action
     }
-    
-    let action: () -> ()
     
     var body: some View {
         Button {
