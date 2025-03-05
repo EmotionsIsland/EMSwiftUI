@@ -15,15 +15,16 @@ enum SizeFormat: String {
 }
 
 final class MangaListViewModel: ObservableObject {
-    @Published var mangaList: [MangaData] = []
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String? = nil
+    @Published private(set) var mangaList: [MangaData] = []
+    @Published private(set) var isLoading: Bool = false
+    @Published private(set) var errorMessage: String? = nil
     
     private let service: MangaListServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
     init(service: MangaListServiceProtocol) {
         self.service = service
+        getData()
     }
     
     func getData() {
@@ -33,12 +34,14 @@ final class MangaListViewModel: ObservableObject {
         service.getManga()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
-                self?.isLoading = false
+                guard let self = self else { return }
+                self.isLoading = false
                 if case .failure(let error) = completion {
-                    self?.errorMessage = error.localizedDescription
+                    self.errorMessage = error.localizedDescription
                 }
             }, receiveValue: { [weak self] mangaModel in
-                self?.mangaList = mangaModel.data
+                guard let self = self else { return }
+                self.mangaList = mangaModel.data
             })
             .store(in: &cancellables)
     }

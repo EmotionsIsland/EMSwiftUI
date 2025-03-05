@@ -22,9 +22,6 @@ struct MainView: View {
                 MangaSectionView(viewModel: viewModel)
             }
         }
-        .onAppear {
-            viewModel.getData()
-        }
     }
 }
 
