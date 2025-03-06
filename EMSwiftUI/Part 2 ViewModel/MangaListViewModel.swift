@@ -58,20 +58,13 @@ final class MangaListViewModel: ObservableObject {
     }
     
     func getTitle(mangaData: MangaData) -> String {
-        if let title = mangaData.attributes.title.en {
-            return title
-        }else if let title = mangaData.attributes.altTitles.first(where: { altTitle in
-            altTitle.ru != nil
-        })?.ru {
-            return title
-        }else{
-            return "No name"
-        }
+        mangaData.attributes.title.en
+        ?? mangaData.attributes.altTitles.first{ $0.ru != nil}?.ru
+        ?? "No name"
     }
     
     func getTags(mangaData: MangaData) -> String {
-        let tags = mangaData.attributes.tags.compactMap(\.self.attributes.name.en).joined(separator: ", ")
-        return tags
+        return mangaData.attributes.tags.compactMap(\.self.attributes.name.en).joined(separator: ", ")
     }
     
     func mangaWasTapped(mangaData: MangaData){

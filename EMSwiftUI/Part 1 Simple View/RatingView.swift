@@ -25,6 +25,9 @@ struct RatingView: View {
             .frame(width: 100, height: 16)
         }
     }
+}
+
+private extension RatingView {
     
     private func starView(for number: Int) -> some View {
         let fillWidth = fillWidth(for: number)

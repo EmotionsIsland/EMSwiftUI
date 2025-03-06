@@ -38,6 +38,9 @@ struct FilterView: View {
             }
         }
     }
+}
+
+private extension FilterView {
     
     private func appendTag(tag: String){
         if(!selectedTags.contains(tag)){
@@ -64,9 +67,6 @@ struct FilterView: View {
             selectedTags.removeAll()
         }
     }
-}
-
-private extension FilterView {
     
     private func filtersView() -> some View {
         ZStack{

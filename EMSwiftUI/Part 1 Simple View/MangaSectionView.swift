@@ -32,5 +32,7 @@ struct MangaSectionView: View {
 }
 
 #Preview {
-    MangaSectionView(title: "Popular")
+    ScrollView{
+        MangaSectionView(title: "Popular")
+    }
 }
