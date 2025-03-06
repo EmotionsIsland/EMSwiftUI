@@ -13,7 +13,10 @@ struct RatingView: View {
     
     var body: some View {
         VStack {
-            // TODO: Create star rating View
+            ForEach(0..<maxRating, id: \.self) { index in
+                Image(.starIcon)
+                    .foregroundStyle(.yellow)
+            }
         }
     }
 }
