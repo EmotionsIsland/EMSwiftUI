@@ -14,4 +14,11 @@ extension Image {
             .aspectRatio(contentMode: .fill)
             .frame(width: width, height: height)
     }
+    
+    func resizedToFit() -> some View {
+        self
+            .resizable()
+            .frame(maxHeight: .infinity) // Занимает всю высоту контейнера
+            .scaledToFit()
+    }
 }
