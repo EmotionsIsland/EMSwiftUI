@@ -31,12 +31,12 @@ extension Image {
     func resizedToFillAndRounded(width: CGFloat, height: CGFloat) -> some View {
         self
             .resizedToFill(width: width, height: height)
-            .clipShape(RoundedRectangle(cornerRadius: Const.Layout.radius))
+            .clipShape(RoundedRectangle(cornerRadius: Const.Layout.imageRadius))
     }
     
     func resizedToFitAndRounded(width: CGFloat, height: CGFloat) -> some View {
         self
             .resizedToFit(width: width, height: height)
-            .clipShape(RoundedRectangle(cornerRadius: Const.Layout.radius))
+            .clipShape(RoundedRectangle(cornerRadius: Const.Layout.imageRadius))
     }
 }

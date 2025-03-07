@@ -17,9 +17,11 @@ enum Const {
     }
     
     enum Layout {
-        static let starPadding: CGFloat = 4
+        static let smallPadding: CGFloat = 4
+        static let largePadding: CGFloat = 8
         static let gridPadding: CGFloat = 25
-        static let radius: CGFloat = 4
+        static let imageRadius: CGFloat = 4
+        static let buttonRadius: CGFloat = 8
         static let imageAspectRatio: CGFloat = 3/2
         static let moreButtonName = "more"
     }
@@ -32,6 +34,13 @@ enum Const {
     enum Other {
         static let maxRating = 5
         static let maxMangaSectionNumber = 6
+    }
+    
+    enum FilterScreen {
+        static let navigationTitle = "Filters"
+        static let sectionName = "Selection"
+        static let applyButtonName = "Apply"
+        static let resetButtonName = "Reset"
     }
 }
 

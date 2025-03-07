@@ -32,9 +32,8 @@ internal enum Asset {
     internal static let whiteText = ColorAsset(name: "whiteText")
   }
   internal enum Icons {
-    internal static let emptyStar = ImageAsset(name: "emptyStar")
-    internal static let filledStar = ImageAsset(name: "filledStar")
-    internal static let halfFilledStar = ImageAsset(name: "halfFilledStar")
+    internal static let back = ImageAsset(name: "back")
+    internal static let chevron = ImageAsset(name: "chevron")
     internal static let home = ImageAsset(name: "home")
     internal static let library = ImageAsset(name: "library")
     internal static let moreIcon = ImageAsset(name: "moreIcon")
