@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct MainView: View {
+    let headers = ["Header1", "Header2", "Header3", "Header4"]
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+            ForEach(headers, id: \.self) { index in
+                MangaSectionView()
+                    .padding(.bottom, 24)
+            }
         }
     }
 }
