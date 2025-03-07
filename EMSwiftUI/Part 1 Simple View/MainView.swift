@@ -9,20 +9,19 @@ import SwiftUI
 
 struct MainView: View {
     @State private var searchManga = ""
+    @StateObject var mangaViewModel = MangaListViewModel(service: MangaListService(network: Network()))
 
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
-                MangaSectionView(sectionTitle: Const.Layout.popularSectionTitle)
-                
-                MangaSectionView(sectionTitle: Const.Layout.recentlyAddedSectionTitle)
-                
-                MangaSectionView(sectionTitle: Const.Layout.lastUpdatesSectionTitle)
-                
-                MangaSectionView(sectionTitle: Const.Layout.seasonalSectionTitle)
+                ForEach(MangaSortKey.allCases, id: \.self) { key in
+                    MangaSectionView(sectionTitle: key.rawValue,
+                                     mangaData: mangaViewModel.getSortedData(by: key))
+                }
             }
         }
         .searchable(text: $searchManga)
+        .environmentObject(mangaViewModel)
     }
 }
 

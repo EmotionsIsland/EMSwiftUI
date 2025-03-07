@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MangaSectionView: View {
     let sectionTitle: String
+    let mangaData: [MangaData]
+    @State private var screenWidth: CGFloat = 0
     
     var body: some View {
         VStack {
@@ -27,16 +29,17 @@ struct MangaSectionView: View {
     
     private var mangaGrid: some View {
         LazyVGrid(columns: mangaColumns) {
-            ForEach(Array(0..<Const.Other.maxMangaSectionNumber), id: \.self) { manga in
-                MangaSingleGridView(mangaImage: Const.MockMangaData.mangaImage,
-                                    mangaTitle: Const.MockMangaData.mangaTitle,
-                                    mangarating: Const.MockMangaData.mangarating,
-                                    description: Const.MockMangaData.description)
+            ForEach(mangaData) { manga in
+                MangaSingleGridView(manga: manga, width: screenWidth)
             }
         }
+        .background(
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear {
+                        screenWidth = (proxy.size.width - 2*Const.Layout.gridPadding)/3
+                    }
+            }
+        )
     }
-}
-
-#Preview {
-    MangaSectionView(sectionTitle: Const.Layout.popularSectionTitle)
 }

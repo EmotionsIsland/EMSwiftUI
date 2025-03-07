@@ -8,34 +8,31 @@
 import SwiftUI
 
 struct RatingView: View {
-    let rating: Double
-    
+    var rating: Double
+
     var body: some View {
-        HStack(spacing: Const.Layout.starPadding) {
-            ForEach(Array(1...Const.Other.maxRating), id: \.self) { index in
-                image(for: index)
+        let stars = HStack {
+            ForEach(0..<Const.Other.maxRating, id: \.self) { _ in
+                Asset.Icons.starIcon.swiftUIImage
+                    .resizedToFit()
             }
         }
-    }
-    
-    // функция возвращает изображение звезды рейтинга
-    // (пустая, закрашенная или закрашенная наполовину)
-    private func image(for index: Int) -> some View {
-        let number = Double(index)
-        switch number {
-        case let number where number <= rating:
-            return Asset.Icons.filledStar.swiftUIImage
-                .resizedToFit()
-        case let number where number - 1 < rating:
-            return Asset.Icons.halfFilledStar.swiftUIImage
-                .resizedToFit()
-        default:
-            return Asset.Icons.emptyStar.swiftUIImage
-                .resizedToFit()
-        }
+
+        stars.overlay(
+            GeometryReader { proxy in
+                let width = rating / CGFloat(Const.Other.maxRating) * proxy.size.width
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .frame(width: width)
+                        .foregroundColor(Color.starYellow)
+                }
+            }
+            .mask(stars)
+        )
+        .foregroundColor(Color.starGray)
     }
 }
 
 #Preview {
-    RatingView(rating: 3.5)
+    RatingView(rating: 3.7)
 }

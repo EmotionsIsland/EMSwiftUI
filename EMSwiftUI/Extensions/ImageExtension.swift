@@ -15,10 +15,28 @@ extension Image {
             .frame(width: width, height: height)
     }
     
+    func resizedToFit(width: CGFloat, height: CGFloat) -> some View {
+        self
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: width, height: height)
+    }
+    
     func resizedToFit() -> some View {
         self
             .resizable()
-            .frame(maxHeight: .infinity) // Занимает всю высоту контейнера
-            .scaledToFit()
+            .aspectRatio(contentMode: .fit)
+    }
+    
+    func resizedToFillAndRounded(width: CGFloat, height: CGFloat) -> some View {
+        self
+            .resizedToFill(width: width, height: height)
+            .clipShape(RoundedRectangle(cornerRadius: Const.Layout.radius))
+    }
+    
+    func resizedToFitAndRounded(width: CGFloat, height: CGFloat) -> some View {
+        self
+            .resizedToFit(width: width, height: height)
+            .clipShape(RoundedRectangle(cornerRadius: Const.Layout.radius))
     }
 }

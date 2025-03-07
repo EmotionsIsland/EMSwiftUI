@@ -12,6 +12,8 @@ import SwiftUI
 extension Color {
     static let customGray = Color(hex: "#C4C4C4")
     static let customBlack = Color(hex: "#383838")
+    static let starGray = Color(hex: "#EDEEF2")
+    static let starYellow = Color(hex: "#FADB14")
 
     init(hex: String) {
         let scanner = Scanner(string: hex)
