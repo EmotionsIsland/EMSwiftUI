@@ -21,6 +21,7 @@ enum Const {
         static let gridPadding: CGFloat = 25
         static let radius: CGFloat = 4
         static let imageAspectRatio: CGFloat = 3/2
+        static let moreButtonName = "more"
     }
     
     enum Colors {

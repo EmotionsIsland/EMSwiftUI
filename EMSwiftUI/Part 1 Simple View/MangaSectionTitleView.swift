@@ -33,6 +33,3 @@ struct MangaSectionTitleView: View {
     }
 }
 
-#Preview {
-    MangaSectionTitleView(sectionTitle: Const.Layout.popularSectionTitle)
-}

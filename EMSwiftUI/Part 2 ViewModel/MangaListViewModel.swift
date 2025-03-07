@@ -84,6 +84,8 @@ final class MangaListViewModel: ObservableObject {
         case .updated:
             mangaList.sorted(by: {$0.attributes.updatedAt > $1.attributes.updatedAt})
         case .season:
+            // без сортировки по сезонам, потому что
+            // в модели пока нет данных о сезонах
             mangaList
         }
     }
