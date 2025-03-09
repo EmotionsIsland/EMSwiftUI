@@ -8,26 +8,28 @@
 import SwiftUI
 
 struct MangaSingleGridView: View {
+    let title: String
+    let coverURL: URL
+    let genre: String
+    
     var body: some View {
         VStack(spacing: 4) {
-            Image(.image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100, height: 144)
+            AsyncImage(url: coverURL) { image in
+                image.image?.resizable().scaledToFill().clipShape(RoundedRectangle(cornerRadius: 4))
+            }
             VStack(alignment: .leading, spacing: 2) {
-                Text("Long Manga name")
+                Text(title)
                     .font(FontFamily.SFPro.semibold.swiftUIFont(size: 16))
                     .lineLimit(1)
                     .foregroundStyle(.blackBase)
                 VStack(alignment: .leading) {
-                    RatingView(rating: 4.5, maxRating: 5)
-                    Text("Genre, second genre")
+                    RatingView(rating: CGFloat.random(in: 0...5), maxRating: 5)
+                    Text(genre)
                         .font(FontFamily.SFPro.light.swiftUIFont(size: 14))
                         .lineLimit(1)
                         .foregroundStyle(.grayBase)
                 }
             }
-            .frame(maxWidth: 100)
         }
         .onTapGesture {
             print("Open manga page")
@@ -36,5 +38,5 @@ struct MangaSingleGridView: View {
 }
 
 #Preview {
-    MangaSingleGridView()
+    MangaSingleGridView(title: "Default title", coverURL: URL(string: "")!, genre: "Default genre")
 }

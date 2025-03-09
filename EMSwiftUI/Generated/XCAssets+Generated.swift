@@ -35,7 +35,6 @@ internal enum Asset {
     internal static let moreIcon = ImageAsset(name: "moreIcon")
     internal static let starIcon = ImageAsset(name: "starIcon")
   }
-  internal static let image = ImageAsset(name: "Image")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

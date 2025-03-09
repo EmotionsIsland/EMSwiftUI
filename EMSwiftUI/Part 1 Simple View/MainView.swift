@@ -8,15 +8,51 @@
 import SwiftUI
 
 struct MainView: View {
-    let headers = ["Header1", "Header2", "Header3", "Header4"]
+    @StateObject private var viewModel = MangaListViewModel()
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            ForEach(headers, id: \.self) { index in
-                MangaSectionView()
-                    .padding(.bottom, 24)
+            stateMainView
+                .animation(.default, value: viewModel.state)
+        }
+        .overlay(retryButton, alignment: .center)
+        .onAppear(perform: loadDataIfNeeded)
+        .refreshable { viewModel.getData() }
+    }
+}
+
+private extension MainView {
+    @ViewBuilder
+    var stateMainView: some View {
+        switch viewModel.state {
+        case .loading:
+            LoadingView()
+        case .loaded where viewModel.mangaData.isEmpty:
+            EmptyView()
+        case .loaded:
+            MangaSectionView(viewModel: viewModel)
+        case .error(let description):
+            ErrorView(errorMessage: description)
+        }
+    }
+    
+    var retryButton: some View {
+        Group {
+            if case .error = viewModel.state {
+                Button(action: viewModel.getData) {
+                    Image(systemName: "arrow.clockwise")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                }
             }
         }
+    }
+    
+    func loadDataIfNeeded() {
+        guard viewModel.mangaData.isEmpty else { return }
+        viewModel.getData()
     }
 }
 

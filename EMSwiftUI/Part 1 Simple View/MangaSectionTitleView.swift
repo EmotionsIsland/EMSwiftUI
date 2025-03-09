@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct MangaSectionTitleView: View {
+    let title: String
+    
     var body: some View {
         HStack {
-            Text("SectionTitle")
+            Text(title)
                 .font(FontFamily.SFPro.bold.swiftUIFont(size: 20))
                 .foregroundStyle(.blackBase)
             Spacer()
@@ -33,5 +35,5 @@ struct MangaSectionTitleView: View {
 }
 
 #Preview {
-    MangaSectionTitleView()
+    MangaSectionTitleView(title: "Manga title")
 }
