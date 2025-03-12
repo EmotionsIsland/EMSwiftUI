@@ -10,6 +10,12 @@
 		37C6FF132D7B1DC6006E27FB /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF122D7B1DC6006E27FB /* LoadingView.swift */; };
 		37C6FF152D7B1E96006E27FB /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF142D7B1E95006E27FB /* ErrorView.swift */; };
 		37C6FF172D7B1FB3006E27FB /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF162D7B1FB3006E27FB /* EmptyView.swift */; };
+		37C6FF1B2D7ED2AF006E27FB /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF1A2D7ED2AF006E27FB /* SelectionView.swift */; };
+		37C6FF1D2D7FF340006E27FB /* View.ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF1C2D7FF340006E27FB /* View.ext.swift */; };
+		37C6FF202D7FFDF8006E27FB /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF1F2D7FFDF8006E27FB /* TagButton.swift */; };
+		37C6FF232D80074E006E27FB /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF222D80074E006E27FB /* TagModel.swift */; };
+		37C6FF252D81842A006E27FB /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF242D81842A006E27FB /* TagView.swift */; };
+		37C6FF272D8187C4006E27FB /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF262D8187C4006E27FB /* GridView.swift */; };
 		808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */; };
 		D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */; };
 		D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */; };
@@ -51,6 +57,12 @@
 		37C6FF122D7B1DC6006E27FB /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		37C6FF142D7B1E95006E27FB /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		37C6FF162D7B1FB3006E27FB /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		37C6FF1A2D7ED2AF006E27FB /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
+		37C6FF1C2D7FF340006E27FB /* View.ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.ext.swift; sourceTree = "<group>"; };
+		37C6FF1F2D7FFDF8006E27FB /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
+		37C6FF222D80074E006E27FB /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
+		37C6FF242D81842A006E27FB /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		37C6FF262D8187C4006E27FB /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		D83E2ECA2B2FC51E00A338A7 /* MangaListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListService.swift; sourceTree = "<group>"; };
 		D83E2ECC2B2FC56400A338A7 /* MangaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListModel.swift; sourceTree = "<group>"; };
@@ -115,6 +127,23 @@
 			path = ViewComponents;
 			sourceTree = "<group>";
 		};
+		37C6FF1E2D7FFDE5006E27FB /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				37C6FF1F2D7FFDF8006E27FB /* TagButton.swift */,
+				37C6FF262D8187C4006E27FB /* GridView.swift */,
+			);
+			path = ViewComponents;
+			sourceTree = "<group>";
+		};
+		37C6FF212D800733006E27FB /* TagModel */ = {
+			isa = PBXGroup;
+			children = (
+				37C6FF222D80074E006E27FB /* TagModel.swift */,
+			);
+			path = TagModel;
+			sourceTree = "<group>";
+		};
 		7858FB117C86FDC565D9C2E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,9 +155,13 @@
 		D83E2ED22B2FD74E00A338A7 /* Part 3 FlexibleLayout */ = {
 			isa = PBXGroup;
 			children = (
+				37C6FF212D800733006E27FB /* TagModel */,
+				37C6FF1E2D7FFDE5006E27FB /* ViewComponents */,
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
 				D83E2EE02B2FDB6900A338A7 /* Part3Example.png */,
 				D83E2EE22B2FDBC300A338A7 /* FilterView.swift */,
+				37C6FF1A2D7ED2AF006E27FB /* SelectionView.swift */,
+				37C6FF242D81842A006E27FB /* TagView.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -137,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				D83E2ED02B2FCE6B00A338A7 /* ImageExtension.swift */,
+				37C6FF1C2D7FF340006E27FB /* View.ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -396,11 +430,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C6FF1B2D7ED2AF006E27FB /* SelectionView.swift in Sources */,
 				D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */,
 				D8A6077D2B2FC1F70093F5A4 /* Network.swift in Sources */,
+				37C6FF1D2D7FF340006E27FB /* View.ext.swift in Sources */,
 				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,
 				D8A607752B2FB7740093F5A4 /* MangaSingleGridView.swift in Sources */,
 				D83E2EE32B2FDBC300A338A7 /* FilterView.swift in Sources */,
+				37C6FF272D8187C4006E27FB /* GridView.swift in Sources */,
+				37C6FF202D7FFDF8006E27FB /* TagButton.swift in Sources */,
 				D8A607792B2FBE6F0093F5A4 /* MangaSectionTitleView.swift in Sources */,
 				D8A607732B2FB7430093F5A4 /* MangaSectionView.swift in Sources */,
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
@@ -409,6 +447,8 @@
 				D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */,
 				D8A607712B2FB23C0093F5A4 /* Fonts+Generated.swift in Sources */,
 				D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */,
+				37C6FF232D80074E006E27FB /* TagModel.swift in Sources */,
+				37C6FF252D81842A006E27FB /* TagView.swift in Sources */,
 				D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */,
 				D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */,
 				37C6FF152D7B1E96006E27FB /* ErrorView.swift in Sources */,
@@ -561,7 +601,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -594,7 +634,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
