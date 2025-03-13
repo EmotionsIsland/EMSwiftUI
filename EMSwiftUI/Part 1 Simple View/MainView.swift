@@ -16,7 +16,6 @@ struct MainView: View {
                 .animation(.default, value: viewModel.state)
         }
         .overlay(retryButton, alignment: .center)
-        .onAppear(perform: loadDataIfNeeded)
         .refreshable { viewModel.getData() }
     }
 }
@@ -48,11 +47,6 @@ private extension MainView {
                 }
             }
         }
-    }
-    
-    func loadDataIfNeeded() {
-        guard viewModel.mangaData.isEmpty else { return }
-        viewModel.getData()
     }
 }
 

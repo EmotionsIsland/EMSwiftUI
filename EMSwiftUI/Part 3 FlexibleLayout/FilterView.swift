@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct FilterView: View {
-    @StateObject var tagModel: TagModel = TagModel()
-    @State var availableWidthSpace: CGFloat = 0
-    
-    let spacing: CGFloat = 8
+    @StateObject private var tagViewModel: TagViewModel = TagViewModel()
+    @State private var availableWidthSpace: CGFloat = 0
         
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -22,20 +20,20 @@ struct FilterView: View {
                 }
             ScrollView(.vertical) {
                 SelectionView(
-                    tagModel: tagModel,
-                    availableWidthSpace: availableWidthSpace,
-                    buttonsMode: .orange
+                    tagViewModel: tagViewModel,
+                    availableWidthSpace: availableWidthSpace
                 )
-                VStack(alignment: .leading, spacing: 24) {
-                    ForEach(tagModel.tags.keys.sorted(), id: \.self) { key in
+                LazyVStack(alignment: .leading, spacing: 24) {
+                    ForEach(tagViewModel.tags.keys.sorted(), id: \.self) { key in
                         TagView(title: key) {
                             GridView(
-                                tagModel: tagModel,
-                                tags: tagModel.tags[key]!,
-                                availableWidthSpace: availableWidthSpace,
-                                buttonsMode: .white
+                                tagViewModel: tagViewModel,
+                                gridViewMode: .topic,
+                                title: key,
+                                availableWidthSpace: availableWidthSpace
                             )
                         }
+                        .drawingGroup()
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

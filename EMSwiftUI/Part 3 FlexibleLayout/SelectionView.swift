@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct SelectionView: View {
-    @ObservedObject var tagModel: TagModel
+    @ObservedObject var tagViewModel: TagViewModel
     let availableWidthSpace: CGFloat
-    let buttonsMode: ButtonMode
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -19,10 +18,10 @@ struct SelectionView: View {
                 .foregroundStyle(.blackBase)
             
             GridView(
-                tagModel: tagModel,
-                tags: tagModel.selectedTags,
-                availableWidthSpace: availableWidthSpace,
-                buttonsMode: buttonsMode
+                tagViewModel: tagViewModel,
+                gridViewMode: .selection,
+                title: "Selection",
+                availableWidthSpace: availableWidthSpace
             )
             
             VStack(spacing: 0) {
@@ -34,7 +33,7 @@ struct SelectionView: View {
                 .background(Color.orangeBase)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 Button {
-                    tagModel.removeAll()
+                    tagViewModel.removeAll()
                 } label: {
                     Text("Reset")
                         .foregroundStyle(.blackBase)
@@ -50,8 +49,7 @@ struct SelectionView: View {
 
 #Preview {
     SelectionView(
-        tagModel: TagModel(),
-        availableWidthSpace: 300,
-        buttonsMode: .orange
+        tagViewModel: TagViewModel(),
+        availableWidthSpace: 300
     )
 }

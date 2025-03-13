@@ -7,25 +7,29 @@
 
 import SwiftUI
 
+enum GridViewMode {
+    case selection, topic
+}
+
 struct GridView: View {
     @State private var tagsSize: [String: CGSize] = [:]
-    @ObservedObject var tagModel: TagModel
+    @ObservedObject var tagViewModel: TagViewModel
     
-    var tags: [String]
-    
+    let gridViewMode: GridViewMode
+    let title: String
     let spacing: CGFloat = 8
     let availableWidthSpace: CGFloat
-    let buttonsMode: ButtonMode
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            ForEach(computeRows(), id: \.self) { rowTags in
+            ForEach(computeRows(from: getRowsData()), id: \.self) { rowTags in
                 HStack(spacing: 8) {
                     ForEach(rowTags, id: \.self) { tag in
                         TagButton(
-                            tagModel: tagModel,
+                            tagViewModel: tagViewModel,
+                            title: getTitle(by: tag),
                             tag: tag,
-                            buttonMode: buttonsMode
+                            buttonMode: getButtonMode(by: tag)
                         )
                         .readViewSize { size in
                             tagsSize[tag] = size
@@ -35,13 +39,53 @@ struct GridView: View {
             }
         }
     }
+}
+
+private extension GridView {
+    private func getTitle(by tag: String) -> String {
+        switch gridViewMode {
+        case .selection:
+            let title = tagViewModel.selectedTags.first(where: { $0.tag == tag })?.title ?? "Default title"
+            return title
+        case .topic:
+            return title
+        }
+    }
     
-    func computeRows() -> [[String]] {
+    private func getButtonMode(by tag: String) -> ButtonMode {
+        switch gridViewMode {
+        case .selection:
+            return .selected
+        case .topic:
+            let isSelected = tagViewModel.tags[title]!.first(where: { $0.tag == tag} )?.isSelected ?? false
+            return isSelected ? .selected : .unselected
+        }
+    }
+    
+    private func getRowsData() -> [String] {
+        var tags: [String] = []
+        
+        switch gridViewMode {
+        case .selection:
+            for tag in tagViewModel.selectedTags {
+                tags.append(tag.tag)
+            }
+        case .topic:
+            let topicTags = tagViewModel.tags[title]!
+            for tag in topicTags {
+                tags.append(tag.tag)
+            }
+        }
+        
+        return tags
+    }
+    
+    private func computeRows(from data: [String]) -> [[String]] {
         var rows: [[String]] = [[]]
         var currentRow = 0
         var remainingWidth: CGFloat = availableWidthSpace
         
-        for tag in tags {
+        for tag in data {
             let elementSize = tagsSize[tag, default: CGSize(width: availableWidthSpace, height: 1)]
             
             if remainingWidth - elementSize.width >= 0 {
@@ -59,6 +103,6 @@ struct GridView: View {
     }
 }
 
-#Preview {
-    GridView(tagModel: TagModel(), tags: ["random word really long", "second word", "third", "fourth word"], availableWidthSpace: 300, buttonsMode: .orange)
-}
+//#Preview {
+//    GridView(tagModel: TagViewModel(), tags: ["random word really long", "second word", "third", "fourth word"], availableWidthSpace: 300, buttonsMode: .orange)
+//}

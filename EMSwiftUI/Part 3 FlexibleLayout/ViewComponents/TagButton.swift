@@ -8,22 +8,26 @@
 import SwiftUI
 
 enum ButtonMode {
-    case white, orange
+    case unselected, selected
 }
 
 struct TagButton: View {
-    @ObservedObject var tagModel: TagModel
+    @ObservedObject var tagViewModel: TagViewModel
+    let title: String
     let tag: String
     let buttonMode: ButtonMode
     
     var body: some View {
+        let _ = print(title)
         Button {
-        switch buttonMode {
-        case .white:
-            tagModel.addTag(tag)
-        case .orange:
-            tagModel.removeTag(tag)
-        } } label: {
+            switch buttonMode {
+            case .unselected:
+                tagViewModel.addTag(by: title, tag: tag)
+            case .selected:
+                tagViewModel.removeTag(by: title, tag: tag)
+            }
+            tagViewModel.switchState(by: title, tag)
+        } label: {
             HStack(spacing: 4) {
                 Image(systemName: "plus")
                 Text(tag)
@@ -42,11 +46,11 @@ struct ContentModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         switch buttonMode {
-        case .white:
+        case .unselected:
             content
                 .foregroundStyle(.blackBase)
                 .background(Color.grayBase)
-        case .orange:
+        case .selected:
             content
                 .foregroundStyle(.white)
                 .background(Color.orangeBase)
@@ -56,8 +60,9 @@ struct ContentModifier: ViewModifier {
 
 #Preview {
     TagButton(
-        tagModel: TagModel(),
+        tagViewModel: TagViewModel(),
+        title: "Default title",
         tag: "Default topic",
-        buttonMode: .white
+        buttonMode: .unselected
     )
 }

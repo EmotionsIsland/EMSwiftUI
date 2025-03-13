@@ -24,15 +24,17 @@ struct TagView<Content: View>: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                withAnimation(.easeInOut) {
+                withAnimation(.easeInOut(duration: 0.3)) {
                     isExpanded.toggle()
                 }
             }
-            
-            if isExpanded {
+            VStack(spacing: 0) {
                 content()
-                    .transition(.opacity.combined(with: .move(edge: .top)))
+                    .opacity(isExpanded ? 1 : 0)
+                
             }
+            .frame(maxHeight: isExpanded ? nil : 0)
+            .clipped()
         }
     }
 }

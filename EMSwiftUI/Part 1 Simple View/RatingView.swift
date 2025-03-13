@@ -37,7 +37,9 @@ struct RatingView: View {
             }
         }
     }
+}
 
+private extension RatingView {
     private func fillWidth(for index: Int, in totalWidth: CGFloat) -> CGFloat {
             let remaining = rating - Double(index)
             return totalWidth * CGFloat(max(0, min(1, remaining)))

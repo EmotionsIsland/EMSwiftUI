@@ -20,12 +20,28 @@ final class MangaListViewModel: ObservableObject {
         case error(description: String)
     }
     
+    enum MangaTitle: CaseIterable {
+        case popular, latest
+        
+        var title: String {
+            switch self {
+            case .popular:
+                return "Popular"
+            case .latest:
+                return "Latest"
+            }
+        }
+    }
+    
     private let mangaService = MangaListService(network: Network())
     private var cancellable = Set<AnyCancellable>()
+    let mangaTitle = MangaTitle.self
     
     // TODO: create Published variables
-    @Published var mangaData: [MangaData] = []
+    @Published private(set) var mangaData: [MangaData] = []
     @Published var state: State = .loading
+    
+    init() { loadDataIfNeeded() }
     
     // TODO: create getData func
     func getData() {
@@ -34,14 +50,23 @@ final class MangaListViewModel: ObservableObject {
         mangaService.getManga()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] errorCompletion in
-                self?.state = .loaded
+                guard let self = self else { return }
+                
+                state = .loaded
                 if case .failure(let error) = errorCompletion {
-                    self?.state = .error(description: error.localizedDescription)
+                    state = .error(description: error.localizedDescription)
                 }
             } receiveValue: { [weak self] model in
-                self?.mangaData = model.data
+                guard let self = self else { return }
+                
+                mangaData = model.data
             }
             .store(in: &cancellable)
+    }
+    
+    func loadDataIfNeeded() {
+        guard mangaData.isEmpty else { return }
+        getData()
     }
     
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
