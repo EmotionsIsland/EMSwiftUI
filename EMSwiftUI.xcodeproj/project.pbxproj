@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37667B9E2D83E68000BA790A /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37667B9D2D83E68000BA790A /* TagModel.swift */; };
 		37C6FF132D7B1DC6006E27FB /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF122D7B1DC6006E27FB /* LoadingView.swift */; };
 		37C6FF152D7B1E96006E27FB /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF142D7B1E95006E27FB /* ErrorView.swift */; };
 		37C6FF172D7B1FB3006E27FB /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF162D7B1FB3006E27FB /* EmptyView.swift */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
+		37667B9D2D83E68000BA790A /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		37C6FF122D7B1DC6006E27FB /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		37C6FF142D7B1E95006E27FB /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		37C6FF162D7B1FB3006E27FB /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37667B9C2D83E67000BA790A /* TagModel */ = {
+			isa = PBXGroup;
+			children = (
+				37667B9D2D83E68000BA790A /* TagModel.swift */,
+			);
+			path = TagModel;
+			sourceTree = "<group>";
+		};
 		37C6FF112D7B1DA7006E27FB /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 		D83E2ED22B2FD74E00A338A7 /* Part 3 FlexibleLayout */ = {
 			isa = PBXGroup;
 			children = (
+				37667B9C2D83E67000BA790A /* TagModel */,
 				37C6FF212D800733006E27FB /* TagViewModel */,
 				37C6FF1E2D7FFDE5006E27FB /* ViewComponents */,
 				D83E2ED32B2FD76B00A338A7 /* Readme.md */,
@@ -452,6 +463,7 @@
 				D8A607832B2FC2150093F5A4 /* DataState.swift in Sources */,
 				D83E2ECD2B2FC56400A338A7 /* MangaListModel.swift in Sources */,
 				37C6FF152D7B1E96006E27FB /* ErrorView.swift in Sources */,
+				37667B9E2D83E68000BA790A /* TagModel.swift in Sources */,
 				D8A6077F2B2FC2010093F5A4 /* Endpoint.swift in Sources */,
 				D8A607702B2FB23C0093F5A4 /* XCAssets+Generated.swift in Sources */,
 				37C6FF132D7B1DC6006E27FB /* LoadingView.swift in Sources */,

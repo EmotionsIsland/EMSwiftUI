@@ -39,7 +39,7 @@ final class MangaListViewModel: ObservableObject {
     
     // TODO: create Published variables
     @Published private(set) var mangaData: [MangaData] = []
-    @Published var state: State = .loading
+    @Published private(set) var state: State = .loading
     
     init() { loadDataIfNeeded() }
     

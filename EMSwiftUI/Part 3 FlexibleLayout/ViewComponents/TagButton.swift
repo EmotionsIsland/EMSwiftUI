@@ -20,13 +20,10 @@ struct TagButton: View {
     var body: some View {
         let _ = print(title)
         Button {
-            switch buttonMode {
-            case .unselected:
-                tagViewModel.addTag(by: title, tag: tag)
-            case .selected:
-                tagViewModel.removeTag(by: title, tag: tag)
-            }
-            tagViewModel.switchState(by: title, tag)
+            tagViewModel.manageButtonState(
+                by: buttonMode,
+                for: title, tag
+            )
         } label: {
             HStack(spacing: 4) {
                 Image(systemName: "plus")
@@ -61,8 +58,8 @@ struct ContentModifier: ViewModifier {
 #Preview {
     TagButton(
         tagViewModel: TagViewModel(),
-        title: "Default title",
-        tag: "Default topic",
+        title: TagStruct.defaultTag.title,
+        tag: TagStruct.defaultTag.tag,
         buttonMode: .unselected
     )
 }

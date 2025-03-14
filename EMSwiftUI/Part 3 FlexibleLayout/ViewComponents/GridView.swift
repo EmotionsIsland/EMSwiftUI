@@ -17,7 +17,6 @@ struct GridView: View {
     
     let gridViewMode: GridViewMode
     let title: String
-    let spacing: CGFloat = 8
     let availableWidthSpace: CGFloat
     
     var body: some View {
@@ -42,17 +41,17 @@ struct GridView: View {
 }
 
 private extension GridView {
-    private func getTitle(by tag: String) -> String {
+    func getTitle(by tag: String) -> String {
         switch gridViewMode {
         case .selection:
-            let title = tagViewModel.selectedTags.first(where: { $0.tag == tag })?.title ?? "Default title"
+            let title = tagViewModel.selectedTags.first(where: { $0.tag == tag })?.title ?? TagStruct.defaultTag.title
             return title
         case .topic:
             return title
         }
     }
     
-    private func getButtonMode(by tag: String) -> ButtonMode {
+    func getButtonMode(by tag: String) -> ButtonMode {
         switch gridViewMode {
         case .selection:
             return .selected
@@ -62,7 +61,7 @@ private extension GridView {
         }
     }
     
-    private func getRowsData() -> [String] {
+    func getRowsData() -> [String] {
         var tags: [String] = []
         
         switch gridViewMode {
@@ -80,7 +79,7 @@ private extension GridView {
         return tags
     }
     
-    private func computeRows(from data: [String]) -> [[String]] {
+    func computeRows(from data: [String]) -> [[String]] {
         var rows: [[String]] = [[]]
         var currentRow = 0
         var remainingWidth: CGFloat = availableWidthSpace
@@ -96,13 +95,18 @@ private extension GridView {
                 remainingWidth = availableWidthSpace
             }
             
-            remainingWidth -= (elementSize.width + spacing)
+            remainingWidth -= (elementSize.width)
         }
         
         return rows
     }
 }
 
-//#Preview {
-//    GridView(tagModel: TagViewModel(), tags: ["random word really long", "second word", "third", "fourth word"], availableWidthSpace: 300, buttonsMode: .orange)
-//}
+#Preview {
+    GridView(
+        tagViewModel: TagViewModel(),
+        gridViewMode: .topic,
+        title: "Stars",
+        availableWidthSpace: 300
+    )
+}
