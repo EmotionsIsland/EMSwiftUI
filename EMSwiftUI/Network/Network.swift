@@ -14,6 +14,7 @@ protocol NetworkProtocol: AnyObject {
 
 final class Network: NetworkProtocol {
     func getData<T>(with url: URL, _ type: T.Type) -> AnyPublisher<T, Error> where T : Decodable {
+        print(url)
         return URLSession.shared.dataTaskPublisher(for: url)
             .tryMap(self.handleOutput)
             .decode(type: type.self, decoder: decoder)

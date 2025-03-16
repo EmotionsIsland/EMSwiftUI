@@ -23,8 +23,6 @@ final class MangaListService: MangaListServiceProtocol {
     
     func getManga() -> AnyPublisher<MangaListModel, Error> {
         let endpoint = Endpoint.mangaList
-        print("\(endpoint.url)")
-        
         return network.getData(with: endpoint.url, MangaListModel.self)
     }
 }

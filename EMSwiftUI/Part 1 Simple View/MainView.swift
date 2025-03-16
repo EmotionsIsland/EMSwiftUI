@@ -8,13 +8,30 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var searchText: String = ""
+    @ObservedObject var viewModel: MangaListViewModel
+    private let sections = ["Popular", "Recently Added", "Last Updated", "Seasonal"]
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+        NavigationView {
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVStack {
+                    Divider()
+                    ForEach(sections, id: \.self) { section in
+                        MangaSectionView(viewModel: viewModel, title: section, mangaList: viewModel.mangaData)
+                    }
+                }
+            }
+            .onAppear {
+                viewModel.getData()
+            }
+            .searchable(text: $searchText)
         }
     }
 }
 
 #Preview {
-    MainView()
+    let network = Network()
+    let service = MangaListService(network: network)
+    let viewModel = MangaListViewModel(mangaService: service)
+    MainView(viewModel: viewModel)
 }

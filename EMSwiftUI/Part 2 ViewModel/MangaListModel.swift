@@ -63,7 +63,8 @@ struct AttributesDescription: Decodable {
 struct Tag: Decodable, Identifiable {
     let id: String
     let type: String
-    let attributes: TagAttributes
+    let attributes: TagAttributes?
+    var isSelected: Bool?
 }
 
 struct TagAttributes: Decodable {
