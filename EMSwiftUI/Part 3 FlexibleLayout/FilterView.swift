@@ -61,7 +61,6 @@ struct FilterView: View {
             }
         }
     }
-
 }
 
 #Preview {
