@@ -20,7 +20,9 @@ struct MangaSectionTitleView: View {
         }
         .foregroundColor(Const.Colors.black)
     }
-    
+}
+
+private extension MangaSectionTitleView {
     var moreButton: some View {
         Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
             HStack {

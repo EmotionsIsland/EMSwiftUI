@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @State private var searchManga = ""
-    @StateObject var mangaViewModel = MangaListViewModel(service: MangaListService(network: Network()))
+    @StateObject private var mangaViewModel = MangaListViewModel(service: MangaListService(network: Network()))
 
     var body: some View {
         NavigationView {
@@ -25,6 +25,3 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    MainView()
-}

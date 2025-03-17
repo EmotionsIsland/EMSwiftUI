@@ -10,36 +10,26 @@ import SwiftUI
 struct MangaSectionView: View {
     let sectionTitle: String
     let mangaData: [MangaData]
-    @State private var screenWidth: CGFloat = 0
     
     var body: some View {
         VStack {
             MangaSectionTitleView(sectionTitle: sectionTitle)
             mangaGrid
         }
-        .padding(.horizontal)
-        .padding(.bottom)
+        .padding([.horizontal, .bottom])
     }
-    
-    private let mangaColumns: [GridItem] = [
-        GridItem(.flexible(), spacing: Const.Layout.gridPadding),
-        GridItem(.flexible(), spacing: Const.Layout.gridPadding),
-        GridItem(.flexible())
-    ]
+}
+
+private extension MangaSectionView {
+    private var mangaColumns: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: Const.Layout.gridPadding), count: 3)
+    }
     
     private var mangaGrid: some View {
         LazyVGrid(columns: mangaColumns) {
             ForEach(mangaData) { manga in
-                MangaSingleGridView(manga: manga, width: screenWidth)
+                MangaSingleGridView(manga: manga)
             }
         }
-        .background(
-            GeometryReader { proxy in
-                Color.clear
-                    .onAppear {
-                        screenWidth = (proxy.size.width - 2*Const.Layout.gridPadding)/3
-                    }
-            }
-        )
     }
 }

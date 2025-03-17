@@ -32,7 +32,3 @@ struct RatingView: View {
         .foregroundColor(Color.starGray)
     }
 }
-
-#Preview {
-    RatingView(rating: 3.7)
-}

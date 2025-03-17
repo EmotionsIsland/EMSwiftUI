@@ -22,7 +22,7 @@ enum Const {
         static let gridPadding: CGFloat = 25
         static let imageRadius: CGFloat = 4
         static let buttonRadius: CGFloat = 8
-        static let imageAspectRatio: CGFloat = 3/2
+        static let imageAspectRatio: CGFloat = 2/3
         static let moreButtonName = "more"
     }
     

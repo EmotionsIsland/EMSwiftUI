@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MangaSingleGridView: View {
     let manga: MangaData
-    let width: CGFloat
     @EnvironmentObject var mangaViewModel: MangaListViewModel
     
     var body: some View {
@@ -28,6 +27,9 @@ struct MangaSingleGridView: View {
         }
     }
     
+}
+
+private extension MangaSingleGridView {
     var mangaCover: some View {
         AsyncImage(url: mangaViewModel.getCoverURL(manga: manga, sizeFormat: .size512)) { phase in
             switch phase {
@@ -35,13 +37,11 @@ struct MangaSingleGridView: View {
                 ProgressView()
             case .success(let image):
                 image
-                    .resizedToFillAndRounded(width: width, height: Const.Layout.imageAspectRatio*width)
+                    .resizedToFillAndRounded()
             case .failure:
                 Image(systemName: "exclamationmark.triangle")
-                    .resizedToFitAndRounded(width: width, height: Const.Layout.imageAspectRatio*width)
             @unknown default:
                 Image(systemName: "book.pages")
-                    .resizedToFitAndRounded(width: width, height: Const.Layout.imageAspectRatio*width)
             }
         }
     }
