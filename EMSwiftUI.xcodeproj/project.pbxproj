@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6073F2B2F3DE20093F5A4 /* ContentView.swift */; };
+		D8A607402B2F3DE20093F5A4 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6073F2B2F3DE20093F5A4 /* TabBar.swift */; };
 		D8A607452B2F3DE40093F5A4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8A607442B2F3DE40093F5A4 /* Preview Assets.xcassets */; };
 		D8D62A3A2D88465C002330A1 /* Netify in Frameworks */ = {isa = PBXBuildFile; productRef = D8D62A392D88465C002330A1 /* Netify */; };
 		D8D62A3D2D884F92002330A1 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = D8D62A3C2D884F92002330A1 /* Factory */; };
@@ -15,7 +15,7 @@
 
 /* Begin PBXFileReference section */
 		D8A6073A2B2F3DE20093F5A4 /* EMSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D8A6073F2B2F3DE20093F5A4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D8A6073F2B2F3DE20093F5A4 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		D8A607442B2F3DE40093F5A4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,7 +81,7 @@
 				D8D629F22D8843E9002330A1 /* Library */,
 				D8D629F12D8843E2002330A1 /* Core */,
 				D8D629F02D8843DA002330A1 /* Common */,
-				D8A6073F2B2F3DE20093F5A4 /* ContentView.swift */,
+				D8A6073F2B2F3DE20093F5A4 /* TabBar.swift */,
 				D8A607432B2F3DE40093F5A4 /* Preview Content */,
 			);
 			path = EMSwiftUI;
@@ -174,7 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,
+				D8A607402B2F3DE20093F5A4 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
