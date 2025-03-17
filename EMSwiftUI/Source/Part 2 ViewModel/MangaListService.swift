@@ -16,8 +16,8 @@ protocol MangaListService {
 final class MangaListServiceImpl: MangaListService {
     let netify: Netify
     
-    init(container: Container) {
-        self.netify = container.netify()
+    init(netify: Netify) {
+        self.netify = netify
     }
     
     func getManga() async throws -> MangaListModel {

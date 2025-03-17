@@ -14,7 +14,9 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-final class MangaListViewModel: ObservableObject {
+protocol MangaListViewModel: ObservableObject { }
+
+final class MangaListViewModelImpl: MangaListViewModel {
     // TODO: create Published variables
     // TODO: create getData func
     private let service: MangaListService

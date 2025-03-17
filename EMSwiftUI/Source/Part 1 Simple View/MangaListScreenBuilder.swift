@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Factory
 
 final class MangaListScreenBuilder {
     static func build() -> some View {
-        let service = MangaListServiceImpl(container: .shared)
-        let viewModel = MangaListViewModel(service: service)
+        let service: MangaListService = MangaListServiceImpl(netify: Container.shared.netify())
+        let viewModel = MangaListViewModelImpl(service: service)
         let view = MangaListScreen(viewModel: viewModel)
         
         return view
