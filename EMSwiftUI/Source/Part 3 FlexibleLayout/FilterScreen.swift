@@ -1,5 +1,5 @@
 //
-//  FilterView.swift
+//  FilterScreen.swift
 //  EMSwiftUI
 //
 //  Created by Akbar Umetov on 18/12/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FilterView: View {
+struct FilterScreen: View {
     var body: some View {
         VStack {
             // TODO: Create View
@@ -16,5 +16,5 @@ struct FilterView: View {
 }
 
 #Preview {
-    FilterView()
+    FilterScreen()
 }

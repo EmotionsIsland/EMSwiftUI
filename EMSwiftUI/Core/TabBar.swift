@@ -26,7 +26,7 @@ struct TabBar: View {
 
 private extension TabBar {
     var mainTab: some View {
-        MainView()
+        MangaListScreenBuilder.build()
             .tag(TabSelection.main)
             .tabItem {
                 Image(.tabBarHome)
@@ -35,7 +35,7 @@ private extension TabBar {
     }
     
     var filterTab: some View {
-        FilterView()
+        FilterScreenBuilder.build()
             .tag(TabSelection.main)
             .tabItem {
                 Image(.tabBarSearch)
