@@ -11,6 +11,6 @@
 ### Для создания ячеек, используйте LazyVGrid/LazyHGrid
 ### Расстояние между ячейками гридов - 25
 
-### В проекте уже заведен SwiftGen, поэтому для шрифтов следует использовать его
+### В проекте уже заведены шрифты, цвета и иконки
 
 ### Ссылка на Figma: https://www.figma.com/file/fW9ONdAr4MMj11jLZdwGrP/Untitled?type=design&node-id=0-1&mode=design&t=3pKWYsSE3qpWE8Mv-0
