@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		37667B9E2D83E68000BA790A /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37667B9D2D83E68000BA790A /* TagModel.swift */; };
+		37AFF51F2D886EEF003D16E0 /* GridService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AFF51E2D886EEF003D16E0 /* GridService.swift */; };
 		37C6FF132D7B1DC6006E27FB /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF122D7B1DC6006E27FB /* LoadingView.swift */; };
 		37C6FF152D7B1E96006E27FB /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF142D7B1E95006E27FB /* ErrorView.swift */; };
 		37C6FF172D7B1FB3006E27FB /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C6FF162D7B1FB3006E27FB /* EmptyView.swift */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		37667B9D2D83E68000BA790A /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
+		37AFF51E2D886EEF003D16E0 /* GridService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridService.swift; sourceTree = "<group>"; };
 		37C6FF122D7B1DC6006E27FB /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		37C6FF142D7B1E95006E27FB /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		37C6FF162D7B1FB3006E27FB /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -127,6 +129,14 @@
 			path = TagModel;
 			sourceTree = "<group>";
 		};
+		37AFF51D2D886EDF003D16E0 /* GridService */ = {
+			isa = PBXGroup;
+			children = (
+				37AFF51E2D886EEF003D16E0 /* GridService.swift */,
+			);
+			path = GridService;
+			sourceTree = "<group>";
+		};
 		37C6FF112D7B1DA7006E27FB /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +175,7 @@
 		D83E2ED22B2FD74E00A338A7 /* Part 3 FlexibleLayout */ = {
 			isa = PBXGroup;
 			children = (
+				37AFF51D2D886EDF003D16E0 /* GridService */,
 				37667B9C2D83E67000BA790A /* TagModel */,
 				37C6FF212D800733006E27FB /* TagViewModel */,
 				37C6FF1E2D7FFDE5006E27FB /* ViewComponents */,
@@ -455,6 +466,7 @@
 				D8A607772B2FB84E0093F5A4 /* RatingView.swift in Sources */,
 				D8A6074E2B2F3E1A0093F5A4 /* MainView.swift in Sources */,
 				D8A6073E2B2F3DE20093F5A4 /* EMSwiftUIApp.swift in Sources */,
+				37AFF51F2D886EEF003D16E0 /* GridService.swift in Sources */,
 				D83E2ED12B2FCE6B00A338A7 /* ImageExtension.swift in Sources */,
 				D8A607712B2FB23C0093F5A4 /* Fonts+Generated.swift in Sources */,
 				D8A607812B2FC20E0093F5A4 /* NetworkError.swift in Sources */,

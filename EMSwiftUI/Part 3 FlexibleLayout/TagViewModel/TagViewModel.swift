@@ -10,6 +10,7 @@ import Foundation
 final class TagViewModel: ObservableObject {
     @Published private(set) var selectedTags: [TagStruct] = []
     @Published private(set) var tags: [String: [TagStruct]] = TagStruct.tags
+    private var gridService = GridService()
     
     // MARK: - Internal access functions
     func manageButtonState(by buttonMode: ButtonMode, for title: String, _ tag: String) {
@@ -35,6 +36,44 @@ final class TagViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    // MARK: - Callling grid service 
+    func computeRows(
+        by title: String,
+        for gridViewMode: GridViewMode, _ tagsSize: [String: CGSize], _ availableWidthSpace: CGFloat
+    ) -> [[String]] {
+        
+        let rowsData = gridService.getRowsData(
+            by: title,
+            for: gridViewMode, selectedTags, tags)
+        
+        let rowsStructure = gridService.computeRows(from: rowsData, for: tagsSize, availableWidthSpace)
+        return rowsStructure
+    }
+    
+    func getTitle(
+        by tag: String, _ title: String,
+        for gridViewMode: GridViewMode
+    ) -> String {
+        
+        let title = gridService.getTitle(
+            by: tag, title,
+            for: gridViewMode, selectedTags
+        )
+        return title
+    }
+    
+    func getButtonMode(
+        by tag: String, _ title: String,
+        for gridViewMode: GridViewMode
+    ) -> ButtonMode {
+        
+        let buttonMode = gridService.getButtonMode(
+            by: tag, title,
+            for: gridViewMode, tags
+        )
+        return buttonMode
     }
     
     // MARK: - Private access functions

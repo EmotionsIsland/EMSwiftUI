@@ -50,14 +50,16 @@ final class MangaListViewModel: ObservableObject {
         mangaService.getManga()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] errorCompletion in
-                guard let self = self else { return }
+                guard let self else { return }
                 
-                state = .loaded
-                if case .failure(let error) = errorCompletion {
+                switch errorCompletion {
+                case .finished:
+                    state = .loaded
+                case .failure(let error):
                     state = .error(description: error.localizedDescription)
                 }
             } receiveValue: { [weak self] model in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 mangaData = model.data
             }

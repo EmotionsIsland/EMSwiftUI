@@ -18,7 +18,6 @@ struct TagButton: View {
     let buttonMode: ButtonMode
     
     var body: some View {
-        let _ = print(title)
         Button {
             tagViewModel.manageButtonState(
                 by: buttonMode,
