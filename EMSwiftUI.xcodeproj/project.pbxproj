@@ -67,7 +67,6 @@
 		D8A6075B2B2F45330093F5A4 /* SF-Pro-Text-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Black.otf"; sourceTree = "<group>"; };
 		D8A6075C2B2F45330093F5A4 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		D8A607682B2F46020093F5A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		D8A6076B2B2F4E3D0093F5A4 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		D8A6076F2B2FB23C0093F5A4 /* Font+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
 		D8A607722B2FB7430093F5A4 /* MangaSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaSectionView.swift; sourceTree = "<group>"; };
 		D8A607742B2FB7740093F5A4 /* MangaSingleGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaSingleGridView.swift; sourceTree = "<group>"; };
@@ -139,7 +138,6 @@
 				D83E2EE42B2FDCD500A338A7 /* Extensions */,
 				D8A6075D2B2F453F0093F5A4 /* Resources */,
 				D8A607432B2F3DE40093F5A4 /* Preview Content */,
-				D8A6076B2B2F4E3D0093F5A4 /* swiftgen.yml */,
 			);
 			path = EMSwiftUI;
 			sourceTree = "<group>";
