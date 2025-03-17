@@ -42,7 +42,3 @@ private extension TabBar {
             }
     }
 }
-
-#Preview {
-    TabBar()
-}
