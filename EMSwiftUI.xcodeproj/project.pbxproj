@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		808046BDC7230B0BCA37942D /* Pods_EMSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFFCCF5DFFC0EB14123A852 /* Pods_EMSwiftUI.framework */; };
+		A3CAF82A2D88420F006FA6B9 /* FilterViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CAF8292D88420F006FA6B9 /* FilterViewService.swift */; };
 		A3FC5F912D86F90500E44BDB /* ExpandableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FC5F902D86F90500E44BDB /* ExpandableView.swift */; };
 		A3FC5F932D86F90C00E44BDB /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FC5F922D86F90C00E44BDB /* FilterViewModel.swift */; };
 		A3FC5F952D86F91300E44BDB /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FC5F942D86F91300E44BDB /* TagView.swift */; };
@@ -50,6 +51,7 @@
 /* Begin PBXFileReference section */
 		2CAF19D8BED18FA4E6C37A48 /* Pods-EMSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		99433C400A593D17824A8DCB /* Pods-EMSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-EMSwiftUI/Pods-EMSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
+		A3CAF8292D88420F006FA6B9 /* FilterViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewService.swift; sourceTree = "<group>"; };
 		A3FC5F902D86F90500E44BDB /* ExpandableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableView.swift; sourceTree = "<group>"; };
 		A3FC5F922D86F90C00E44BDB /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		A3FC5F942D86F91300E44BDB /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				A3FC5F922D86F90C00E44BDB /* FilterViewModel.swift */,
 				A3FC5F942D86F91300E44BDB /* TagView.swift */,
 				A3FC5F962D86F92E00E44BDB /* WrappingStack.swift */,
+				A3CAF8292D88420F006FA6B9 /* FilterViewService.swift */,
 			);
 			path = "Part 3 FlexibleLayout";
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D83E2ECB2B2FC51E00A338A7 /* MangaListService.swift in Sources */,
+				A3CAF82A2D88420F006FA6B9 /* FilterViewService.swift in Sources */,
 				D8A6077D2B2FC1F70093F5A4 /* Network.swift in Sources */,
 				A3FC5F932D86F90C00E44BDB /* FilterViewModel.swift in Sources */,
 				D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */,

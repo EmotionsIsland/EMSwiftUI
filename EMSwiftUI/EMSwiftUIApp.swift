@@ -11,7 +11,7 @@ import SwiftUI
 struct EMSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            FilterView(title: "Title")
+            FilterView()
         }
     }
 }

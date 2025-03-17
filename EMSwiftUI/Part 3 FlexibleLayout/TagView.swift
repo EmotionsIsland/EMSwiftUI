@@ -17,7 +17,7 @@ struct TagView: View {
             }
         } label: {
             HStack {
-                if tag.isSelected ?? false {
+                if tag.isSelected {
                     Image(systemName: "plus")
                         .frame(width: 18, height: 18)
                 }
@@ -27,9 +27,8 @@ struct TagView: View {
             }
             .foregroundStyle(.white)
             .padding(8)
-            .background(tag.isSelected ?? false ? .orangeBase : .grayBase)
+            .background(tag.isSelected ? .orangeBase : .grayBase)
             .cornerRadius(8)
-        }
-       
+        }       
     }
 }

@@ -21,17 +21,7 @@ struct MainView: View {
                     }
                 }
             }
-            .onAppear {
-                viewModel.getData()
-            }
             .searchable(text: $searchText)
         }
     }
-}
-
-#Preview {
-    let network = Network()
-    let service = MangaListService(network: network)
-    let viewModel = MangaListViewModel(mangaService: service)
-    MainView(viewModel: viewModel)
 }

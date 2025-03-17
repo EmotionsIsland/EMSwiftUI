@@ -64,7 +64,13 @@ struct Tag: Decodable, Identifiable {
     let id: String
     let type: String
     let attributes: TagAttributes?
-    var isSelected: Bool?
+    var isSelected: Bool = false
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case type
+        case attributes
+    }
 }
 
 struct TagAttributes: Decodable {
@@ -81,3 +87,4 @@ struct Relationship: Decodable {
 struct CoverAttributes: Decodable {
     let fileName: String
 }
+

@@ -11,9 +11,7 @@ struct MangaSectionView: View {
     @ObservedObject var viewModel: MangaListViewModel
     let title: String
     let mangaList: [MangaData]
-    private let columns = [GridItem(.fixed(100), spacing: 25),
-                   GridItem(.fixed(100), spacing: 25),
-                   GridItem(.fixed(100))]
+    private let columns = Array(repeating: GridItem(.fixed(100), spacing: 25), count: 3)
    
     var body: some View {
         VStack {
@@ -27,11 +25,4 @@ struct MangaSectionView: View {
             }
         
         }
-}
-
-#Preview {
-    let netwok = Network()
-    let service = MangaListService(network: netwok)
-    let viewModel = MangaListViewModel(mangaService: service)
-    MangaSectionView(viewModel: viewModel, title: "Test", mangaList: [])
 }

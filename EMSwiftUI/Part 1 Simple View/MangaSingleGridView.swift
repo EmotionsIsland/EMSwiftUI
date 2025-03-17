@@ -13,16 +13,7 @@ struct MangaSingleGridView: View {
     @State private var url: URL?
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            AsyncImage(url: url) { image in
-                image.resizable()
-                    .resizedToFill(width: 100, height: 144)
-                    .cornerRadius(8)
-                    .padding(.bottom, 4)
-            } placeholder: {
-                ProgressView()
-                    .frame(width: 100, height: 144)
-                    .padding(.bottom, 4)
-            }
+            GridImageView(imageURL: url)
                 
             Text(manga.attributes.title.en ?? "")
                 .font(.custom(FontFamily.SFPro.semibold, size: 16))
@@ -35,6 +26,22 @@ struct MangaSingleGridView: View {
         .frame(height: 208)
         .onAppear {
             url =  viewModel.getCoverURL(manga: manga, sizeFormat: .size512)
+        }
+    }
+}
+
+struct GridImageView: View {
+    let imageURL: URL?
+    var body: some View {
+        AsyncImage(url: imageURL) { image in
+            image.resizable()
+                .resizedToFill(width: 100, height: 144)
+                .cornerRadius(8)
+                .padding(.bottom, 4)
+        } placeholder: {
+            ProgressView()
+                .frame(width: 100, height: 144)
+                .padding(.bottom, 4)
         }
     }
 }

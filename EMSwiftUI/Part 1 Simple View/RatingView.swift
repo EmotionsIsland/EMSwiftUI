@@ -11,25 +11,26 @@ struct RatingView: View {
     let rating: CGFloat
     let maxRating: Int
     
+    private var ratingWidth: (Int) -> CGFloat {
+        { index in
+            max(0, min(1, rating - CGFloat(index))) * 17
+        }
+    }
+    
     var body: some View {
         HStack(spacing: 4) {
             ForEach(0..<maxRating, id: \.self) { index in
                 ZStack(alignment: .leading) {
                     Image(.starIcon)
                         .foregroundColor(.gray)
-                        .frame(width: 17)
-                        .frame(height: 16)
+                        .frame(width:17 , height: 16)
                     
                     Image(.starIcon)
                         .foregroundColor(.yellow)
                         .mask(Rectangle()
-                            .size(width: max(0, min(1, rating - CGFloat(index))) * 17,height: 16))
+                            .size(width: ratingWidth(index), height: 16))
                 }
             }
         }
     }
-}
-
-#Preview {
-    RatingView(rating: 3.5, maxRating: 5)
 }

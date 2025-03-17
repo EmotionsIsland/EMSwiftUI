@@ -8,18 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel: MangaListViewModel
-    
-    init() {
-        let network = Network()
-        let service = MangaListService(network: network)
-        self._viewModel = StateObject(wrappedValue: MangaListViewModel(mangaService: service))
-    }
+    @StateObject private var viewModel: MangaListViewModel = MangaListViewModel(mangaService: MangaListService(network: Network()))
     var body: some View {
         MainView(viewModel: viewModel)
     }
-}
-
-#Preview {
-    ContentView()
 }

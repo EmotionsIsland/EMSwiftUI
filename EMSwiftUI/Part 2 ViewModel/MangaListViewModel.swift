@@ -20,12 +20,13 @@ final class MangaListViewModel: ObservableObject {
     private let mangaService: MangaListServiceProtocol
     // TODO: create Published variables
     @Published var mangaData: [MangaData] = []
-    // INIT: INIT
+    
     init(mangaService: MangaListServiceProtocol) {
         self.mangaService = mangaService
+        getData()
     }
     // TODO: create getData func
-    func getData() {
+    private func getData() {
         mangaService.getManga()
             .receive(on: DispatchQueue.main)
             .sink { comp in
@@ -35,7 +36,8 @@ final class MangaListViewModel: ObservableObject {
                 default:
                     break
                 }
-            } receiveValue: { mangas in
+            } receiveValue: { [weak self] mangas in
+                guard let self else { return }
                 self.mangaData = mangas.data
             }
             .store(in: &cancellables)
