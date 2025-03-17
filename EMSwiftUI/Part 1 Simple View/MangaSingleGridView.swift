@@ -11,9 +11,11 @@ struct MangaSingleGridView: View {
     let manga: MangaData
     @EnvironmentObject var mangaViewModel: MangaListViewModel
     
+    typealias Const = MangaListMainScreenModel.Const
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            mangaCover
+            MangaCover(url: mangaViewModel.getCoverURL(manga: manga, sizeFormat: .size512))
             Text(manga.attributes.unwrappedTitle)
                 .font(.custom(FontFamily.SFPro.semibold,
                               size: Const.Text.mediumSize))
@@ -26,23 +28,6 @@ struct MangaSingleGridView: View {
                 .lineLimit(1)
         }
     }
-    
 }
 
-private extension MangaSingleGridView {
-    var mangaCover: some View {
-        AsyncImage(url: mangaViewModel.getCoverURL(manga: manga, sizeFormat: .size512)) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                image
-                    .resizedToFillAndRounded()
-            case .failure:
-                Image(systemName: "exclamationmark.triangle")
-            @unknown default:
-                Image(systemName: "book.pages")
-            }
-        }
-    }
-}
+

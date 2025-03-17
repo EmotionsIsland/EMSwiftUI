@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RatingView: View {
     var rating: Double
+    
+    typealias Const = MangaListMainScreenModel.Const
 
     var body: some View {
         let stars = HStack {

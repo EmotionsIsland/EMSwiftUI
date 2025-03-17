@@ -11,6 +11,8 @@ struct FilterView: View {
     @State private var filtersData: [String: [String]] = [:]
     @State private var pickedFiltersData = Set<String>()
     
+    typealias Const = MangaListMainScreenModel.Const
+    
     var body: some View {
         NavigationView {
             ScrollView {

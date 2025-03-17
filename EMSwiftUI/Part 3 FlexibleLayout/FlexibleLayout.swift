@@ -15,6 +15,8 @@ struct FlexibleLayout<Content: View>: View {
     @State private var gridHeight: CGFloat = 0
     @State var elementsSize: [String: CGSize] = [:]
     
+    typealias Const = MangaListMainScreenModel.Const
+    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
             GeometryReader { proxy in

@@ -8,6 +8,8 @@
 import SwiftUI
 
 extension Text {
+    typealias Const = MangaListMainScreenModel.Const
+
     func oranged() -> some View {
         self
             .font(.custom(FontFamily.SFPro.regular, size: Const.Text.mediumSize))

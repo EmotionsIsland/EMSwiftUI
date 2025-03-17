@@ -8,6 +8,8 @@
 import SwiftUI
 
 extension Image {
+    typealias Const = MangaListMainScreenModel.Const
+
     func resizedToFill(width: CGFloat? = nil, height: CGFloat? = nil) -> some View {
         self
             .resizable()

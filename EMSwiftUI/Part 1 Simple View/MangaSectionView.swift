@@ -11,6 +11,8 @@ struct MangaSectionView: View {
     let sectionTitle: String
     let mangaData: [MangaData]
     
+    typealias Const = MangaListMainScreenModel.Const
+    
     var body: some View {
         VStack {
             MangaSectionTitleView(sectionTitle: sectionTitle)

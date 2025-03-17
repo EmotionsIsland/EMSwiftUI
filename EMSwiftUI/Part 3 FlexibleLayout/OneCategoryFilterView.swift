@@ -16,6 +16,8 @@ struct OneCategoryFilterView: View {
     @State private var isShowingFilters: Bool = false
     @State private var height: CGFloat = 0
     
+    typealias Const = MangaListMainScreenModel.Const
+    
     var body: some View {
         VStack {
             categoryButton

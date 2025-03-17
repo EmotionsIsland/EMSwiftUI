@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OrangeButtonStyle: ViewModifier {
    let color: Color
+    
+    typealias Const = MangaListMainScreenModel.Const
 
     func body(content: Content) -> some View {
         content

@@ -14,16 +14,10 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-enum MangaSortKey: String, CaseIterable {
-    case popular = "Popular"
-    case new = "Recently Added"
-    case updated = "Last updates"
-    case season = "Seasonal"
-}
-
 final class MangaListViewModel: ObservableObject {
-    @Published var mangaList: [MangaData] = []
-    @Published var mangaRatingList: [String: Double] = [:]
+    @Published private(set) var mangaList: [MangaData] = []
+    @Published private(set) var mangaRatingList: [String: Double] = [:]
+    @Published private(set) var isLoaded = false
     
     private let service: MangaListService
     private var cancellables = Set<AnyCancellable>()
@@ -47,6 +41,7 @@ final class MangaListViewModel: ObservableObject {
                 guard let self else { return }
                 self.mangaList = response.data
                 getRating()
+                self.isLoaded = true
             })
             .store(in: &cancellables)
     }
@@ -75,7 +70,7 @@ final class MangaListViewModel: ObservableObject {
     }
     
     // функция сортировки по различным критериям
-    func getSortedData(by key: MangaSortKey) -> [MangaData] {
+    func getSortedData(by key: MangaListMainScreenModel.SortKey) -> [MangaData] {
         switch key {
         case .popular:
             mangaList.sorted(by: compareRatings)

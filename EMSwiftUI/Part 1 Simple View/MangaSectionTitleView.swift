@@ -10,6 +10,8 @@ import SwiftUI
 struct MangaSectionTitleView: View {
     let sectionTitle: String
     
+    typealias Const = MangaListMainScreenModel.Const
+    
     var body: some View {
         HStack {
             Text(sectionTitle)
