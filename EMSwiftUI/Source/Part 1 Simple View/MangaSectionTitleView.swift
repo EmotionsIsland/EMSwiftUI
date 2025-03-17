@@ -14,7 +14,3 @@ struct MangaSectionTitleView: View {
         }
     }
 }
-
-#Preview {
-    MangaSectionTitleView()
-}

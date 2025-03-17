@@ -20,7 +20,3 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         }
     }
 }
-
-#Preview {
-    MangaListScreen(viewModel: MangaListViewModel(service: MangaListServiceImpl(container: .shared)))
-}

@@ -17,7 +17,3 @@ struct RatingView: View {
         }
     }
 }
-
-#Preview {
-    RatingView(rating: 4, maxRating: 5)
-}

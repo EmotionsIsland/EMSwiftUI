@@ -14,7 +14,3 @@ struct FilterScreen: View {
         }
     }
 }
-
-#Preview {
-    FilterScreen()
-}

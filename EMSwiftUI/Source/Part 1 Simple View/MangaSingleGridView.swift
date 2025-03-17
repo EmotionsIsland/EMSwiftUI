@@ -14,7 +14,3 @@ struct MangaSingleGridView: View {
         }
     }
 }
-
-#Preview {
-    MangaSingleGridView()
-}
