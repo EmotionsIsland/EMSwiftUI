@@ -32,7 +32,9 @@ struct OneCategoryFilterView: View {
             }
         }
     }
-    
+}
+
+private extension OneCategoryFilterView {
     private var categoryButton: some View {
         HStack {
             Text(category)

@@ -30,7 +30,9 @@ struct FlexibleLayout<Content: View>: View {
             grid
         }
     }
-    
+}
+
+private extension FlexibleLayout {
     var grid: some View {
         VStack(alignment: .leading, spacing: Const.Layout.smallPadding) {
             ForEach(makeGrid(), id: \.self) { rowElements in
