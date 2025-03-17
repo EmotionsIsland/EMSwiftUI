@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Combine
+import Netify
 
 enum SizeFormat: String {
     case size256 = ".256.jpg"
@@ -17,14 +17,18 @@ enum SizeFormat: String {
 final class MangaListViewModel: ObservableObject {
     // TODO: create Published variables
     // TODO: create getData func
+    private let service: MangaListService
     
-    func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL {
-        guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" } )?.attributes?.fileName else { return URL(string: "")! }
+    init(service: MangaListService) {
+        self.service = service
         
-        return Endpoint(path: "/covers/" + manga.id + "/" + fileName + sizeFormat.rawValue).coverURL
+        Task {
+            try await self.getData()
+        }
     }
     
-    func getRating(manga: MangaData) -> URL {
-        return Endpoint(path: "/statistics/manga/" + manga.id).url
+    @MainActor
+    private func getData() async throws {
+        
     }
 }

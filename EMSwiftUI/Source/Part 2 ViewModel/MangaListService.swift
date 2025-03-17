@@ -6,25 +6,21 @@
 //
 
 import Foundation
-import Combine
+import Factory
+import Netify
 
-protocol MangaListServiceProtocol: AnyObject {
-    var network: NetworkProtocol { get }
-    
-    func getManga() -> AnyPublisher<MangaListModel, Error>
+protocol MangaListService {
+    func getManga() async throws -> MangaListModel
 }
 
-final class MangaListService: MangaListServiceProtocol {
-    let network: NetworkProtocol
+final class MangaListServiceImpl: MangaListService {
+    let netify: Netify
     
-    init(network: NetworkProtocol) {
-        self.network = network
+    init(container: Container) {
+        self.netify = container.netify()
     }
     
-    func getManga() -> AnyPublisher<MangaListModel, Error> {
-        let endpoint = Endpoint.mangaList
-        print("\(endpoint.url)")
-        
-        return network.getData(with: endpoint.url, MangaListModel.self)
+    func getManga() async throws -> MangaListModel {
+        try await netify.request(API.mangaList, type: MangaListModel.self)
     }
 }

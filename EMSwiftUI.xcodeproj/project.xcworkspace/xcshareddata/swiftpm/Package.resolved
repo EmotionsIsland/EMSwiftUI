@@ -1,0 +1,33 @@
+{
+  "originHash" : "4486abb5399b141327e28c8d3ed0fb8082860f277be310d6288b4d7f8ac50a95",
+  "pins" : [
+    {
+      "identity" : "factory",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hmlongco/Factory.git",
+      "state" : {
+        "revision" : "fb04a8918848e413d3921d346a23bae7f81088d9",
+        "version" : "2.4.3"
+      }
+    },
+    {
+      "identity" : "logify",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aumetov7/Logify.git",
+      "state" : {
+        "revision" : "38d5f0669f99ad4d340f30277b07d972e3404e3b",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "netify",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aumetov7/Netify.git",
+      "state" : {
+        "revision" : "39260ccdccf8d76269d4dbf1de1cf9d2f0f76222",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 3
+}

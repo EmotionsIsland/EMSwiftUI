@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D8A607402B2F3DE20093F5A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6073F2B2F3DE20093F5A4 /* ContentView.swift */; };
 		D8A607452B2F3DE40093F5A4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8A607442B2F3DE40093F5A4 /* Preview Assets.xcassets */; };
+		D8D62A3A2D88465C002330A1 /* Netify in Frameworks */ = {isa = PBXBuildFile; productRef = D8D62A392D88465C002330A1 /* Netify */; };
+		D8D62A3D2D884F92002330A1 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = D8D62A3C2D884F92002330A1 /* Factory */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8D62A3A2D88465C002330A1 /* Netify in Frameworks */,
+				D8D62A3D2D884F92002330A1 /* Factory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +145,10 @@
 				Base,
 			);
 			mainGroup = D8A607312B2F3DE20093F5A4;
+			packageReferences = (
+				D8D62A382D88465C002330A1 /* XCRemoteSwiftPackageReference "Netify" */,
+				D8D62A3B2D884F92002330A1 /* XCRemoteSwiftPackageReference "Factory" */,
+			);
 			productRefGroup = D8A6073B2B2F3DE20093F5A4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -378,6 +386,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D8D62A382D88465C002330A1 /* XCRemoteSwiftPackageReference "Netify" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aumetov7/Netify.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		D8D62A3B2D884F92002330A1 /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D8D62A392D88465C002330A1 /* Netify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8D62A382D88465C002330A1 /* XCRemoteSwiftPackageReference "Netify" */;
+			productName = Netify;
+		};
+		D8D62A3C2D884F92002330A1 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8D62A3B2D884F92002330A1 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D8A607322B2F3DE20093F5A4 /* Project object */;
 }
