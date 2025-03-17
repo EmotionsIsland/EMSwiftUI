@@ -11,6 +11,7 @@ import Netify
 
 extension API {
     static let api: Self = API(host: "api.mangadex.org")
+    static let coverURL: Self = API(host: "uploads.mangadex.org")
     
     static var mangaList: Endpoint {
         let queryItems = [
@@ -22,8 +23,10 @@ extension API {
         
         return api.endpoint(path: "/manga", queryItems: queryItems)
     }
-    
-    static var mangaCover: Endpoint {
-        api.endpoint(path: "/cover")
+
+    static func coverURL(for manga: MangaData, _ sizeFormat: SizeFormat = .size512) -> URL? {
+        guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" })?.attributes?.fileName else { return nil }
+
+        return coverURL.endpoint(path: "/covers/\(manga.id)/\(fileName)\(sizeFormat.rawValue)").url
     }
 }

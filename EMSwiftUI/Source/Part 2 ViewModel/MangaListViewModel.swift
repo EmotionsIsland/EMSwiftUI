@@ -18,17 +18,10 @@ final class MangaListViewModel: ObservableObject {
     // TODO: create Published variables
     // TODO: create getData func
     private let service: MangaListService
-    
+
     init(service: MangaListService) {
         self.service = service
-        
-        Task {
-            try await self.getData()
-        }
     }
     
-    @MainActor
-    private func getData() async throws {
-        
-    }
+    @MainActor private func getData() async throws { }
 }
