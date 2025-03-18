@@ -12,5 +12,6 @@
 ### Расстояние между ячейками гридов - 25
 
 ### В проекте уже заведены шрифты, цвета и иконки
+### Выполнять задание необходимо в папке Source/MangaListScreen
 
 ### Ссылка на Figma: https://www.figma.com/file/fW9ONdAr4MMj11jLZdwGrP/Untitled?type=design&node-id=0-1&mode=design&t=3pKWYsSE3qpWE8Mv-0

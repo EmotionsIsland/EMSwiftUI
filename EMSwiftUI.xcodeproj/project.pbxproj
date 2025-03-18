@@ -18,6 +18,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D81817572D8967C600F89267 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Part 1/Part1Example.png",
+				"Part 1/Readme.md",
+				"Part 2/Readme.md",
+				"Part 3/Part3Example.png",
+				"Part 3/Readme.md",
+			);
+			target = D8A607392B2F3DE20093F5A4 /* EMSwiftUI */;
+		};
 		D8D629F92D884433002330A1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -25,22 +36,14 @@
 			);
 			target = D8A607392B2F3DE20093F5A4 /* EMSwiftUI */;
 		};
-		D8D62A2E2D884453002330A1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Part 1 Simple View/Readme.md",
-				"Part 2 ViewModel/Readme.md",
-				"Part 3 FlexibleLayout/Readme.md",
-			);
-			target = D8A607392B2F3DE20093F5A4 /* EMSwiftUI */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		D81817512D89674F00F89267 /* Readme */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D81817572D8967C600F89267 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Readme; sourceTree = "<group>"; };
 		D8D629F02D8843DA002330A1 /* Common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Common; sourceTree = "<group>"; };
 		D8D629F12D8843E2002330A1 /* Core */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D8D629F92D884433002330A1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Core; sourceTree = "<group>"; };
 		D8D629F22D8843E9002330A1 /* Library */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Library; sourceTree = "<group>"; };
-		D8D629F32D8843F4002330A1 /* Source */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D8D62A2E2D884453002330A1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Source; sourceTree = "<group>"; };
+		D8D629F32D8843F4002330A1 /* Source */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Source; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,7 @@
 			children = (
 				D8A6073C2B2F3DE20093F5A4 /* EMSwiftUI */,
 				D8A6073B2B2F3DE20093F5A4 /* Products */,
+				D81817512D89674F00F89267 /* Readme */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,6 +112,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				D81817512D89674F00F89267 /* Readme */,
 				D8D629F02D8843DA002330A1 /* Common */,
 				D8D629F12D8843E2002330A1 /* Core */,
 				D8D629F22D8843E9002330A1 /* Library */,
