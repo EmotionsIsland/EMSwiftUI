@@ -30,7 +30,6 @@ private extension TabBar {
             .tag(TabSelection.main)
             .tabItem {
                 Image(.tabBarHome)
-                
             }
     }
     
