@@ -23,7 +23,7 @@ brew install xcodegen
 xcodegen generate
 ```
 
-После этого проект можно открыть в Xcode и собрать.
+После этого проект можно открыть в Xcode и собрать. Не забудьте применить "Asset Catalog" и "Enable Generated Asset Symbol Extensions" (Update to recommended settings).
 
 ## ✅ Стиль кода
 
