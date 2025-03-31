@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct MangaListScreen<VM: MangaListViewModel>: View {
     @StateObject private var viewModel: VM
@@ -15,8 +16,10 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
     }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
-        }
+        MangaSectionView(viewModel: viewModel)
     }
+}
+
+#Preview {
+    MangaListScreen(viewModel: MangaListViewModelImpl(service: MangaListServiceImpl(netify: Container.shared.netify())))
 }

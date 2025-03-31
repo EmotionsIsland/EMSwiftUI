@@ -6,11 +6,60 @@
 //
 
 import SwiftUI
+import Factory
+import Netify
 
-struct MangaSectionView: View {
+struct MangaSectionView<VM: MangaListViewModel>: View {
+    @ObservedObject var viewModel: VM
+    
+    let columns = [
+        GridItem(.flexible(), spacing: 25),
+        GridItem(.flexible(), spacing: 25),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
-        VStack {
-            // TODO: Create section View
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 24) {
+                if viewModel.isLoading {
+                    ProgressView("Loading...")
+                } else if let error = viewModel.errorMessage {
+                    Text(error).foregroundColor(.red)
+                } else {
+                    ForEach(viewModel.mangaTitle, id: \.self) { title in
+                        VStack(alignment: .leading, spacing: 16) {
+                            MangaSectionTitleView(title: title)
+                            LazyVGrid(columns: columns) {
+                                ForEach(viewModel.mangaList) { manga in
+                                    MangaSingleGridView(
+                                        title: manga.attributes.title.en ?? "Untitled",
+                                        description: manga.attributes.tags.first?.attributes.name.en ?? "Unknown",
+                                        coverURL: viewModel.getCoverURL(
+                                            manga: manga,
+                                            sizeFormat: .size256)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .onAppear {
+                Task {
+                    do {
+                        try await viewModel.getData()
+                    } catch {
+                        print("Ошибка при загрузке: \(error.localizedDescription)")
+                    }
+                }
+            }
         }
     }
+}
+
+
+
+#Preview {
+    MangaSectionView(viewModel: MangaListViewModelImpl(service: MangaListServiceImpl(netify: Container.shared.netify())))
 }
