@@ -19,9 +19,10 @@ protocol MangaListViewModel: ObservableObject {
     var isLoading: Bool { get }
     var errorMessage: String? { get }
     var mangaTitle: [String] { get }
-    func loadCoverImage(for manga: MangaData, size: SizeFormat) async -> UIImage?
-    func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL?
+    var searchText: String { get set }
+    var filteredMangaList: [MangaData] { get set }
     
+    func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL?
     func getData() async throws
 }
 
@@ -29,22 +30,28 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @Published var mangaList: [MangaData] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published var filteredMangaList: [MangaData] = [] // Фильтрованный список
+    @Published var searchText: String = "" {
+        didSet {
+            filterMangaList()
+        }
+    }
     
     var getRandomRating: CGFloat {
         CGFloat.random(in: 1...5)
     }
     
     var mangaTitle = ["Popular", "Recently Added", "Last Updates", "Seasonal"]
-        
+    
     private let service: MangaListService
+    
+    init(service: MangaListService) {
+        self.service = service
+    }
     
     func fillRatio(for index: Int, rating: CGFloat) -> CGFloat {
         let remainingRating = rating - CGFloat(index)
         return min(max(remainingRating, 0), 1)
-    }
-    
-    init(service: MangaListService) {
-        self.service = service
     }
     
     @MainActor func getData() async throws {
@@ -54,6 +61,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
         do {
             let data = try await service.getManga()
             self.mangaList = data.data
+            self.filteredMangaList = data.data
             print(data)
         } catch {
             self.errorMessage = "Ошибка загрузки: \(error.localizedDescription)"
@@ -66,17 +74,13 @@ final class MangaListViewModelImpl: MangaListViewModel {
         API.coverURL(for: manga, sizeFormat)
     }
     
-    func loadCoverImage(for manga: MangaData, size: SizeFormat = .size512) async -> UIImage? {
-            guard let url = API.coverURL(for: manga, size) else {
-                return nil
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                return UIImage(data: data)
-            } catch {
-                print("Ошибка загрузки изображения: \(error.localizedDescription)")
-                return nil
+    private func filterMangaList() {
+            if searchText.isEmpty {
+                filteredMangaList = mangaList
+            } else {
+                filteredMangaList = mangaList.filter { manga in
+                    manga.attributes.title.en?.lowercased().contains(searchText.lowercased()) ?? false
+                }
             }
         }
 }

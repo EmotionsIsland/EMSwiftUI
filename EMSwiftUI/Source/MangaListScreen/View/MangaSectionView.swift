@@ -19,46 +19,52 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
     ]
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 24) {
-                if viewModel.isLoading {
-                    ProgressView("Loading...")
-                } else if let error = viewModel.errorMessage {
-                    Text(error).foregroundColor(.red)
-                } else {
-                    ForEach(viewModel.mangaTitle, id: \.self) { title in
-                        VStack(alignment: .leading, spacing: 16) {
-                            MangaSectionTitleView(title: title)
-                            LazyVGrid(columns: columns) {
-                                ForEach(viewModel.mangaList) { manga in
-                                    MangaSingleGridView(
-                                        title: manga.attributes.title.en ?? "Untitled",
-                                        description: manga.attributes.tags.first?.attributes.name.en ?? "Unknown",
-                                        coverURL: viewModel.getCoverURL(
-                                            manga: manga,
-                                            sizeFormat: .size256)
-                                    )
+        VStack {
+            // Search Bar
+            SearchBar(text: $viewModel.searchText)
+                .padding([.bottom, .top], 8)
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 24) {
+                    if viewModel.isLoading {
+                        ProgressView("Loading...")
+                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                            .padding(.top, 300)
+                    } else if let error = viewModel.errorMessage {
+                        Text(error).foregroundColor(.red)
+                    } else {
+                        ForEach(viewModel.mangaTitle, id: \.self) { title in
+                            VStack(alignment: .leading, spacing: 16) {
+                                MangaSectionTitleView(title: title)
+                                LazyVGrid(columns: columns) {
+                                    ForEach(viewModel.filteredMangaList) { manga in
+                                        MangaSingleGridView(
+                                            title: manga.attributes.title.en ?? "Untitled",
+                                            description: manga.attributes.tags.first?.attributes.name.en ?? "Unknown",
+                                            coverURL: viewModel.getCoverURL(
+                                                manga: manga,
+                                                sizeFormat: .size256)
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            .padding(.horizontal, 16)
-            .onAppear {
-                Task {
-                    do {
-                        try await viewModel.getData()
-                    } catch {
-                        print("Ошибка при загрузке: \(error.localizedDescription)")
+                .padding(.horizontal, 16)
+                .onAppear {
+                    Task {
+                        do {
+                            try await viewModel.getData()
+                        } catch {
+                            print("Ошибка при загрузке: \(error.localizedDescription)")
+                        }
                     }
                 }
             }
         }
     }
 }
-
-
 
 #Preview {
     MangaSectionView(viewModel: MangaListViewModelImpl(service: MangaListServiceImpl(netify: Container.shared.netify())))

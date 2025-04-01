@@ -14,7 +14,8 @@ final class RatingViewViewModel {
         CGFloat.random(in: 1...5)
     }
     
-    func fillRatio(for index: Int, rating: CGFloat) -> CGFloat {
-        return index < Int(rating) ? 1 : 0
+    func fillRatio(for index: Int, rating: CGFloat) -> CGFloat {        
+        let remainingRating = rating - CGFloat(index)
+        return min(max(remainingRating, 0), 1)
     }
 }
