@@ -62,7 +62,6 @@ final class MangaListViewModelImpl: MangaListViewModel {
             let data = try await service.getManga()
             self.mangaList = data.data
             self.filteredMangaList = data.data
-            print(data)
         } catch {
             self.errorMessage = "Ошибка загрузки: \(error.localizedDescription)"
             throw error

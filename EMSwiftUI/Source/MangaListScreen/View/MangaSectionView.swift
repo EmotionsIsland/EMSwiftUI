@@ -21,8 +21,8 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
     var body: some View {
         VStack {
             SearchBar(text: $viewModel.searchText)
-                .padding([.bottom, .top], 8)
-            
+                .padding(.top, 8)
+            Divider()
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 24) {
                     if viewModel.isLoading {
