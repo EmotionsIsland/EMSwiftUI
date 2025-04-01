@@ -30,7 +30,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @Published var mangaList: [MangaData] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
-    @Published var filteredMangaList: [MangaData] = [] // Фильтрованный список
+    @Published var filteredMangaList: [MangaData] = []
     @Published var searchText: String = "" {
         didSet {
             filterMangaList()
@@ -70,6 +70,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
         
         isLoading = false
     }
+    
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat = .size256) -> URL? {
         API.coverURL(for: manga, sizeFormat)
     }

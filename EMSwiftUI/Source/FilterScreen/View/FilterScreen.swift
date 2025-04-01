@@ -12,5 +12,10 @@ struct FilterScreen: View {
         VStack {
             // TODO: Create View
         }
+        .padding(.vertical)
     }
+}
+
+#Preview {
+    FilterScreen()
 }

@@ -25,13 +25,16 @@ struct SearchBar: View {
                             .padding(.leading, 8)
                         
                         if !text.isEmpty {
-                            Button(action: {
-                                self.text = ""
-                            }) {
-                                Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 8)
-                            }
+                            Button(
+                                action: {
+                                    self.text = ""
+                                },
+                                label: {
+                                    Image(systemName: "multiply.circle.fill")
+                                        .foregroundColor(.gray)
+                                        .padding(.trailing, 8)
+                                }
+                            )
                         }
                     }
                 )

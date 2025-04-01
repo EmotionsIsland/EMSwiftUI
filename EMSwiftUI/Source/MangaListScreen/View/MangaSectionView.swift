@@ -20,7 +20,6 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
     
     var body: some View {
         VStack {
-            // Search Bar
             SearchBar(text: $viewModel.searchText)
                 .padding([.bottom, .top], 8)
             
