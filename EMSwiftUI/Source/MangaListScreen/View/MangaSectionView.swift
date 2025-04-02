@@ -51,15 +51,6 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
                     }
                 }
                 .padding(.horizontal, 16)
-//                .onAppear {
-//                    Task {
-//                        do {
-//                            try await viewModel.getData()
-//                        } catch {
-//                            print("Ошибка при загрузке: \(error.localizedDescription)")
-//                        }
-//                    }
-//                }
             }
         }
     }

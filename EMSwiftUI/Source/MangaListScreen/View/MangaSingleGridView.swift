@@ -35,14 +35,14 @@ struct MangaSingleGridView: View {
             .frame(maxWidth: .infinity)
             
             Text(title)
-                .font(.system(size: 16, weight: .bold))
+                .font(Font.SFPro.mediumNormal)
                 .foregroundColor(.blackBase)
                 .lineLimit(1)
             
             RatingView()
             
             Text(description)
-                .font(.system(size: 14, weight: .regular))
+                .font(Font.SFPro.lightSmall)
                 .foregroundColor(.grayBase)
                 .lineLimit(1)
         }
@@ -64,8 +64,4 @@ struct MangaSingleGridView: View {
             }
         }
     }
-}
-
-#Preview {
-    MangaSingleGridView(title: "Manga Title", description: "Manga Description", coverURL: URL(string: "https://example.com/cover.jpg")!)
 }

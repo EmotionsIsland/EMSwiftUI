@@ -8,21 +8,18 @@
 import Foundation
 
 protocol FilterScreenViewModel: ObservableObject {
-    var mangaTitle: [String] { get }
-    var filters: [String: [String]] { get }
-    var pickedFilters: Set<String> { get set }
+    var tagDictionary: [String: [String]] { get }
+    var selectedTags: Set<String> { get set }
     
-    func removeAllFilters()
-    func pickFilter(_ filter: String)
-    func checkPicking(_ filter: String) -> Bool
+    func removeAllSelectedTags()
+    func addTag(_ filter: String)
+    func isSelected(_ filter: String) -> Bool
 }
 
 class FilterScreenViewModelImpl: FilterScreenViewModel {
-    @Published var filters: [String: [String]] = [:]
-    @Published var pickedFilters: Set<String> = []
-    
-    var mangaTitle = ["Content Rating", "Publication Status", "Magazine Demographic", "Format", "Genre", "Theme"]
-    
+    @Published var selectedTags: Set<String> = []
+    @Published private(set) var tagDictionary: [String: [String]] = [:]
+        
     private let service: MangaListService
     
     init(service: MangaListService) {
@@ -56,7 +53,7 @@ class FilterScreenViewModelImpl: FilterScreenViewModel {
                 .compactMap { $0.attributes.name.en }))
                 .sorted()
             
-            filters = [
+            tagDictionary = [
                 "Content Rating": uniqueRatings,
                 "Publication Status": uniqueStatuses,
                 "Magazine Demographic": uniqueDemographics,
@@ -65,22 +62,22 @@ class FilterScreenViewModelImpl: FilterScreenViewModel {
                 "Theme": uniqueThemes
             ]
             
-            print("Tags list:", filters)
+            print("Tags list:", tagDictionary)
         } catch {
             print("Error fetching data:", error.localizedDescription)
         }
     }
     
-    func pickFilter(_ filter: String) {
-        pickedFilters.insert(filter)
+    func addTag(_ tag: String) {
+        selectedTags.insert(tag)
     }
     
-    func checkPicking(_ filter: String) -> Bool {
-        return pickedFilters.contains(filter)
+    func isSelected(_ tag: String) -> Bool {
+        return selectedTags.contains(tag)
     }
     
-    func removeAllFilters() {
-        pickedFilters.removeAll()
+    func removeAllSelectedTags() {
+        selectedTags.removeAll()
     }
     
     private func loadInitialData() {

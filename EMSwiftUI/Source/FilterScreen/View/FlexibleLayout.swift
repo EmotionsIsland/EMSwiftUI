@@ -15,8 +15,6 @@ struct FlexibleLayout<Content: View>: View {
     @State private var gridHeight: CGFloat = 0
     @State var elementsSize: [String: CGSize] = [:]
     
-    typealias Const = MangaListMainScreenModel.Const
-    
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {
             GeometryReader { proxy in
@@ -34,9 +32,9 @@ struct FlexibleLayout<Content: View>: View {
 
 private extension FlexibleLayout {
     var grid: some View {
-        VStack(alignment: .leading, spacing: Const.Layout.smallPadding) {
+        VStack(alignment: .leading, spacing: 4) {
             ForEach(makeGrid(), id: \.self) { rowElements in
-                HStack(spacing: Const.Layout.smallPadding) {
+                HStack(spacing: 4) {
                     ForEach(rowElements, id: \.self) { element in
                         content(element)
                             .fixedSize()
@@ -54,8 +52,6 @@ private extension FlexibleLayout {
         }
     }
     
-    // функция разбивает элементы на строки
-    // в зависимости от их ширины элемента
     private func makeGrid() -> [[String]] {
         var grid: [[String]] = [[]]
         var currentRow = 0
@@ -63,14 +59,14 @@ private extension FlexibleLayout {
         
         for element in array {
             let elementSize = elementsSize[element, default: CGSize(width: screenWidth, height: 1)]
-            if availableWidth - (elementSize.width + Const.Layout.smallPadding) >= 0 {
+            if availableWidth - (elementSize.width + 4) >= 0 {
                 grid[currentRow].append(element)
             } else {
                 currentRow += 1
                 grid.append([element])
                 availableWidth = screenWidth
             }
-            availableWidth -= (elementSize.width + Const.Layout.smallPadding)
+            availableWidth -= (elementSize.width + 20)
         }
         return grid
     }

@@ -1,5 +1,5 @@
 //
-//  OneCategoryFilterView.swift
+//  CategoryFilterView.swift
 //  EMSwiftUI
 //
 //  Created by Антон Баландин on 1.04.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OneCategoryFilterView: View {
+struct CategoryFilterView: View {
     let category: String
     let filters: [String]
     let addFilterAction: (String) -> Void
@@ -15,8 +15,6 @@ struct OneCategoryFilterView: View {
     
     @State private var isShowingFilters: Bool = false
     @State private var height: CGFloat = 0
-    
-    typealias Const = MangaListMainScreenModel.Const
     
     var body: some View {
         VStack {
@@ -32,14 +30,16 @@ struct OneCategoryFilterView: View {
                                 .font(Font.SFPro.bodyNormal)
                         }
                     )
-                    .orangeButtonStyle(color: isPicked(filter) ? Color.orangeBase : Color.grayBase)
+                    .padding(8)
+                    .background(isPicked(filter) ? Color.orangeBase : Color.grayBase)
+                    .cornerRadius(8)
                 }
             }
         }
     }
 }
 
-private extension OneCategoryFilterView {
+private extension CategoryFilterView {
     private var categoryButton: some View {
         HStack {
             Text(category)

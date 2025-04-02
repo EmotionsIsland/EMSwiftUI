@@ -11,8 +11,6 @@ import Factory
 struct FilterScreen<VM: FilterScreenViewModel>: View {
     @StateObject private var viewModel: VM
     
-    typealias Const = MangaListMainScreenModel.Const
-    
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -24,7 +22,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
                     Divider()
                     selection
                     Divider()
-                    filters
+                    categories
                     Spacer()
                 }
                 .padding(.horizontal)
@@ -32,7 +30,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(Const.FilterScreen.navigationTitle)
+                    Text("Filters")
                         .font(Font.SFPro.headline2)
                 }
             }
@@ -43,43 +41,52 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
 private extension FilterScreen {
     @ViewBuilder
     private var selection: some View {
-        if !viewModel.pickedFilters.isEmpty {
+        if !viewModel.selectedTags.isEmpty {
             VStack(alignment: .leading) {
                 Divider()
                 HStack {
-                    Text(Const.FilterScreen.sectionName)
+                    Text("Selection")
                         .font(Font.SFPro.headline3)
                     Spacer()
                 }
                 
-                pickedFilters
+                selectedTags
                 applyButton
                 resetButton
             }
         }
     }
-    private var pickedFilters: some View {
-        FlexibleLayout(array: Array(viewModel.pickedFilters)) { filter in
+    private var selectedTags: some View {
+        FlexibleLayout(array: Array(viewModel.selectedTags)) { filter in
             Text("+ \(filter)")
-                .oranged()
+                .foregroundColor(Color.whiteText)
+                .font(Font.SFPro.bodyNormal)
+                .padding(8)
+                .background(Color.orangeBase)
+                .cornerRadius(8)
         }
     }
     
     private var applyButton: some View {
-        Button(action: {}) {
-            Text(Const.FilterScreen.applyButtonName)
-                .foregroundColor(Color.whiteText)
-                .padding(4)
-                .frame(maxWidth: .infinity)
-                .contentShape(Rectangle())
-                .font(Font.SFPro.bodyNormal)
-        }
-        .orangeButtonStyle(color: Color.orangeBase)
+        Button(
+            action: {},
+            label: {
+                Text("Apply")
+                    .foregroundColor(Color.whiteText)
+                    .padding(4)
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
+                    .font(Font.SFPro.bodyNormal)
+            }
+        )
+        .padding(8)
+        .background(Color.orangeBase)
+        .cornerRadius(8)
     }
     
     private var resetButton: some View {
-        Button(action: viewModel.removeAllFilters) {
-            Text(Const.FilterScreen.resetButtonName)
+        Button(action: viewModel.removeAllSelectedTags) {
+            Text("Reset")
                 .padding(.bottom, 16)
                 .frame(maxWidth: .infinity)
                 .foregroundColor(Color.blackBase)
@@ -88,13 +95,13 @@ private extension FilterScreen {
         }
     }
     
-    private var filters: some View {
+    private var categories: some View {
         VStack(alignment: .leading) {
-            ForEach(Array(viewModel.filters.keys.sorted(by: {$0 < $1})), id: \.self) { category in
-                OneCategoryFilterView(category: category,
-                                      filters: viewModel.filters[category] ?? [],
-                                      addFilterAction: viewModel.pickFilter(_:),
-                                      checkPickingAction: viewModel.checkPicking(_:)
+            ForEach(Array(viewModel.tagDictionary.keys.sorted(by: {$0 < $1})), id: \.self) { category in
+                CategoryFilterView(category: category,
+                                      filters: viewModel.tagDictionary[category] ?? [],
+                                      addFilterAction: viewModel.addTag(_:),
+                                      checkPickingAction: viewModel.isSelected(_:)
                 )
                 .padding(.bottom, 10)
                 .font(Font.SFPro.regularLarge)

@@ -65,7 +65,6 @@ final class MangaListViewModelImpl: MangaListViewModel {
             self.filteredMangaList = data.data
         } catch {
             self.errorMessage = "Ошибка загрузки: \(error.localizedDescription)"
-            //throw error
         }
         
         isLoading = false
