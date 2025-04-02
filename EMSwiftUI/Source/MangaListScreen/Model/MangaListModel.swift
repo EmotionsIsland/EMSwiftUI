@@ -8,6 +8,7 @@
 import Foundation
 
 // swiftlint:disable identifier_name
+
 struct MangaListModel: Decodable {
     let result: String
     let response: String
@@ -80,4 +81,5 @@ struct Relationship: Decodable {
 struct CoverAttributes: Decodable {
     let fileName: String
 }
+
 // swiftlint:enable identifier_name

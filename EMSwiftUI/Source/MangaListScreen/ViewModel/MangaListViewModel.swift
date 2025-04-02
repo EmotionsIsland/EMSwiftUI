@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import UIKit
 import Netify
+import OSLog
 
 enum SizeFormat: String {
     case size256 = ".256.jpg"
@@ -14,16 +16,43 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-protocol MangaListViewModel: ObservableObject { }
+protocol MangaListViewModel: ObservableObject {
+    var items: [MangaListItem] { get }
+
+    @MainActor
+    func fetchItems() async
+
+    @MainActor
+    func fetchCover(for item: MangaListItem) async -> UIImage?
+}
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    // TODO: create Published variables
-    // TODO: create getData func
+    @Published var items: [MangaListItem] = []
+
     private let service: MangaListService
 
     init(service: MangaListService) {
         self.service = service
     }
     
-    @MainActor private func getData() async throws { }
+    @MainActor
+    func fetchItems() async {
+        do {
+            items = try await service.fetchManga().data
+                .map(MangaListItem.init)
+        } catch {
+            Logger.standard.error("\(error)")
+        }
+    }
+
+    @MainActor
+    func fetchCover(for item: MangaListItem) async -> UIImage? {
+        do {
+            return try await service.fetchCover(for: item)
+        } catch {
+            Logger.standard.error("\(error)")
+        }
+
+        return nil
+    }
 }
