@@ -47,6 +47,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
     
     init(service: MangaListService) {
         self.service = service
+        loadInitialData()
     }
     
     func fillRatio(for index: Int, rating: CGFloat) -> CGFloat {
@@ -54,7 +55,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
         return min(max(remainingRating, 0), 1)
     }
     
-    @MainActor func getData() async throws {
+    @MainActor func getData() async {
         isLoading = true
         errorMessage = nil
         
@@ -64,7 +65,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
             self.filteredMangaList = data.data
         } catch {
             self.errorMessage = "Ошибка загрузки: \(error.localizedDescription)"
-            throw error
+            //throw error
         }
         
         isLoading = false
@@ -83,4 +84,10 @@ final class MangaListViewModelImpl: MangaListViewModel {
                 }
             }
         }
+    
+    private func loadInitialData() {
+        Task {
+            await getData()
+        }
+    }
 }
