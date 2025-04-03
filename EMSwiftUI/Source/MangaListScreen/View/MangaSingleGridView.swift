@@ -15,24 +15,10 @@ struct MangaSingleGridView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Group {
-                if let url = coverURL {
-                    AsyncImage(url: url) { phase in
-                        if case .success(let image) = phase {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                        } else {
-                            placeholderView
-                        }
-                    }
-                } else {
-                    placeholderView
-                }
-            }
-            .aspectRatio(2/3, contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: 4))
-            .frame(maxWidth: .infinity)
+            coverImage
+                .aspectRatio(2/3, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .frame(maxWidth: .infinity)
             
             Text(title)
                 .font(Font.SFPro.mediumNormal)
@@ -49,17 +35,37 @@ struct MangaSingleGridView: View {
     }
 }
 
-extension MangaSingleGridView {
+private extension MangaSingleGridView {
     @ViewBuilder
-    private var placeholderView: some View {
+    var coverImage: some View {
+        Group {
+            if let url = coverURL {
+                AsyncImage(
+                    url: url,
+                    content: { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    },
+                    placeholder: {
+                        placeholderView(showProgress: true)
+                    }
+                )
+            } else {
+                placeholderView(showProgress: false)
+            }
+        }
+    }
+    
+    func placeholderView(showProgress: Bool) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 4)
                 .fill(Color.gray.opacity(0.2))
             
-            if coverURL != nil {
+            if showProgress {
                 ProgressView()
             } else {
-                Image(systemName: "book.closed.fill")
+                Image(systemName: "photo.artframe")
                     .resizable()
                     .scaledToFit()
                     .padding(20)
