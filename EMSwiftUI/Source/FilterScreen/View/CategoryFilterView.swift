@@ -13,7 +13,7 @@ struct CategoryFilterView: View {
     let addFilterAction: (String) -> Void
     let checkPickingAction: (String) -> Bool
     
-    @State private var isShowingFilters: Bool = false
+    @State private var isShowingFilters = false
     @State private var height: CGFloat = 0
     
     var body: some View {
@@ -33,14 +33,16 @@ struct CategoryFilterView: View {
                     .padding(8)
                     .background(isPicked(tag) ? Color.orangeBase : Color.grayBase)
                     .cornerRadius(8)
+                    .transition(.opacity)
                 }
             }
         }
+        .animation(.default, value: isShowingFilters)
     }
 }
 
 private extension CategoryFilterView {
-    private var categoryButton: some View {
+    var categoryButton: some View {
         HStack {
             Text(category)
                 .font(Font.SFPro.regularLarge)
@@ -48,14 +50,17 @@ private extension CategoryFilterView {
             Image(systemName: "chevron.down")
                 .foregroundColor(.black)
                 .rotationEffect(isShowingFilters ? .degrees(180) : .zero)
+                .animation(.easeInOut, value: isShowingFilters)
             Spacer()
         }
         .onTapGesture {
-            isShowingFilters.toggle()
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isShowingFilters.toggle()
+            }
         }
     }
     
-    private func isPicked(_ tag: String) -> Bool {
-        return checkPickingAction(tag)
+    func isPicked(_ tag: String) -> Bool {
+        checkPickingAction(tag)
     }
 }
