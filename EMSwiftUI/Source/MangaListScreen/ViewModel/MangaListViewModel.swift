@@ -75,14 +75,14 @@ final class MangaListViewModelImpl: MangaListViewModel {
     }
     
     private func filterMangaList() {
-            if searchText.isEmpty {
-                filteredMangaList = mangaList
-            } else {
-                filteredMangaList = mangaList.filter { manga in
-                    manga.attributes.title.en?.lowercased().contains(searchText.lowercased()) ?? false
-                }
+        if searchText.isEmpty {
+            filteredMangaList = mangaList
+        } else {
+            filteredMangaList = mangaList.filter { manga in
+                manga.attributes.title.en?.lowercased().contains(searchText.lowercased()) ?? false
             }
         }
+    }
     
     private func loadInitialData() {
         Task {

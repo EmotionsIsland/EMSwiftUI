@@ -26,31 +26,37 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 24) {
                     if viewModel.isLoading {
-                        ProgressView("Loading...")
+                        ProgressView(Strings.loading)
                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                             .padding(.top, 300)
                     } else if let error = viewModel.errorMessage {
                         Text(error).foregroundColor(.red)
                     } else {
-                        ForEach(viewModel.mangaTitle, id: \.self) { title in
-                            VStack(alignment: .leading, spacing: 16) {
-                                MangaSectionTitleView(title: title)
-                                LazyVGrid(columns: columns) {
-                                    ForEach(viewModel.filteredMangaList) { manga in
-                                        MangaSingleGridView(
-                                            title: manga.attributes.title.en ?? "Untitled",
-                                            description: manga.attributes.tags.first?.attributes.name.en ?? "Unknown",
-                                            coverURL: viewModel.getCoverURL(
-                                                manga: manga,
-                                                sizeFormat: .size256)
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        section(viewModel: viewModel)
                     }
                 }
                 .padding(.horizontal, 16)
+            }
+        }
+    }
+}
+
+private extension MangaSectionView {
+    private func section(viewModel: VM) -> some View {
+        ForEach(viewModel.mangaTitle, id: \.self) { title in
+            VStack(alignment: .leading, spacing: 16) {
+                MangaSectionTitleView(title: title)
+                LazyVGrid(columns: columns) {
+                    ForEach(viewModel.filteredMangaList) { manga in
+                        MangaSingleGridView(
+                            title: manga.attributes.title.en ?? "Untitled",
+                            description: manga.attributes.tags.first?.attributes.name.en ?? "Unknown",
+                            coverURL: viewModel.getCoverURL(
+                                manga: manga,
+                                sizeFormat: .size256)
+                        )
+                    }
+                }
             }
         }
     }

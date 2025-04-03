@@ -9,11 +9,12 @@ import UIKit
 import SwiftUICore
 
 struct FlexibleLayout<Content: View>: View {
-    let array: [String]
-    let content: (String) -> Content
     @State private var screenWidth: CGFloat = 0
     @State private var gridHeight: CGFloat = 0
     @State var elementsSize: [String: CGSize] = [:]
+    
+    let array: [String]
+    let content: (String) -> Content
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .center)) {

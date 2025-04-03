@@ -47,7 +47,10 @@ struct MangaSingleGridView: View {
                 .lineLimit(1)
         }
     }
-    
+}
+
+extension MangaSingleGridView {
+    @ViewBuilder
     private var placeholderView: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 4)

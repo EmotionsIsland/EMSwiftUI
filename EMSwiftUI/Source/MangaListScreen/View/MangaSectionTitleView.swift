@@ -20,7 +20,7 @@ struct MangaSectionTitleView: View {
                 action: {},
                 label: {
                     HStack(alignment: .top, spacing: 8) {
-                        Text("more")
+                        Text(Strings.more)
                             .foregroundStyle(.blackBase)
                             .font(Font.SFPro.bodyNormal)
                         Image(.moreIcon)

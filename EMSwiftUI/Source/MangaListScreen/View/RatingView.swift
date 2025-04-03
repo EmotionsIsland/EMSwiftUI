@@ -9,15 +9,15 @@ import SwiftUI
 
 struct RatingView: View {
     private let viewModel = RatingViewViewModel()
-        
+    
     var body: some View {
         let rating = viewModel.getRandomRating
         let maxRating = viewModel.maxRating
-
+        
         HStack {
             HStack(spacing: 2) {
                 ForEach(0..<maxRating, id: \.self) { index in
-                    StarView(
+                    starView(
                         fillRatio: viewModel.fillRatio(for: index, rating: rating),
                         size: CGSize(width: 17, height: 16)
                     )
@@ -27,11 +27,8 @@ struct RatingView: View {
     }
 }
 
-struct StarView: View {
-    let fillRatio: CGFloat
-    let size: CGSize
-    
-    var body: some View {
+private extension RatingView {
+    private func starView(fillRatio: CGFloat, size: CGSize) -> some View {
         ZStack(alignment: .leading) {
             Image("starIcon")
                 .renderingMode(.template)

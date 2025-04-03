@@ -21,17 +21,17 @@ struct CategoryFilterView: View {
             categoryButton
             
             if isShowingFilters {
-                FlexibleLayout(array: filters) { filter in
+                FlexibleLayout(array: filters) { tag in
                     Button(
-                        action: { addFilterAction(filter) },
+                        action: { addFilterAction(tag) },
                         label: {
-                            Text(isPicked(filter) ? "+ \(filter)" : filter)
-                                .foregroundColor(isPicked(filter) ? Color.whiteText : Color.blackBase)
+                            Text(isPicked(tag) ? "+ \(tag)" : tag)
+                                .foregroundColor(isPicked(tag) ? Color.whiteText : Color.blackBase)
                                 .font(Font.SFPro.bodyNormal)
                         }
                     )
                     .padding(8)
-                    .background(isPicked(filter) ? Color.orangeBase : Color.grayBase)
+                    .background(isPicked(tag) ? Color.orangeBase : Color.grayBase)
                     .cornerRadius(8)
                 }
             }
@@ -55,7 +55,7 @@ private extension CategoryFilterView {
         }
     }
     
-    private func isPicked(_ filter: String) -> Bool {
-        return checkPickingAction(filter)
+    private func isPicked(_ tag: String) -> Bool {
+        return checkPickingAction(tag)
     }
 }

@@ -12,14 +12,14 @@ protocol FilterScreenViewModel: ObservableObject {
     var selectedTags: Set<String> { get set }
     
     func removeAllSelectedTags()
-    func addTag(_ filter: String)
-    func isSelected(_ filter: String) -> Bool
+    func addTag(_ tag: String)
+    func isSelected(_ tag: String) -> Bool
 }
 
 class FilterScreenViewModelImpl: FilterScreenViewModel {
     @Published var selectedTags: Set<String> = []
     @Published private(set) var tagDictionary: [String: [String]] = [:]
-        
+    
     private let service: MangaListService
     
     init(service: MangaListService) {
@@ -27,8 +27,26 @@ class FilterScreenViewModelImpl: FilterScreenViewModel {
         loadInitialData()
     }
     
+    func addTag(_ tag: String) {
+        selectedTags.insert(tag)
+    }
+    
+    func isSelected(_ tag: String) -> Bool {
+        return selectedTags.contains(tag)
+    }
+    
+    func removeAllSelectedTags() {
+        selectedTags.removeAll()
+    }
+    
+    private func loadInitialData() {
+        Task {
+            await getData()
+        }
+    }
+    
     @MainActor
-    func getData() async {
+    private func getData() async {
         do {
             let tags = try await service.getTags()
             let mangaResponse = try await service.getManga()
@@ -54,35 +72,13 @@ class FilterScreenViewModelImpl: FilterScreenViewModel {
                 .sorted()
             
             tagDictionary = [
-                "Content Rating": uniqueRatings,
-                "Publication Status": uniqueStatuses,
-                "Magazine Demographic": uniqueDemographics,
-                "Format": uniqueFormats,
-                "Genre": uniqueGenres,
-                "Theme": uniqueThemes
+                Strings.contentRating: uniqueRatings,
+                Strings.publicationStatus: uniqueStatuses,
+                Strings.magazineDemographic: uniqueDemographics,
+                Strings.format: uniqueFormats,
+                Strings.genre: uniqueGenres,
+                Strings.theme: uniqueThemes
             ]
-            
-            print("Tags list:", tagDictionary)
-        } catch {
-            print("Error fetching data:", error.localizedDescription)
-        }
-    }
-    
-    func addTag(_ tag: String) {
-        selectedTags.insert(tag)
-    }
-    
-    func isSelected(_ tag: String) -> Bool {
-        return selectedTags.contains(tag)
-    }
-    
-    func removeAllSelectedTags() {
-        selectedTags.removeAll()
-    }
-    
-    private func loadInitialData() {
-        Task {
-            await getData()
-        }
+        } catch {}
     }
 }

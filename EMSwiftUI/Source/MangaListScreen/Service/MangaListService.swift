@@ -26,11 +26,11 @@ final class MangaListServiceImpl: MangaListService {
     }
     
     func getTags() async throws -> [Tag] {
-            struct TagResponse: Decodable {
-                let data: [Tag]
-            }
-            
-            let response = try await netify.request(API.mangaTags, type: TagResponse.self)
-            return response.data
+        struct TagResponse: Decodable {
+            let data: [Tag]
         }
+        
+        let response = try await netify.request(API.mangaTags, type: TagResponse.self)
+        return response.data
+    }
 }

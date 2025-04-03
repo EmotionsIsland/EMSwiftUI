@@ -30,7 +30,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Filters")
+                    Text(Strings.filters)
                         .font(Font.SFPro.headline2)
                 }
             }
@@ -45,20 +45,20 @@ private extension FilterScreen {
             VStack(alignment: .leading) {
                 Divider()
                 HStack {
-                    Text("Selection")
+                    Text(Strings.selection)
                         .font(Font.SFPro.headline3)
                     Spacer()
                 }
-                
                 selectedTags
                 applyButton
                 resetButton
             }
         }
     }
+    
     private var selectedTags: some View {
-        FlexibleLayout(array: Array(viewModel.selectedTags)) { filter in
-            Text("+ \(filter)")
+        FlexibleLayout(array: Array(viewModel.selectedTags)) { tag in
+            Text("+ \(tag)")
                 .foregroundColor(Color.whiteText)
                 .font(Font.SFPro.bodyNormal)
                 .padding(8)
@@ -71,7 +71,7 @@ private extension FilterScreen {
         Button(
             action: {},
             label: {
-                Text("Apply")
+                Text(Strings.apply)
                     .foregroundColor(Color.whiteText)
                     .padding(4)
                     .frame(maxWidth: .infinity)
@@ -86,7 +86,7 @@ private extension FilterScreen {
     
     private var resetButton: some View {
         Button(action: viewModel.removeAllSelectedTags) {
-            Text("Reset")
+            Text(Strings.reset)
                 .padding(.bottom, 16)
                 .frame(maxWidth: .infinity)
                 .foregroundColor(Color.blackBase)
@@ -99,9 +99,9 @@ private extension FilterScreen {
         VStack(alignment: .leading) {
             ForEach(Array(viewModel.tagDictionary.keys.sorted(by: {$0 < $1})), id: \.self) { category in
                 CategoryFilterView(category: category,
-                                      filters: viewModel.tagDictionary[category] ?? [],
-                                      addFilterAction: viewModel.addTag(_:),
-                                      checkPickingAction: viewModel.isSelected(_:)
+                                   filters: viewModel.tagDictionary[category] ?? [],
+                                   addFilterAction: viewModel.addTag(_:),
+                                   checkPickingAction: viewModel.isSelected(_:)
                 )
                 .padding(.bottom, 10)
                 .font(Font.SFPro.regularLarge)
