@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Factory
 
 struct FilterScreen<VM: FilterScreenViewModel>: View {
     @StateObject private var viewModel: VM
@@ -40,7 +39,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
 
 private extension FilterScreen {
     @ViewBuilder
-    private var selection: some View {
+    var selection: some View {
         if !viewModel.selectedTags.isEmpty {
             VStack(alignment: .leading) {
                 Divider()
@@ -56,7 +55,7 @@ private extension FilterScreen {
         }
     }
     
-    private var selectedTags: some View {
+    var selectedTags: some View {
         FlexibleLayout(array: Array(viewModel.selectedTags)) { tag in
             Text("+ \(tag)")
                 .foregroundColor(Color.whiteText)
@@ -67,7 +66,7 @@ private extension FilterScreen {
         }
     }
     
-    private var applyButton: some View {
+    var applyButton: some View {
         Button(
             action: {},
             label: {
@@ -84,7 +83,7 @@ private extension FilterScreen {
         .cornerRadius(8)
     }
     
-    private var resetButton: some View {
+    var resetButton: some View {
         Button(action: viewModel.removeAllSelectedTags) {
             Text(Strings.reset)
                 .padding(.bottom, 16)
@@ -95,7 +94,7 @@ private extension FilterScreen {
         }
     }
     
-    private var categories: some View {
+    var categories: some View {
         VStack(alignment: .leading) {
             ForEach(Array(viewModel.tagDictionary.keys.sorted(by: {$0 < $1})), id: \.self) { category in
                 CategoryFilterView(category: category,
@@ -112,5 +111,5 @@ private extension FilterScreen {
 }
 
 #Preview {
-    FilterScreen(viewModel: FilterScreenViewModelImpl(service: MangaListServiceImpl(netify: Container.shared.netify())))
+    FilterScreenBuilder.build()
 }
