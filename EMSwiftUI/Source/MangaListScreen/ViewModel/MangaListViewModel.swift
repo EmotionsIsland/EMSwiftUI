@@ -5,7 +5,7 @@
 //  Created by Akbar Umetov on 18/12/23.
 //
 
-import UIKit
+import SwiftUI
 import Netify
 
 enum SizeFormat: String {
@@ -20,25 +20,20 @@ protocol MangaListViewModel: ObservableObject {
     var errorMessage: String? { get }
     var mangaTitle: [String] { get }
     var searchText: String { get set }
-    var filteredMangaList: [MangaData] { get set }
+    var filteredMangaList: [MangaData] { get }
     
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL?
-    func getData() async throws
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    @Published var mangaList: [MangaData] = []
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
-    @Published var filteredMangaList: [MangaData] = []
+    @Published private(set) var mangaList: [MangaData] = []
+    @Published private(set) var isLoading: Bool = false
+    @Published private(set) var errorMessage: String?
+    @Published private(set) var filteredMangaList: [MangaData] = []
     @Published var searchText: String = "" {
         didSet {
             filterMangaList()
         }
-    }
-    
-    var getRandomRating: CGFloat {
-        CGFloat.random(in: 1...5)
     }
     
     var mangaTitle = ["Popular", "Recently Added", "Last Updates", "Seasonal"]
@@ -48,11 +43,6 @@ final class MangaListViewModelImpl: MangaListViewModel {
     init(service: MangaListService) {
         self.service = service
         loadInitialData()
-    }
-    
-    func fillRatio(for index: Int, rating: CGFloat) -> CGFloat {
-        let remainingRating = rating - CGFloat(index)
-        return min(max(remainingRating, 0), 1)
     }
     
     @MainActor func getData() async {
@@ -79,7 +69,8 @@ final class MangaListViewModelImpl: MangaListViewModel {
             filteredMangaList = mangaList
         } else {
             filteredMangaList = mangaList.filter { manga in
-                manga.attributes.title.en?.lowercased().contains(searchText.lowercased()) ?? false
+                manga.attributes.title.en?.lowercased()
+                    .contains(searchText.lowercased()) ?? false
             }
         }
     }
