@@ -17,6 +17,15 @@ struct MangaListModel: Decodable {
     let total: Int
 }
 
+struct TagResponse: Decodable {
+    let result: String
+    let response: String
+    let data: [Tag]
+    let limit: Int
+    let offset: Int
+    let total: Int
+}
+
 struct MangaData: Decodable, Identifiable {
     let id: String
     let type: String
