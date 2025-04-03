@@ -1,5 +1,5 @@
 //
-//  RatingViewViewModel.swift
+//  RatingService.swift
 //  EMSwiftUI
 //
 //  Created by Антон Баландин on 31.03.25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class RatingViewViewModel {
+final class RatingService {
     let maxRating: Int = 5
     
     var getRandomRating: CGFloat {
