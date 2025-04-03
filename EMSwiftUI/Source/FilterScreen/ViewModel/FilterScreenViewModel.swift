@@ -9,7 +9,7 @@ import Foundation
 
 protocol FilterScreenViewModel: ObservableObject {
     var tagDictionary: [String: [String]] { get }
-    var selectedTags: Set<String> { get set }
+    var selectedTags: Set<String> { get }
     
     func removeAllSelectedTags()
     func addTag(_ tag: String)
@@ -17,7 +17,7 @@ protocol FilterScreenViewModel: ObservableObject {
 }
 
 class FilterScreenViewModelImpl: FilterScreenViewModel {
-    @Published var selectedTags: Set<String> = []
+    @Published private(set) var selectedTags: Set<String> = []
     @Published private(set) var tagDictionary: [String: [String]] = [:]
     
     private let service: MangaListService
