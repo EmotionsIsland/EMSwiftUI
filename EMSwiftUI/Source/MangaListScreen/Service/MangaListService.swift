@@ -11,7 +11,7 @@ import Netify
 
 protocol MangaListService {
     func getManga() async throws -> MangaListModel
-    func getTags() async throws -> [Tag]
+    func getTags() async throws -> TagResponse
 }
 
 final class MangaListServiceImpl: MangaListService {
@@ -25,12 +25,7 @@ final class MangaListServiceImpl: MangaListService {
         try await netify.request(API.mangaList, type: MangaListModel.self)
     }
     
-    func getTags() async throws -> [Tag] {
-        struct TagResponse: Decodable {
-            let data: [Tag]
-        }
-        
-        let response = try await netify.request(API.mangaTags, type: TagResponse.self)
-        return response.data
+    func getTags() async throws -> TagResponse {
+            try await netify.request(API.mangaTags, type: TagResponse.self)
     }
 }
