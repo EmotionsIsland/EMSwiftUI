@@ -12,56 +12,92 @@ import Netify
 struct MangaSectionView<VM: MangaListViewModel>: View {
     @ObservedObject var viewModel: VM
     
-    let columns = [
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible())
-    ]
+    private let columns: [GridItem] = {
+        var items = Array(repeating: GridItem(.flexible()), count: 3)
+        items[0].spacing = 25
+        items[1].spacing = 25
+        return items
+    }()
     
     var body: some View {
         VStack {
             SearchBar(text: $viewModel.searchText)
                 .padding(.top, 8)
+            
             Divider()
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 24) {
-                    if viewModel.isLoading {
-                        ProgressView(Strings.loading)
-                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                            .padding(.top, 300)
-                    } else if let error = viewModel.errorMessage {
-                        Text(error).foregroundColor(.red)
-                    } else {
-                        section(viewModel: viewModel)
-                    }
-                }
-                .padding(.horizontal, 16)
-            }
+            contentView
         }
     }
 }
 
 private extension MangaSectionView {
-    private func section(viewModel: VM) -> some View {
+    @ViewBuilder
+    var contentView: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            LazyVStack(spacing: 24) {
+                if viewModel.isLoading {
+                    loadingView
+                } else if let error = viewModel.errorMessage {
+                    errorView(error)
+                } else {
+                    mangaSections
+                }
+            }
+            .padding(.horizontal, 16)
+        }
+    }
+    
+    var loadingView: some View {
+        ProgressView(Strings.loading)
+            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+            .padding(.top, 300)
+    }
+    
+    func errorView(_ error: String) -> some View {
+        Text(error)
+            .foregroundColor(.red)
+    }
+    
+    var mangaSections: some View {
         ForEach(viewModel.mangaTitle, id: \.self) { title in
-            VStack(alignment: .leading, spacing: 16) {
-                MangaSectionTitleView(title: title)
-                LazyVGrid(columns: columns) {
-                    ForEach(viewModel.filteredMangaList) { manga in
-                        MangaSingleGridView(
-                            title: manga.attributes.title.en ?? "Untitled",
-                            description: manga.attributes.tags.first?.attributes.name.en ?? "Unknown",
-                            coverURL: viewModel.getCoverURL(
-                                manga: manga,
-                                sizeFormat: .size256)
-                        )
-                    }
+            MangaSectionContainer(
+                title: title,
+                mangaList: viewModel.filteredMangaList,
+                columns: columns,
+                coverURLProvider: { viewModel.getCoverURL(manga: $0, sizeFormat: .size256) }
+            )
+        }
+    }
+}
+
+struct MangaSectionContainer: View {
+    let title: String
+    let mangaList: [MangaData]
+    let columns: [GridItem]
+    let coverURLProvider: (MangaData) -> URL?
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            MangaSectionTitleView(title: title)
+            
+            LazyVGrid(columns: columns) {
+                ForEach(mangaList) { manga in
+                    MangaItemView(manga: manga, coverURL: coverURLProvider(manga))
                 }
             }
         }
     }
 }
 
-#Preview {
-    MangaSectionView(viewModel: MangaListViewModelImpl(service: MangaListServiceImpl(netify: Container.shared.netify())))
+struct MangaItemView: View {
+    let manga: MangaData
+    let coverURL: URL?
+    
+    var body: some View {
+        MangaSingleGridView(
+            title: manga.attributes.title.en ?? "Untitled",
+            description: manga.attributes.tags.first?.attributes.name.en ?? "Unknown",
+            coverURL: coverURL
+        )
+    }
 }
