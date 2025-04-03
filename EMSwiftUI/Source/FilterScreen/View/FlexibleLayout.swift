@@ -11,7 +11,7 @@ import SwiftUICore
 struct FlexibleLayout<Content: View>: View {
     @State private var screenWidth: CGFloat = 0
     @State private var gridHeight: CGFloat = 0
-    @State var elementsSize: [String: CGSize] = [:]
+    @State private var elementsSize: [String: CGSize] = [:]
     
     let array: [String]
     let content: (String) -> Content
