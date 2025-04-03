@@ -48,37 +48,39 @@ class FilterScreenViewModelImpl: FilterScreenViewModel {
     @MainActor
     private func getData() async {
         do {
-            let tags = try await service.getTags()
-            let mangaResponse = try await service.getManga()
-            let allManga = mangaResponse.data
+            async let tagsResponse = service.getTags()
+            async let mangaResponse = service.getManga()
             
-            let uniqueRatings = Array(Set(allManga.map { $0.attributes.contentRating })).sorted()
-            let uniqueStatuses = Array(Set(allManga.map { $0.attributes.status })).sorted()
-            let uniqueDemographics = Array(Set(allManga.compactMap { $0.attributes.publicationDemographic })).sorted()
+            let (tags, manga) = try await (tagsResponse, mangaResponse)
             
-            let uniqueFormats = Array(Set(tags
-                .filter { $0.attributes.group == "format" }
-                .compactMap { $0.attributes.name.en }))
-                .sorted()
-            
-            let uniqueGenres = Array(Set(tags
-                .filter { $0.attributes.group == "genre" }
-                .compactMap { $0.attributes.name.en }))
-                .sorted()
-            
-            let uniqueThemes = Array(Set(tags
-                .filter { $0.attributes.group == "theme" }
-                .compactMap { $0.attributes.name.en }))
-                .sorted()
-            
-            tagDictionary = [
-                Strings.contentRating: uniqueRatings,
-                Strings.publicationStatus: uniqueStatuses,
-                Strings.magazineDemographic: uniqueDemographics,
-                Strings.format: uniqueFormats,
-                Strings.genre: uniqueGenres,
-                Strings.theme: uniqueThemes
-            ]
-        } catch {}
+            tagDictionary = processData(tags: tags.data, manga: manga.data)
+        } catch {
+            print("Error loading data: \(error.localizedDescription)")
+        }
+    }
+    
+    private func processData(tags: [Tag], manga: [MangaData]) -> [String: [String]] {
+        let uniqueRatings = Set(manga.map { $0.attributes.contentRating }).sorted()
+        let uniqueStatuses = Set(manga.map { $0.attributes.status }).sorted()
+        let uniqueDemographics = Set(manga.compactMap { $0.attributes.publicationDemographic }).sorted()
+        
+        let groupedTags = Dictionary(grouping: tags) { $0.attributes.group }
+        
+        let formatTags = extractTagNames(from: groupedTags["format"] ?? [])
+        let genreTags = extractTagNames(from: groupedTags["genre"] ?? [])
+        let themeTags = extractTagNames(from: groupedTags["theme"] ?? [])
+        
+        return [
+            Strings.contentRating: uniqueRatings,
+            Strings.publicationStatus: uniqueStatuses,
+            Strings.magazineDemographic: uniqueDemographics,
+            Strings.format: formatTags,
+            Strings.genre: genreTags,
+            Strings.theme: themeTags
+        ]
+    }
+    
+    private func extractTagNames(from tags: [Tag]) -> [String] {
+        tags.compactMap { $0.attributes.name.en }.sorted()
     }
 }
