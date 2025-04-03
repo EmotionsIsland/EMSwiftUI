@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct RatingView: View {
-    private let viewModel = RatingViewViewModel()
+    private let ratingService = RatingService()
     
     var body: some View {
-        let rating = viewModel.getRandomRating
-        let maxRating = viewModel.maxRating
+        let rating = ratingService.getRandomRating
+        let maxRating = ratingService.maxRating
         
         HStack {
             HStack(spacing: 2) {
                 ForEach(0..<maxRating, id: \.self) { index in
                     starView(
-                        fillRatio: viewModel.fillRatio(for: index, rating: rating),
+                        fillRatio: ratingService.fillRatio(for: index, rating: rating),
                         size: CGSize(width: 17, height: 16)
                     )
                 }
