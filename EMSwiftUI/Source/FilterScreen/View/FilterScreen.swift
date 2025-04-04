@@ -9,19 +9,13 @@ struct FilterScreen<ViewModel: FilterScreenViewModel>: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationBar("Filter") {
-                Button {
-                    print("action")
-                } label: {
-                    buttonImage(icon: "checkmark")
-                }
-            } leftBarItems: {
+            NavigationBar("Filter", leftBarItems: {
                 Button {
                     print("cancel")
                 } label: {
                     buttonImage(icon: "xmark")
                 }
-            }
+            })
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {

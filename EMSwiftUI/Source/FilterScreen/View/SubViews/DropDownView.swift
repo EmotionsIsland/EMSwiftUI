@@ -14,6 +14,7 @@ struct DropDownView: View {
                 Text(category.title)
                 Image(systemName: "chevron.right")
                     .rotationEffect(.degrees(isExpanded ? 90 : 0))
+                    .animation(.easeIn(duration: 0.1), value: isExpanded)
             }
             .animation(.easeIn(duration: 0.1), value: rotation)
             .font(Font.SFPro.lightMedium)
@@ -27,13 +28,15 @@ struct DropDownView: View {
                 TagsView(data: items) { element in
                     TagsViewItem(title: element.name, isSelected: element.isSelected)
                         .onTapGesture {
-                            withAnimation(.smooth) {
-                                onSelectAction(element)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                withAnimation(.smooth) {
+                                    onSelectAction(element)
+                                }
                             }
                         }
                 }
+                .transition(.opacity)
             }
         }
-        .animation(.easeInOut, value: isExpanded)
     }
 }

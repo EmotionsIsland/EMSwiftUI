@@ -61,4 +61,5 @@ struct NavigationBar<Content: View>: View {
                 .foregroundStyle(.blackBase)
                 .frame(width: 30, height: 30)
         }
-    }}
+    }
+}

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct TagsViewItem: View {
-    let id = UUID()
     let title: String
     let isSelected: Bool
         
@@ -13,8 +12,8 @@ struct TagsViewItem: View {
                     .font(Font.SFPro.bodyNormal)
             }
             .foregroundStyle(Color.whiteText)
-            .padding(8)
-            .fixedSize()
+            .padding(.vertical, 6)
+            .padding(.horizontal, 8)
             .background(
                 RoundedRectangle(cornerRadius: 10.0)
                     .foregroundStyle(isSelected ? Color.orangeBase : Color.grayBase)
