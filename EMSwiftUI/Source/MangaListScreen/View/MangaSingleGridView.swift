@@ -14,7 +14,7 @@ struct MangaSingleGridView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            coverImage
+            MangaCoverImage(url: coverURL)
                 .aspectRatio(2/3, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 4))
                 .frame(maxWidth: .infinity)
@@ -30,46 +30,6 @@ struct MangaSingleGridView: View {
                 .font(Font.SFPro.lightSmall)
                 .foregroundColor(.grayBase)
                 .lineLimit(1)
-        }
-    }
-}
-
-private extension MangaSingleGridView {
-    @ViewBuilder
-    var coverImage: some View {
-        Group {
-            if let url = coverURL {
-                AsyncImage(
-                    url: url,
-                    content: { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    },
-                    placeholder: {
-                        placeholderView(showProgress: true)
-                    }
-                )
-            } else {
-                placeholderView(showProgress: false)
-            }
-        }
-    }
-    
-    func placeholderView(showProgress: Bool) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 4)
-                .fill(Color.gray.opacity(0.2))
-            
-            if showProgress {
-                ProgressView()
-            } else {
-                Image(systemName: "photo.artframe")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(20)
-                    .foregroundColor(.gray)
-            }
         }
     }
 }
