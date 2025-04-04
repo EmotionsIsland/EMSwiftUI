@@ -3,14 +3,18 @@ import SwiftUI
 struct TagsViewItem: View {
     let title: String
     let isSelected: Bool
+    var action: () -> Void
         
     var body: some View {
-        VStack {
+        Button {
+            action()
+        } label: {
             HStack(spacing: 4) {
                 if isSelected { Image(systemName: "plus") }
                 Text(title)
                     .font(Font.SFPro.bodyNormal)
             }
+            .frame(height: 20)
             .foregroundStyle(Color.whiteText)
             .padding(.vertical, 6)
             .padding(.horizontal, 8)
@@ -24,8 +28,8 @@ struct TagsViewItem: View {
 
 #Preview {
     VStack {
-        TagsViewItem(title: "Children", isSelected: true)
-        TagsViewItem(title: "Children", isSelected: false)
+        TagsViewItem(title: "Children", isSelected: true) { }
+        TagsViewItem(title: "Children", isSelected: false) { }
     }
 }
   

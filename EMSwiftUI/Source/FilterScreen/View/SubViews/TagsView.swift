@@ -1,81 +1,79 @@
 import SwiftUI
 
-struct TagsView<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
-    @State private var elementSize: [Data.Element: CGSize] = [:]
-    @State private var availableWidth: CGFloat = .zero
-    @State private var isInitialDrawComplete = false
-
-    private let spacing = 4.0
-    private let data: Data
-    private let content: (Data.Element) -> Content
-
-    init(data: Data, @ViewBuilder content: @escaping (Data.Element) -> Content) {
-        self.data = data
-        self.content = content
-    }
+struct TagsView<Data: Hashable, Content: View>: View {
+    private(set) var data: [Data]
+    private(set) var content: (Data) -> Content
+    @State private var totalHeight: CGFloat = 0
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            Color.clear
-                .frame(minHeight: 150)
-                .getSize { size in
-                    if availableWidth != size.width {
-                        availableWidth = size.width
-                    }
-                }
-            
-            if isInitialDrawComplete {
-                VStack(alignment: .leading, spacing: 4) {
-                    ForEach(computeRows(), id: \.self) { rowElements in
-                        HStack(spacing: 4) {
-                            ForEach(rowElements, id: \.self) { element in
-                                content(element)
-                                    .fixedSize()
-                                    .getSize { size in
-                                        if elementSize[element] != size {
-                                            elementSize[element] = size
-                                        }
-                                    }
-                            }
+        GeometryReader { geometry in
+            self.content(in: geometry)
+        }
+        .frame(height: totalHeight)
+    }
+    
+    private func content(in geometry: GeometryProxy) -> some View {
+        var width = CGFloat.zero
+        var height = CGFloat.zero
+        var lastHeight = CGFloat.zero
+
+        return ZStack(alignment: .topLeading) {
+            ForEach(self.data, id: \.self) { item in
+                self.content(item)
+                    .padding(.all, 4)
+                    .alignmentGuide(.leading) { dimensions in
+                        if item == data.first {
+                            height = .zero
                         }
+                        if abs(width - dimensions.width) > geometry.size.width {
+                            width = 0
+                            height -= lastHeight
+                        }
+                        let result = width
+                        if item == self.data.last {
+                            width = 0 // last item
+                        } else {
+                            width -= dimensions.width
+                        }
+                        return result
                     }
-                }
-                .transition(.opacity)
-                .animation(.easeIn(duration: 0.2), value: isInitialDrawComplete)
+                    .alignmentGuide(.top) { dimensions in
+                        let result = height
+                        lastHeight = dimensions.height
+                        return result
+                    }
             }
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                isInitialDrawComplete = true
-            }
-        }
+        .background(viewHeightReader($totalHeight))
     }
 
-    private func computeRows() -> [[Data.Element]] {
-        var rows: [[Data.Element]] = [[]]
-        var currentRow = 0
-        var remainingWidth = availableWidth
-
-        for element in data {
-            let size = elementSize[element, default: CGSize(width: availableWidth, height: 1)]
-
-            if remainingWidth - (size.width + spacing) >= 0 {
-                rows[currentRow].append(element)
-            } else {
-                currentRow += 1
-                rows.append([element])
-                remainingWidth = availableWidth
-                remainingWidth -= (size.width + spacing)
+    private func viewHeightReader(_ height: Binding<CGFloat>) -> some View {
+        return GeometryReader { geometry -> Color in
+            DispatchQueue.main.async {
+                withAnimation {
+                    height.wrappedValue = geometry.frame(in: .local).size.height
+                }
             }
-
-            remainingWidth -= (size.width + spacing)
+            return .clear
         }
-        return rows
     }
 }
 
 #Preview {
-    TagsView(data: ["apple", "banana", "orange", "grape", "pineapple", "mango", "watermelon", "strawberry", "blueberry", "blackberry"]) { element in
-        TagsViewItem(title: element, isSelected: .random())
+    TagsView(
+        data: [
+            "apple",
+            "banana",
+            "orange",
+            "grape",
+            "pineapple",
+            "mango",
+            "watermelon",
+            "strawberry",
+            "blueberry",
+            "blackberry"
+        ]
+    ) { element in
+        TagsViewItem(title: element, isSelected: .random()) { }
     }
 }

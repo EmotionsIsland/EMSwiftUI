@@ -22,12 +22,11 @@ struct FilterScreen<ViewModel: FilterScreenViewModel>: View {
                     header
                     
                     TagsView(data: viewModel.selectedItems) { element in
-                        TagsViewItem(title: element.name, isSelected: element.isSelected)
-                            .onTapGesture {
-                                withAnimation(.smooth) {
-                                    viewModel.selectItem(element)
-                                }
+                        TagsViewItem(title: element.name, isSelected: element.isSelected) {
+                            withAnimation(.smooth) {
+                                viewModel.selectItem(element)
                             }
+                        }
                     }
                     
                     buttonSection
@@ -99,5 +98,5 @@ private extension FilterScreen {
 }
 
 #Preview {
-    FilterScreenBuilder.build()
+    FilterScreenBuilder.build().tint(.orangeBase)
 }
