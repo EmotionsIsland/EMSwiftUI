@@ -2,12 +2,10 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var text: String
-    @FocusState.Binding var focusTF: Bool
     
     var body: some View {
         HStack {
             TextField("Search", text: $text)
-                .focused($focusTF)
                 .padding(8)
                 .padding(.horizontal, 24)
                 .frame(height: 44)

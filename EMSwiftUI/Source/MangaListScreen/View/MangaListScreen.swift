@@ -3,9 +3,6 @@ import SwiftUI
 struct MangaListScreen<ViewModel: MangaListViewModel>: View {
     @StateObject private var viewModel: ViewModel
     
-    @State private var isFetching: Bool = true
-    @FocusState var focusTF: Bool
-    
     init(viewModel: ViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -13,57 +10,43 @@ struct MangaListScreen<ViewModel: MangaListViewModel>: View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBar(text: $viewModel.searchText, focusTF: $focusTF)
+                SearchBar(text: $viewModel.searchText)
                     .padding(.top, 8)
                 Divider()
                 
-                ZStack {
-                    if isFetching {
-                        ProgressView()
-                            .progressViewStyle(.circular)
-                            .foregroundStyle(.secondary)
-                    } else {
-                        ScrollView(.vertical, showsIndicators: false) {
-                            ForEach(MangaSection.allCases, id: \.self) { section in
-                                Section {
-                                    MangaSectionView(viewModel: viewModel)
-                                } header: {
-                                    NavigationLink {
-                                        Text("This is \(section) manga")
-                                    } label: {
-                                        MangaSectionTitleView()
-                                            .padding(.horizontal, 8)
-                                            .padding(.top, 4)
-                                    }
-                                }
-                                .environment(\.mangaListSection, section)
+                ScrollView(.vertical, showsIndicators: false) {
+                    ForEach(MangaSection.allCases, id: \.self) { section in
+                        Section {
+                            MangaSectionView(viewModel: viewModel)
+                        } header: {
+                            NavigationLink {
+                                Text("This is \(section) manga")
+                            } label: {
+                                MangaSectionTitleView()
+                                    .padding(.horizontal, 8)
+                                    .padding(.top, 4)
                             }
                         }
-                        .padding(.horizontal)
+                        .environment(\.mangaListSection, section)
                     }
                 }
+                .padding(.horizontal)
                 .refreshable {
                     Task { await viewModel.fetchItems() }
                 }
-                .alert("Nerwork Error", isPresented: $viewModel.hasError, actions: {
-                    Button("OK") { viewModel.hasError = false }
+                .alert("Network Error", isPresented: Binding<Bool>(
+                    get: { viewModel.hasError },
+                    set: { _ in viewModel.dismissError() }
+                ), actions: {
+                    Button("OK") { viewModel.dismissError() }
                 }, message: {
                     Text(viewModel.errorMessage)
                 })
                 
                 Spacer()
             }
+            .hideKeyboardOnTap()
             .foregroundStyle(Color.white)
-            .task {
-                await viewModel.fetchItems()
-                isFetching = false
-            }
-            .toolbar {
-                ToolbarItem(placement: .keyboard) {
-                    Button("Done Search Manga") { focusTF.toggle() }
-                        .buttonStyle(.borderedProminent).tint(.orangeBase)
-                }
-            }
         }
     }
 }

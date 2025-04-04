@@ -4,11 +4,6 @@ struct MangaSingleGridView<ViewModel: MangaListViewModel>: View {
     @ObservedObject var viewModel: ViewModel
     let item: MangaListItem
     private let maxRaiting = 5
-    
-    init(_ item: MangaListItem, viewModel: ViewModel) {
-        self.item = item
-        self.viewModel = viewModel
-    }
 
     var body: some View {
         VStack(spacing: 4) {

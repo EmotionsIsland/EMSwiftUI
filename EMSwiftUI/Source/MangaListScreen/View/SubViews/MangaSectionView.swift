@@ -11,7 +11,7 @@ struct MangaSectionView<ViewModel: MangaListViewModel>: View {
     var body: some View {
         LazyVGrid(columns: columns, spacing: 25, pinnedViews: .sectionHeaders) {
             ForEach(viewModel.filteredMangaList) { manga in
-                MangaSingleGridView(manga, viewModel: viewModel)
+                MangaSingleGridView(viewModel: viewModel, item: manga)
             }
         }
         .padding(.horizontal)

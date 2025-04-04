@@ -1,15 +1,10 @@
 import SwiftUI
 
-struct TagsViewItem: View, Identifiable, Hashable {
+struct TagsViewItem: View {
     let id = UUID()
     let title: String
     let isSelected: Bool
         
-    init(title: String, isSelected: Bool) {
-        self.title = title
-        self.isSelected = isSelected
-    }
-
     var body: some View {
         VStack {
             HStack(spacing: 4) {

@@ -16,7 +16,7 @@ struct NavigationBar<Content: View>: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 HStack(spacing: 8) {
                     rightBarItems?()
@@ -35,8 +35,6 @@ struct NavigationBar<Content: View>: View {
                 }
                 .padding(.trailing, 16)
             }
-            .padding(.vertical, 8)
-            
             Divider()
         }
     }

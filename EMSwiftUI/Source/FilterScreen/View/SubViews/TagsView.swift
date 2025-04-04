@@ -3,11 +3,11 @@ import SwiftUI
 struct TagsView<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
     @State private var elementSize: [Data.Element: CGSize] = [:]
     @State private var availableWidth: CGFloat = .zero
-    let columns: [GridItem]
-    let rows: [GridItem]
-    let data: Data
-    let content: (Data.Element) -> Content
-    let spacing = 8.0
+    private let columns: [GridItem]
+    private let rows: [GridItem]
+    private let data: Data
+    private let content: (Data.Element) -> Content
+    private let spacing = 8.0
     
     init(data: Data, @ViewBuilder content: @escaping (Data.Element) -> Content) {
         self.data = data
@@ -59,13 +59,6 @@ private extension TagsView {
             remainingWidth -= (elementSize.width + spacing)
         }
         return rows
-    }
-}
-
-private extension TagsView {
-    struct ItemGroup: Hashable {
-        var id = UUID()
-        let item: [TagsViewItem]
     }
 }
 

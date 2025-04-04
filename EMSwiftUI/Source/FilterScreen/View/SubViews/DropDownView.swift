@@ -2,14 +2,12 @@ import SwiftUI
 
 struct DropDownView: View {
     @State private var rotation: Double = 0
+    @State private var isExpanded = false
     let category: FilterCategory
     let items: [FilterItem]
-    @State private var isExpanded = false
     let onSelectAction: (FilterItem) -> Void
-    let columns = [
-        GridItem(.flexible(minimum: 100))
-    ]
-            
+    let columns = [GridItem(.flexible(minimum: 100))]
+    
     var body: some View {
         LazyVGrid(columns: columns, alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {

@@ -3,24 +3,26 @@ import Netify
 import Combine
 
 protocol MangaListViewModel: ObservableObject {
-    var hasError: Bool { get set }
+    var hasError: Bool { get }
     var searchText: String { get set }
-    var errorMessage: String { get set }
+    var errorMessage: String { get }
     var filteredMangaList: [MangaListItem] { get }
     @MainActor func fetchItems() async
+    func dismissError()
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
     private let service: MangaListService
-    @Published var searchText: String = ""
-    @Published var errorMessage: String = ""
-    @Published var hasError: Bool = false
-    @Published var itemsManga: [MangaListItem] = []
-    @Published var filteredMangaList: [MangaListItem] = []
-    @Published var state: DataState = .notAvailable
+    @Published var searchText = ""
+    @Published private(set) var errorMessage = ""
+    @Published private(set) var hasError = false
+    @Published private(set) var itemsManga: [MangaListItem] = []
+    @Published private(set) var filteredMangaList: [MangaListItem] = []
+    @Published private(set) var state: DataState = .notAvailable
     
     init(service: MangaListService) {
         self.service = service
+        Task { await fetchItems() }
         setupErrorSubscriptions()
         setupSearchFilterSubscriptions()
     }
@@ -37,6 +39,9 @@ extension MangaListViewModelImpl {
             self.state = .failed(error: error)
             debugPrint("Fetch data failed: \(error.localizedDescription)")
         }
+    }
+    func dismissError() {
+        hasError = false
     }
 }
 

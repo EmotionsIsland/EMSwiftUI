@@ -51,14 +51,6 @@ struct FilterScreen<ViewModel: FilterScreenViewModel>: View {
                 }
                 .padding(.horizontal)
             }
-            .alert("Nerwork Error", isPresented: $viewModel.hasError, actions: {
-                Button("OK") { viewModel.hasError = false }
-            }, message: {
-                Text(viewModel.errorMessage)
-            })
-        }
-        .task {
-            await viewModel.fetchItems()
         }
     }
 }
@@ -67,7 +59,7 @@ private extension FilterScreen {
     var buttonSection: some View {
         VStack(alignment: .center, spacing: 8) {
             Button {
-                viewModel.applySelection()
+                withAnimation { viewModel.applySelection() }
             } label: {
                 Text("Apply")
                     .frame(height: 44)
@@ -79,7 +71,7 @@ private extension FilterScreen {
                     )
             }
             Button {
-                viewModel.resetSelection()
+                withAnimation { viewModel.resetSelection()}
             } label: {
                 Text("Reset")
                     .frame(height: 44)
@@ -104,8 +96,11 @@ private extension FilterScreen {
         Image(systemName: icon)
             .resizable()
             .frame(width: 15, height: 15)
-            .foregroundStyle(.blackBase)
-            .frame(width: 30, height: 30)
+            .padding(20)
+            .background {
+                Rectangle().fill(.clear)
+                    .frame(width: 30, height: 30)
+            }
     }
 }
 
