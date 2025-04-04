@@ -5,8 +5,7 @@
 //  Created by Антон Баландин on 1.04.25.
 //
 
-import UIKit
-import SwiftUICore
+import SwiftUI
 
 struct FlexibleLayout<Content: View>: View {
     @State private var screenWidth: CGFloat = 0

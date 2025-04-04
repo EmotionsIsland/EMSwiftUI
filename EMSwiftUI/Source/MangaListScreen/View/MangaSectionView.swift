@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import Factory
-import Netify
 
 struct MangaSectionView<VM: MangaListViewModel>: View {
     @ObservedObject var viewModel: VM

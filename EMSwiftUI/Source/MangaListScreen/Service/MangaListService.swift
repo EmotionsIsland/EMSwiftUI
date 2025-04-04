@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Factory
 import Netify
 
 protocol MangaListService {

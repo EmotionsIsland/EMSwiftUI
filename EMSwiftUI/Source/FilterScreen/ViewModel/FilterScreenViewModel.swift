@@ -16,7 +16,7 @@ protocol FilterScreenViewModel: ObservableObject {
     func isSelected(_ tag: String) -> Bool
 }
 
-class FilterScreenViewModelImpl: FilterScreenViewModel {
+final class FilterScreenViewModelImpl: FilterScreenViewModel {
     @Published private(set) var selectedTags: Set<String> = []
     @Published private(set) var tagDictionary: [String: [String]] = [:]
     

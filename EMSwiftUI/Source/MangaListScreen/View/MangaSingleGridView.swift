@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Factory
 
 struct MangaSingleGridView: View {
     let title: String
