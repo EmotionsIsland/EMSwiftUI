@@ -14,14 +14,12 @@ struct RatingView: View {
         let rating = ratingService.getRandomRating
         let maxRating = ratingService.maxRating
         
-        HStack {
-            HStack(spacing: 2) {
-                ForEach(0..<maxRating, id: \.self) { index in
-                    starView(
-                        fillRatio: ratingService.fillRatio(for: index, rating: rating),
-                        size: CGSize(width: 17, height: 16)
-                    )
-                }
+        HStack(spacing: 2) {
+            ForEach(0..<maxRating, id: \.self) { index in
+                starView(
+                    fillRatio: ratingService.fillRatio(for: index, rating: rating),
+                    size: CGSize(width: 17, height: 16)
+                )
             }
         }
     }
