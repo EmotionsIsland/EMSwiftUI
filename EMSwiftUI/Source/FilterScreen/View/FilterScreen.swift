@@ -34,7 +34,7 @@ struct FilterScreen<ViewModel: FilterScreenViewModel>: View {
                 }
                 .padding(.horizontal)
                 
-                LazyVStack(spacing: 24) {
+                VStack(spacing: 24) {
                     ForEach(FilterCategory.allCases, id: \.self) { categoty in
                         DropDownView(
                             category: categoty,
