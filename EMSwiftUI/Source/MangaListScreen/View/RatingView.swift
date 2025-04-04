@@ -28,7 +28,7 @@ struct RatingView: View {
 }
 
 private extension RatingView {
-    private func starView(fillRatio: CGFloat, size: CGSize) -> some View {
+    func starView(fillRatio: CGFloat, size: CGSize) -> some View {
         ZStack(alignment: .leading) {
             Image("starIcon")
                 .renderingMode(.template)

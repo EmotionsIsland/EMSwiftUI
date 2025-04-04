@@ -52,7 +52,7 @@ private extension FlexibleLayout {
         }
     }
     
-    private func makeGrid() -> [[String]] {
+    func makeGrid() -> [[String]] {
         var grid: [[String]] = [[]]
         var currentRow = 0
         var availableWidth = screenWidth
