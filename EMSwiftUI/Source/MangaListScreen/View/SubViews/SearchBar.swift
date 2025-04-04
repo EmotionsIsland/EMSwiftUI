@@ -1,0 +1,38 @@
+import SwiftUI
+
+struct SearchBar: View {
+    @Binding var text: String
+    @FocusState.Binding var focusTF: Bool
+    
+    var body: some View {
+        HStack {
+            TextField("Search", text: $text)
+                .focused($focusTF)
+                .padding(8)
+                .padding(.horizontal, 24)
+                .frame(height: 44)
+                .background(.grayBase)
+                .cornerRadius(8)
+                .overlay(
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 8)
+                        
+                        if !text.isEmpty {
+                            Image(systemName: "multiply.circle.fill")
+                                .padding(.trailing, 16)
+                                .onTapGesture {
+                                    withAnimation {
+                                        text = ""
+                                    }
+                                }
+                        }
+                    }
+                )
+        }
+        .foregroundColor(.orangeBase)
+        .padding(.horizontal, 16)
+    }
+}

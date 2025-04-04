@@ -1,29 +1,71 @@
-//
-//  MangaListViewModel.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 18/12/23.
-//
-
-import Foundation
+import SwiftUI
 import Netify
+import Combine
 
-enum SizeFormat: String {
-    case size256 = ".256.jpg"
-    case size512 = ".512.jpg"
-    case size1024 = ".1024.jpg"
+protocol MangaListViewModel: ObservableObject {
+    var hasError: Bool { get set }
+    var searchText: String { get set }
+    var errorMessage: String { get set }
+    var filteredMangaList: [MangaListItem] { get }
+    @MainActor func fetchItems() async
 }
 
-protocol MangaListViewModel: ObservableObject { }
-
 final class MangaListViewModelImpl: MangaListViewModel {
-    // TODO: create Published variables
-    // TODO: create getData func
     private let service: MangaListService
-
+    @Published var searchText: String = ""
+    @Published var errorMessage: String = ""
+    @Published var hasError: Bool = false
+    @Published var itemsManga: [MangaListItem] = []
+    @Published var filteredMangaList: [MangaListItem] = []
+    @Published var state: DataState = .notAvailable
+    
     init(service: MangaListService) {
         self.service = service
+        setupErrorSubscriptions()
+        setupSearchFilterSubscriptions()
     }
-    
-    @MainActor private func getData() async throws { }
+}
+
+extension MangaListViewModelImpl {
+    @MainActor
+    func fetchItems() async {
+        do {
+            let response = try await service.getManga()
+            self.itemsManga = response.data.map(MangaListItem.init)
+            self.state = .successfull
+        } catch {
+            self.state = .failed(error: error)
+            debugPrint("Fetch data failed: \(error.localizedDescription)")
+        }
+    }
+}
+
+private extension MangaListViewModelImpl {
+    func setupErrorSubscriptions() {
+        $state
+            .map { [weak self] state -> Bool in
+                switch state {
+                case .successfull, .notAvailable:
+                    return false
+                case .failed(let error):
+                    self?.errorMessage = error.localizedDescription
+                    return true
+                }
+            }
+            .assign(to: &$hasError)
+    }
+}
+
+private extension MangaListViewModelImpl {
+    func setupSearchFilterSubscriptions() {
+        $searchText
+            .combineLatest($itemsManga)
+            .map { searchText, mangaList in
+                guard !searchText.isEmpty else { return mangaList }
+                return mangaList.filter { manga in
+                    manga.title.lowercased().contains(searchText.lowercased())
+                }
+            }
+            .assign(to: &$filteredMangaList)
+    }
 }

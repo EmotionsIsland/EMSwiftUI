@@ -9,5 +9,6 @@ extension Font {
         static let mediumNormal = Font.custom("SFProText-Medium", size: 16)
         static let semiboldNormal = Font.custom("SFPro-Semibold", size: 16)
         static let lightSmall = Font.custom("SFProText-Light", size: 14)
+        static let lightMedium = Font.custom("SFProText-Light", size: 20)
     }
 }

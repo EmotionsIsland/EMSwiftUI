@@ -1,10 +1,3 @@
-//
-//  App+Injections.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 17/3/25.
-//
-
 import Factory
 import Logify
 import Netify

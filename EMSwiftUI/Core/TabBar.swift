@@ -1,10 +1,3 @@
-//
-//  TabBar.swift
-//  EMSwiftUI
-//
-//  Created by Akbar Umetov on 17/12/23.
-//
-
 import SwiftUI
 
 enum TabSelection {
@@ -35,7 +28,7 @@ private extension TabBar {
     
     var filterTab: some View {
         FilterScreenBuilder.build()
-            .tag(TabSelection.main)
+            .tag(TabSelection.filter)
             .tabItem {
                 Image(.tabBarSearch)
             }
