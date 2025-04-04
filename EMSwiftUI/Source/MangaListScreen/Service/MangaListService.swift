@@ -25,6 +25,6 @@ final class MangaListServiceImpl: MangaListService {
     }
     
     func getTags() async throws -> TagResponse {
-            try await netify.request(API.mangaTags, type: TagResponse.self)
+        try await netify.request(API.mangaTags, type: TagResponse.self)
     }
 }

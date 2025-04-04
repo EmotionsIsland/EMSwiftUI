@@ -27,10 +27,10 @@ extension API {
     static var mangaTags: Endpoint {
         return api.endpoint(path: "/manga/tag")
     }
-
+    
     static func coverURL(for manga: MangaData, _ sizeFormat: SizeFormat = .size512) -> URL? {
         guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" })?.attributes?.fileName else { return nil }
-
+        
         return coverURL.endpoint(path: "/covers/\(manga.id)/\(fileName)\(sizeFormat.rawValue)").url
     }
 }
