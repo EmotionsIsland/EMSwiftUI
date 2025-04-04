@@ -58,44 +58,12 @@ private extension MangaSectionView {
     
     var mangaSections: some View {
         ForEach(viewModel.mangaTitle, id: \.self) { title in
-            MangaSectionContainer(
+            MangaSectionContainerView(
                 title: title,
                 mangaList: viewModel.filteredMangaList,
                 columns: columns,
                 coverURLProvider: { viewModel.getCoverURL(manga: $0, sizeFormat: .size256) }
             )
         }
-    }
-}
-
-struct MangaSectionContainer: View {
-    let title: String
-    let mangaList: [MangaData]
-    let columns: [GridItem]
-    let coverURLProvider: (MangaData) -> URL?
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            MangaSectionTitleView(title: title)
-            
-            LazyVGrid(columns: columns) {
-                ForEach(mangaList) { manga in
-                    MangaItemView(manga: manga, coverURL: coverURLProvider(manga))
-                }
-            }
-        }
-    }
-}
-
-struct MangaItemView: View {
-    let manga: MangaData
-    let coverURL: URL?
-    
-    var body: some View {
-        MangaSingleGridView(
-            title: manga.attributes.title.en ?? "Untitled",
-            description: manga.attributes.tags.first?.attributes.name.en ?? "Unknown",
-            coverURL: coverURL
-        )
     }
 }
