@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct TagsView<Data: Hashable, Content: View>: View {
-    private(set) var data: [Data]
-    private(set) var content: (Data) -> Content
+    let data: [Data]
+    let content: (Data) -> Content
     @State private var totalHeight: CGFloat = 0
 
     var body: some View {

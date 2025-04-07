@@ -3,7 +3,7 @@ import SwiftUI
 struct TagsViewItem: View {
     let title: String
     let isSelected: Bool
-    var action: () -> Void
+    let action: () -> Void
         
     var body: some View {
         Button {
