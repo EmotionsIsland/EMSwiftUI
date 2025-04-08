@@ -7,18 +7,11 @@
 
 import Foundation
 import OSLog
-import SwiftUI
-import Factory
-import Netify
 
 protocol FilterScreenViewModelProtocol: ObservableObject {
     var items: [FilterItem] { get }
     var selectedItems: [FilterItem] { get }
 
-    @MainActor
-    func fetchItems() async
-
-    @MainActor
     func getItems(for category: FilterCategory) -> [FilterItem]
 
     @MainActor
@@ -32,7 +25,7 @@ protocol FilterScreenViewModelProtocol: ObservableObject {
 }
 
 final class FilterScreenViewModel: FilterScreenViewModelProtocol {
-    @Published var items: [FilterItem] = []
+    @Published private(set) var items: [FilterItem] = []
     var selectedItems: [FilterItem] {
         items.filter { $0.isSelected }
     }
@@ -41,10 +34,14 @@ final class FilterScreenViewModel: FilterScreenViewModelProtocol {
 
     init(service: FilterService) {
         self.service = service
+
+        Task {
+            await fetchItems()
+        }
     }
 
     @MainActor
-    func fetchItems() async {
+    private func fetchItems() async {
         do {
             items = try await service.fetchMangaTags().data
                 .map(FilterItem.init)
@@ -53,7 +50,6 @@ final class FilterScreenViewModel: FilterScreenViewModelProtocol {
         }
     }
 
-    @MainActor
     func getItems(for category: FilterCategory) -> [FilterItem] {
         switch category {
         case .other:

@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct RatingView: View {
-    let maxRating: Int
+    private let maxRating: Int = 5
     let rating: Double
 
-    init(_ rating: Double, maxRating: Int = 5) {
-        self.maxRating = maxRating
+    init(_ rating: Double) {
         self.rating = min(rating, Double(maxRating))
     }
 
@@ -24,7 +23,9 @@ struct RatingView: View {
             }
         }
     }
+}
 
+private extension RatingView {
     @ViewBuilder
     func startView(for index: Int) -> some View {
         ZStack {

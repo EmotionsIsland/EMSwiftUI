@@ -19,40 +19,34 @@ enum SizeFormat: String {
 protocol MangaListViewModel: ObservableObject {
     var items: [MangaListItem] { get }
 
-    @MainActor
-    func fetchItems() async
-
-    @MainActor
-    func fetchCover(for item: MangaListItem) async -> UIImage?
+    var isFetching: Bool { get }
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    @Published var items: [MangaListItem] = []
+    @Published private(set) var items: [MangaListItem] = []
+    @Published private(set) var isFetching: Bool = false
 
     private let service: MangaListService
 
     init(service: MangaListService) {
         self.service = service
+
+        Task {
+            await fetchItems()
+        }
     }
-    
+
     @MainActor
-    func fetchItems() async {
+    private func fetchItems() async {
+        isFetching = true
+
         do {
             items = try await service.fetchManga().data
                 .map(MangaListItem.init)
         } catch {
             Logger.standard.error("\(error)")
         }
-    }
 
-    @MainActor
-    func fetchCover(for item: MangaListItem) async -> UIImage? {
-        do {
-            return try await service.fetchCover(for: item)
-        } catch {
-            Logger.standard.error("\(error)")
-        }
-
-        return nil
+        isFetching = false
     }
 }

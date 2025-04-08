@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import UIKit
-import Factory
 import Netify
 
 protocol FilterServiceProtocol {

@@ -10,36 +10,39 @@ import SwiftUI
 struct MangaListScreen<ViewModel: MangaListViewModel>: View {
     @StateObject private var viewModel: ViewModel
 
-    @State private var isFetching: Bool = true
-
     init(viewModel: ViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
         ZStack {
-            if isFetching {
+            if viewModel.isFetching {
                 ProgressView()
                     .progressViewStyle(.circular)
                     .foregroundStyle(.secondary)
             } else {
                 ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(MangaSection.allCases, id: \.self) {
-                        Section {
-                            MangaGridView(viewModel: viewModel)
-                        } header: {
-                            MangaSectionHeaderView()
+                    VStack(spacing: 8) {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.grayBase)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 38)
+                            .padding(.horizontal)
+
+                        Divider()
+
+                        ForEach(MangaSection.allCases, id: \.self) {
+                            Section {
+                                MangaGridView(items: viewModel.items)
+                            } header: {
+                                MangaSectionHeaderView()
+                            }
+                            .environment(\.mangaListSection, $0)
                         }
-                        .environment(\.mangaListSection, $0)
+                        .padding(.horizontal)
                     }
                 }
-                .padding(.horizontal)
             }
-        }
-        .task {
-            await viewModel.fetchItems()
-
-            isFetching = false
         }
     }
 }
