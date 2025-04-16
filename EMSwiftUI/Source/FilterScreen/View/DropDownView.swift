@@ -53,8 +53,10 @@ struct DropDownView: View {
             }
         }
     }
+}
 
-    private func menuItem(_ item: TagItem) -> some View {
+private extension DropDownView {
+    func menuItem(_ item: TagItem) -> some View {
         Button {
             if !selectedTags.contains(item) {
                 selectedTags.append(item)

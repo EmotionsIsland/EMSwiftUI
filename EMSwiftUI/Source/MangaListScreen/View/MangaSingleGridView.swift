@@ -27,8 +27,10 @@ struct MangaSingleGridView: View {
         }
         .frame(width: 100)
     }
+}
 
-    private var coverImage: some View {
+private extension MangaSingleGridView {
+    var coverImage: some View {
         AsyncImage(url: urlForImage) { phase in
             switch phase {
             case .empty:
@@ -54,14 +56,14 @@ struct MangaSingleGridView: View {
         }
     }
 
-    private var titleText: some View {
+    var titleText: some View {
         Text(model.attributes.title.en ?? "No title")
             .foregroundStyle(Color.blackBase)
             .font(Font.SFPro.semiboldNormal)
             .lineLimit(1)
     }
 
-    private var tagsText: some View {
+    var tagsText: some View {
         let tagsText = model.attributes.tags
             .compactMap { $0.attributes.name.en }
             .joined(separator: ", ")

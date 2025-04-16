@@ -16,21 +16,17 @@ struct TagModel: Codable {
 
 struct TagData: Codable {
     let id: String
-    let type: TypeEnum
+    let type: String
     let attributes: Attributes
 
     struct Attributes: Codable {
         let name: Name
         let group: String
         let version: Int
-
-        struct Name: Codable {
-            let en: String
-        }
     }
 
-    enum TypeEnum: String, Codable {
-        case tag = "tag"
+    struct Name: Codable {
+        let en: String
     }
 }
 // swiftlint:enable identifier_name

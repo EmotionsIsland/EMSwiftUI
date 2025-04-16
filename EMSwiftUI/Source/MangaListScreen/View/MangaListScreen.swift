@@ -19,14 +19,12 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             switch viewModel.dataState {
             case .successfull:
                 VStack(spacing: 0) {
-                    RoundedRectangle(cornerRadius: 8, style: .circular)
-                        .frame(height: 36)
-                        .foregroundStyle(.gray)
+                    searchBar
                         .padding(.bottom, 8)
                         .padding(.horizontal, 16)
                     Divider()
-                    ForEach(0..<2) { _ in
-                        MangaSectionView(viewModel: viewModel, header: "Popular")
+                    ForEach(viewModel.headers, id: \.self) { header in
+                        MangaSectionView(viewModel: viewModel, header: header)
                     }
                     .padding(.horizontal, 16)
                 }
@@ -36,5 +34,23 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 ProgressView()
             }
         }
+    }
+}
+
+private extension MangaListScreen {
+    var searchBar: some View {
+        HStack(spacing: 4) {
+            Image(.search)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 24, height: 24)
+                .padding(.vertical, 6)
+                .padding(.leading, 4)
+
+            TextField("Search", text: $viewModel.searchText)
+                .frame(maxWidth: .infinity)
+        }
+        .frame(height: 36)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

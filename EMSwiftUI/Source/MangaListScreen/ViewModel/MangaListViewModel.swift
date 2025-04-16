@@ -9,23 +9,27 @@ import Foundation
 import Netify
 import Combine
 
-enum SizeFormat: String {
-    case size256 = ".256.jpg"
-    case size512 = ".512.jpg"
-    case size1024 = ".1024.jpg"
-}
-
 protocol MangaListViewModel: ObservableObject {
     var dataState: DataState { get }
-    var mangaData: [MangaData] { get }
+    var filteredData: [MangaData] { get }
+    var searchText: String { get set }
+    var headers: [String] { get }
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL?
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
     private let service: MangaListService
+    private var mangaData: [MangaData] = []
 
+    let headers = ["Popular", "Recently Added"]
+
+    @Published var searchText: String = "" {
+        didSet {
+            filterMangaData(by: searchText)
+        }
+    }
     @Published var dataState: DataState = .notAvailable
-    @Published var mangaData: [MangaData] = []
+    @Published var filteredData: [MangaData] = []
 
     init(service: MangaListService) {
         self.service = service
@@ -37,8 +41,10 @@ final class MangaListViewModelImpl: MangaListViewModel {
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL? {
         return service.getCoverURL(manga: manga, sizeFormat: sizeFormat)
     }
+}
 
-    @MainActor private func getData() async {
+private extension MangaListViewModelImpl {
+    @MainActor func getData() async {
         do {
             let result = try await service.getManga()
             mangaData = result.data
@@ -47,10 +53,12 @@ final class MangaListViewModelImpl: MangaListViewModel {
             dataState = .failed(error: error)
         }
     }
-}
 
-enum DataState {
-    case successfull
-    case failed(error: Error)
-    case notAvailable
+    func filterMangaData(by text: String) {
+        guard !text.isEmpty else {
+            filteredData = mangaData
+            return
+        }
+        filteredData = mangaData.filter { $0.attributes.title.en?.lowercased().contains(text.lowercased()) ?? false }
+    }
 }

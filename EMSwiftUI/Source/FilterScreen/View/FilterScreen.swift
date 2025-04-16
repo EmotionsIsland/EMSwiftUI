@@ -32,8 +32,10 @@ struct FilterScreen<VM: IFilterViewModel>: View {
             }
         }
     }
+}
 
-    private var content: some View {
+private extension FilterScreen {
+    var content: some View {
         VStack(alignment: .leading, spacing: 16) {
             selectionTitle
             if !viewModel.selectedTags.isEmpty {
@@ -45,13 +47,13 @@ struct FilterScreen<VM: IFilterViewModel>: View {
         .padding(.top, 16)
     }
 
-    private var selectionTitle: some View {
+    var selectionTitle: some View {
         Text("Selection")
             .foregroundStyle(Color.blackBase)
             .font(Font.SFPro.headline3)
     }
 
-    private var selectionContent: some View {
+    var selectionContent: some View {
         FlexibleView(
             data: viewModel.selectedTags,
             spacing: 8,
@@ -61,7 +63,7 @@ struct FilterScreen<VM: IFilterViewModel>: View {
         }
     }
 
-    private var selectionButtons: some View {
+    var selectionButtons: some View {
         VStack(alignment: .center, spacing: 0) {
             Button(action: {}) {
                 Text("Apply")
@@ -88,7 +90,7 @@ struct FilterScreen<VM: IFilterViewModel>: View {
         }
     }
 
-    private var dropDownMenu: some View {
+    var dropDownMenu: some View {
         VStack(alignment: .leading, spacing: 24) {
             ForEach(viewModel.dropDownContent.indices, id: \.self) { index in
                 DropDownView(
@@ -101,7 +103,7 @@ struct FilterScreen<VM: IFilterViewModel>: View {
         }
     }
 
-    private func filterItem(_ item: TagItem) -> some View {
+    func filterItem(_ item: TagItem) -> some View {
         HStack(spacing: 4) {
             Image(.addIcon)
                 .resizable()

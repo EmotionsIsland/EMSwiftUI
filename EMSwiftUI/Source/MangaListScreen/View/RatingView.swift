@@ -33,8 +33,10 @@ struct RatingView: View {
             }
         }
     }
+}
 
-    private func fillAmount(for index: Int) -> CGFloat {
+private extension RatingView {
+    func fillAmount(for index: Int) -> CGFloat {
         let remaining = rating - CGFloat(index)
         return min(max(remaining, 0), 1)
     }

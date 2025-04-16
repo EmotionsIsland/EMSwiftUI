@@ -26,7 +26,7 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
             MangaSectionTitleView(header: header)
 
             LazyVGrid(columns: columns) {
-                ForEach(viewModel.mangaData, id: \.id) { model in
+                ForEach(viewModel.filteredData, id: \.id) { model in
                     MangaSingleGridView(
                         model: model,
                         urlForImage: viewModel.getCoverURL(manga: model, sizeFormat: .size256)
