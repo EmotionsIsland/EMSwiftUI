@@ -9,6 +9,9 @@ import SwiftUI
 
 final class FilterScreenBuilder {
     static func build() -> some View {
-        FilterScreen()
+        let viewModel = FilterViewModel()
+        let view = FilterScreen(viewModel: viewModel)
+
+        return view
     }
 }
