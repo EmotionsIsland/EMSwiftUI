@@ -44,6 +44,7 @@ private extension MangaListScreen {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 24)
+                .foregroundStyle(.grayBase)
                 .padding(.vertical, 6)
                 .padding(.leading, 4)
 
@@ -51,6 +52,9 @@ private extension MangaListScreen {
                 .frame(maxWidth: .infinity)
         }
         .frame(height: 36)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.whiteText)
+        )
     }
 }

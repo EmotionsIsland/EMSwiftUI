@@ -18,7 +18,7 @@ struct RatingView: View {
                     ZStack(alignment: .leading) {
                         Image(.starIcon)
                             .resizable()
-                            .foregroundColor(.gray.opacity(0.2))
+                            .foregroundColor(.whiteText)
 
                         Image(.starIcon)
                             .resizable()

@@ -20,7 +20,7 @@ struct MangaSectionTitleView: View {
                 .foregroundStyle(Color.blackBase)
                 .font(Font.SFPro.headline3)
             Spacer()
-            Button(action: {}) {
+            Button(action: {}, label: {
                 HStack(spacing: 4) {
                     Text("more")
                         .foregroundStyle(Color.blackBase)
@@ -31,7 +31,7 @@ struct MangaSectionTitleView: View {
                         .frame(width: 24, height: 24)
                         .foregroundStyle(Color.blackBase)
                 }
-            }
+            })
         }
     }
 }

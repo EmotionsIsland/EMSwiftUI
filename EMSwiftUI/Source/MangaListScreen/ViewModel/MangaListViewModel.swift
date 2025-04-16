@@ -48,6 +48,7 @@ private extension MangaListViewModelImpl {
         do {
             let result = try await service.getManga()
             mangaData = result.data
+            filteredData = result.data
             dataState = .successfull
         } catch {
             dataState = .failed(error: error)

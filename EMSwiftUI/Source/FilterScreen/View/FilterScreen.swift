@@ -65,26 +65,26 @@ private extension FilterScreen {
 
     var selectionButtons: some View {
         VStack(alignment: .center, spacing: 0) {
-            Button(action: {}) {
+            Button(action: {}, label: {
                 Text("Apply")
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Color.whiteText)
                     .font(Font.SFPro.mediumNormal)
                     .padding(12)
-            }
+            })
             .background(Color.orangeBase)
             .clipShape(RoundedRectangle(cornerRadius: 8))
 
             Button(action: {
                 viewModel.selectedTags.removeAll()
-            }) {
+            }, label: {
                 Text("Reset")
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Color.blackBase)
                     .font(Font.SFPro.mediumNormal)
                     .padding(.top, 8)
                     .padding(.bottom, 16)
-            }
+            })
 
             Divider()
         }

@@ -36,7 +36,7 @@ private extension MangaSingleGridView {
             case .empty:
                 ZStack {
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.grayBase.opacity(0.2))
+                        .fill(Color.whiteText)
                     ProgressView()
                 }
                     .frame(width: 100, height: 144)

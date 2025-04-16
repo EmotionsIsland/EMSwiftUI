@@ -86,7 +86,7 @@ private extension DropDownView {
                     .padding(8)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.grayBase.opacity(0.2))
+                            .fill(Color.whiteText)
                     )
             }
         }
