@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Factory
 
 final class FilterScreenBuilder {
     static func build() -> some View {
-        let viewModel = FilterViewModel()
+        let service = FilterService(netify: Container.shared.netify())
+        let viewModel = FilterViewModel(service: service)
         let view = FilterScreen(viewModel: viewModel)
 
         return view

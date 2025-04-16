@@ -32,14 +32,18 @@ struct MangaSingleGridView: View {
         AsyncImage(url: urlForImage) { phase in
             switch phase {
             case .empty:
-                ProgressView()
+                ZStack {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.grayBase.opacity(0.2))
+                    ProgressView()
+                }
                     .frame(width: 100, height: 144)
             case .success(let image):
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 100, height: 144)
-                    .cornerRadius(4)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
             case .failure:
                 Color.gray
                     .frame(width: 100, height: 144)

@@ -18,9 +18,19 @@ struct FilterScreen<VM: IFilterViewModel>: View {
         ScrollView {
             content
         }
-        .navigationBarTitleDisplayMode(.inline)
         .padding(16)
-        .navigationTitle("Filters")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                VStack {
+                    Text("Filters")
+                        .font(Font.SFPro.headline2)
+
+                    Divider()
+                        .frame(width: UIScreen.main.bounds.width)
+                }
+            }
+        }
     }
 
     private var content: some View {
