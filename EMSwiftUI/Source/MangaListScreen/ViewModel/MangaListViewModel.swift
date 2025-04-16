@@ -7,6 +7,7 @@
 
 import Foundation
 import Netify
+import Combine
 
 enum SizeFormat: String {
     case size256 = ".256.jpg"
@@ -14,16 +15,42 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-protocol MangaListViewModel: ObservableObject { }
+protocol MangaListViewModel: ObservableObject {
+    var dataState: DataState { get }
+    var mangaData: [MangaData] { get }
+    func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL?
+}
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    // TODO: create Published variables
-    // TODO: create getData func
     private let service: MangaListService
+
+    @Published var dataState: DataState = .notAvailable
+    @Published var mangaData: [MangaData] = []
 
     init(service: MangaListService) {
         self.service = service
+        Task {
+            await getData()
+        }
     }
-    
-    @MainActor private func getData() async throws { }
+
+    func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL? {
+        return service.getCoverURL(manga: manga, sizeFormat: sizeFormat)
+    }
+
+    @MainActor private func getData() async {
+        do {
+            let result = try await service.getManga()
+            mangaData = result.data
+            dataState = .successfull
+        } catch {
+            dataState = .failed(error: error)
+        }
+    }
+}
+
+enum DataState {
+    case successfull
+    case failed(error: Error)
+    case notAvailable
 }
