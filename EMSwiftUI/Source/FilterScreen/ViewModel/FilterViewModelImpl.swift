@@ -7,32 +7,45 @@
 
 import Combine
 
-protocol IFilterViewModel: ObservableObject {
-    var menuIsPresenting: [Bool] { get set }
+protocol FilterViewModel: ObservableObject {
     var dropDownContent: [DropDownMenuModel] { get }
-    var selectedTags: [TagItem] { get set }
+    var selectedTags: [TagItem] { get }
+    func addSelectedTag(_ tag: TagItem)
+    func removeAllSelectedTags()
 }
 
-final class FilterViewModel: IFilterViewModel {
+final class FilterViewModelImpl: FilterViewModel {
     private let service: FilterService
 
-    @Published var menuIsPresenting: [Bool] = []
-    @Published var dropDownContent: [DropDownMenuModel] = []
-    @Published var selectedTags: [TagItem] = []
+    @Published private(set) var dropDownContent: [DropDownMenuModel] = []
+    @Published private(set) var selectedTags: [TagItem] = []
 
     init(service: FilterService) {
         self.service = service
 
-        Task { @MainActor in
-            let tagModel = try? await service.getTags()
-
-            self.dropDownContent = tagModel?.toDropDownMenuModel() ?? []
-            self.menuIsPresenting = .init(repeating: false, count: dropDownContent.count)
+        Task {
+            await getData()
         }
+    }
+
+    func addSelectedTag(_ tag: TagItem) {
+        selectedTags.append(tag)
+    }
+
+    func removeAllSelectedTags() {
+        selectedTags.removeAll()
     }
 }
 
-fileprivate extension TagModel {
+private extension FilterViewModelImpl {
+    @MainActor func getData() async {
+        let tagModel = try? await service.getTags()
+
+        self.dropDownContent = tagModel?.toDropDownMenuModel() ?? []
+    }
+}
+
+private extension TagModel {
     func toDropDownMenuModel() -> [DropDownMenuModel] {
         let groups = data.reduce(into: [String]()) { result, tag in
             let group = tag.attributes.group

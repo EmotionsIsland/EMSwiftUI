@@ -33,13 +33,13 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
     }
 }
 
-struct _FlexibleView<Data: Collection, Content: View>: View where Data.Element: Hashable {
+private struct _FlexibleView<Data: Collection, Content: View>: View where Data.Element: Hashable {
     let availableWidth: CGFloat
     let data: Data
     let spacing: CGFloat
     let alignment: HorizontalAlignment
     let content: (Data.Element) -> Content
-    @State var elementsSize: [Data.Element: CGSize] = [:]
+    @State private var elementsSize: [Data.Element: CGSize] = [:]
 
     var body: some View {
         VStack(alignment: alignment, spacing: spacing) {

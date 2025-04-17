@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FilterScreen<VM: IFilterViewModel>: View {
+struct FilterScreen<VM: FilterViewModel>: View {
     @StateObject private var viewModel: VM
 
     init(viewModel: VM) {
@@ -15,19 +15,16 @@ struct FilterScreen<VM: IFilterViewModel>: View {
     }
 
     var body: some View {
-        ScrollView {
-            content
-        }
-        .padding(16)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                VStack {
+        NavigationView {
+            ScrollView {
+                content
+            }
+            .padding(16)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
                     Text("Filters")
                         .font(Font.SFPro.headline2)
-
-                    Divider()
-                        .frame(width: UIScreen.main.bounds.width)
                 }
             }
         }
@@ -75,9 +72,8 @@ private extension FilterScreen {
             .background(Color.orangeBase)
             .clipShape(RoundedRectangle(cornerRadius: 8))
 
-            Button(action: {
-                viewModel.selectedTags.removeAll()
-            }, label: {
+            Button(action: viewModel.removeAllSelectedTags,
+                   label: {
                 Text("Reset")
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Color.blackBase)
@@ -94,10 +90,10 @@ private extension FilterScreen {
         VStack(alignment: .leading, spacing: 24) {
             ForEach(viewModel.dropDownContent.indices, id: \.self) { index in
                 DropDownView(
-                    tagElements: viewModel.dropDownContent[index].tagElements,
                     title: viewModel.dropDownContent[index].title,
-                    menuIsPresenting: $viewModel.menuIsPresenting[index],
-                    selectedTags: $viewModel.selectedTags
+                    tagElements: viewModel.dropDownContent[index].tagElements,
+                    selectedTags: viewModel.selectedTags,
+                    onMenuItem: viewModel.addSelectedTag
                 )
             }
         }

@@ -20,26 +20,25 @@ protocol MangaListViewModel: ObservableObject {
 final class MangaListViewModelImpl: MangaListViewModel {
     private let service: MangaListService
     private var mangaData: [MangaData] = []
+    private var cancellables: Set<AnyCancellable> = []
 
     let headers = ["Popular", "Recently Added"]
 
-    @Published var searchText: String = "" {
-        didSet {
-            filterMangaData(by: searchText)
-        }
-    }
-    @Published var dataState: DataState = .notAvailable
-    @Published var filteredData: [MangaData] = []
+    @Published var searchText: String = ""
+    @Published private(set) var dataState: DataState = .notAvailable
+    @Published private(set) var filteredData: [MangaData] = []
 
     init(service: MangaListService) {
         self.service = service
         Task {
             await getData()
         }
+
+        configurePipelines()
     }
 
     func getCoverURL(manga: MangaData, sizeFormat: SizeFormat) -> URL? {
-        return service.getCoverURL(manga: manga, sizeFormat: sizeFormat)
+        API.coverURL(for: manga, sizeFormat)
     }
 }
 
@@ -53,6 +52,15 @@ private extension MangaListViewModelImpl {
         } catch {
             dataState = .failed(error: error)
         }
+    }
+
+    func configurePipelines() {
+        $searchText
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] text in
+                self?.filterMangaData(by: text)
+            }
+            .store(in: &cancellables)
     }
 
     func filterMangaData(by text: String) {

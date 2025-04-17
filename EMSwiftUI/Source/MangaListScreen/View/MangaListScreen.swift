@@ -24,7 +24,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                         .padding(.horizontal, 16)
                     Divider()
                     ForEach(viewModel.headers, id: \.self) { header in
-                        MangaSectionView(viewModel: viewModel, header: header)
+                        MangaSectionView(header: header, viewModel: viewModel)
                     }
                     .padding(.horizontal, 16)
                 }

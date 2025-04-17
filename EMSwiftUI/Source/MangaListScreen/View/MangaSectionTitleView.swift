@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct MangaSectionTitleView: View {
-    private let header: String
-
-    init(header: String) {
-        self.header = header
-    }
+    let header: String
 
     var body: some View {
         HStack {

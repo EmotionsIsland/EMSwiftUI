@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct MangaSectionView<VM: MangaListViewModel>: View {
-    private let header: String
-    private let columns: [GridItem] = [
-        .init(.flexible(), spacing: 25, alignment: .leading),
-        .init(.flexible(), spacing: 25, alignment: .leading),
-        .init(.flexible(), alignment: .leading)
-    ]
-    @ObservedObject private var viewModel: VM
-
-    init(viewModel: VM, header: String) {
-        self.viewModel = viewModel
-        self.header = header
-    }
+    private let columns: [GridItem] = .init(
+        repeating: .init(.flexible(), spacing: 25, alignment: .leading),
+        count: 3
+    )
+    let header: String
+    @ObservedObject var viewModel: VM
 
     var body: some View {
         VStack(spacing: 12) {
