@@ -14,16 +14,29 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-protocol MangaListViewModel: ObservableObject { }
+protocol MangaListViewModel: ObservableObject {
+    var mangaList: MangaListModel? { get }
+    var isLoading: Bool { get }
+    func getData() async throws
+    func getCoverURL(for manga: MangaData) -> URL?
+}
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    // TODO: create Published variables
-    // TODO: create getData func
+    @Published var mangaList: MangaListModel?
+    @Published var isLoading: Bool = false
     private let service: MangaListService
-
+    
     init(service: MangaListService) {
         self.service = service
     }
     
-    @MainActor private func getData() async throws { }
+    @MainActor func getData() async throws {
+        isLoading = true
+        mangaList = try await service.getManga()
+        isLoading = false
+    }
+    
+    func getCoverURL(for manga: MangaData) -> URL? {
+        API.coverURL(for: manga, .size512)
+    }
 }

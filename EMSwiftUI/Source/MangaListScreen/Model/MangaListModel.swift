@@ -42,7 +42,7 @@ struct Attributes: Decodable {
     let availableTranslatedLanguages: [String?]
 }
 
-struct Title: Decodable {
+struct Title: Decodable, Hashable {
     let en: String?
 }
 
@@ -58,17 +58,6 @@ struct AlternativeTitle: Decodable {
 struct AttributesDescription: Decodable {
     let en: String?
     let ru: String?
-}
-
-struct Tag: Decodable, Identifiable {
-    let id: String
-    let type: String
-    let attributes: TagAttributes
-}
-
-struct TagAttributes: Decodable {
-    let name: Title
-    let group: String
 }
 
 struct Relationship: Decodable {
