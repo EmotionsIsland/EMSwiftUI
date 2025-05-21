@@ -20,16 +20,18 @@ struct FlowLayout<Data: RandomAccessCollection, Content: View>: View where Data.
                 content(item)
                     .padding(.all, itemSpacing)
                     .alignmentGuide(.leading, computeValue: { dimension in
-                        if abs(width - dimension.width) > UIScreen.main.bounds.width - 16 {
+                        if abs(width - dimension.width) > (UIScreen.main.bounds.width - 32) {
                             width = 0
                             height -= dimension.height
                         }
                         let result = width
+                        
                         if item.id == items.last?.id {
                             width = 0
                         } else {
                             width -= dimension.width
                         }
+                        
                         return result
                     })
                     .alignmentGuide(.top, computeValue: { _ in
