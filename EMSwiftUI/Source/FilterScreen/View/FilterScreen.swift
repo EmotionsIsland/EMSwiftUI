@@ -14,6 +14,7 @@ struct FilterScreen<VM: FilterViewModel>: View {
         VStack(alignment: .leading) {
             Text("Selection")
                 .font(Font.SFPro.headline3)
+                .padding(.bottom, 16)
             
             SelectedFlowLayout(viewModel: viewModel)
             
