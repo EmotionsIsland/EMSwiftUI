@@ -36,7 +36,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
         self.service = service
     }
     
-    @MainActor func getData() async throws {
+    func getData() async throws {
         isLoading = true
         let fetched = try await service.getManga().data
         await MainActor.run {
