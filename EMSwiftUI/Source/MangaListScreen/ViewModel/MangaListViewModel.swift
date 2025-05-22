@@ -37,7 +37,6 @@ final class MangaListViewModelImpl: MangaListViewModel {
     }
     
     func getData() async throws {
-        isLoading = true
         let fetched = try await service.getManga().data
         await MainActor.run {
             isLoading = true
