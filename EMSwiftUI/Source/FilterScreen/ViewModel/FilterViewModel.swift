@@ -11,11 +11,11 @@ protocol FilterViewModel: ObservableObject {
     func applySelection()
 }
 
-class FilterViewModelImpl: FilterViewModel {
+final class FilterViewModelImpl: FilterViewModel {
     private let service: FilterService
-    @Published var tags: [Tag] = []
-    @Published var selectedTags: [Tag] = []
-    var isLoading: Bool = false
+    @Published private(set) var tags: [Tag] = []
+    @Published private(set) var selectedTags: [Tag] = []
+    var isLoading = false
     var groupedTags: [String: [Tag]] {
         Dictionary(grouping: tags, by: { $0.attributes.group })
     }
@@ -24,8 +24,11 @@ class FilterViewModelImpl: FilterViewModel {
         self.service = service
     }
     
-    @MainActor func loadTags() async throws {
-        tags = try await service.fetchTags()
+    func loadTags() async throws {
+        let fetched = try await service.fetchTags().data
+        await MainActor.run {
+            self.tags = fetched
+        }
     }
     
     func toggleSelection(for tag: Tag) {

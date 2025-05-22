@@ -1,5 +1,4 @@
 import SwiftUI
-import SwiftUIFlowLayout
 
 struct FilterScreen<VM: FilterViewModel>: View {
     @StateObject private var viewModel: VM
@@ -18,60 +17,73 @@ struct FilterScreen<VM: FilterViewModel>: View {
             
             SelectedFlowLayout(viewModel: viewModel)
             
-            Button("Apply") {
-                viewModel.applySelection()
-            }
-            .frame(maxWidth: .infinity, minHeight: 44)
-            .font(Font.SFPro.mediumNormal)
-            .foregroundStyle(.white)
-            .background(.orangeBase)
-            .cornerRadius(8)
-            
-            Button("Reset") {
-                withAnimation {
-                    viewModel.resetSelection()
-                }
-            }
-            .frame(maxWidth: .infinity)
-            .font(Font.SFPro.mediumNormal)
-            .foregroundStyle(.black)
-            .background(.clear)
+            applyButton
+            resetButton
             
             Divider()
                 .padding(.vertical, 16)
             
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 16) {
-                    ForEach(viewModel.groupedTags.sorted(by: { $0.key < $1.key }), id: \.key) { group, tags in
-                        HStack {
-                            Text(group.capitalized)
-                                .font(Font.SFPro.regularLarge)
-                                .padding(.trailing, 8)
-                            Image(systemName: dropDownGroups.contains(group) ? "chevron.up" : "chevron.down")
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            withAnimation {
-                                if dropDownGroups.contains(group) {
-                                    dropDownGroups.remove(group)
-                                } else {
-                                    dropDownGroups.insert(group)
-                                }
-                            }
-                        }
-                        
-                        if dropDownGroups.contains(group) {
-                            GroupsFlowLayout(tags: tags, viewModel: viewModel)
-                        }
-                    }
-                }
-            }
+            tagGroupsSection
         }
         .padding()
         .task {
             if !didAppear {
                 didAppear = true
                 try? await viewModel.loadTags()
+            }
+        }
+    }
+}
+
+private extension FilterScreen {
+    private var applyButton: some View {
+        Button("Apply") {
+            viewModel.applySelection()
+        }
+        .frame(maxWidth: .infinity, minHeight: 44)
+        .font(Font.SFPro.mediumNormal)
+        .foregroundStyle(.white)
+        .background(.orangeBase)
+        .cornerRadius(8)
+    }
+    
+    private var resetButton: some View {
+        Button("Reset") {
+            withAnimation {
+                viewModel.resetSelection()
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .font(Font.SFPro.mediumNormal)
+        .foregroundStyle(.black)
+        .background(.clear)
+    }
+    
+    private var tagGroupsSection: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 16) {
+                ForEach(viewModel.groupedTags.sorted(by: { $0.key < $1.key }), id: \.key) { group, tags in
+                    HStack {
+                        Text(group.capitalized)
+                            .font(Font.SFPro.regularLarge)
+                            .padding(.trailing, 8)
+                        Image(systemName: dropDownGroups.contains(group) ? "chevron.up" : "chevron.down")
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation {
+                            if dropDownGroups.contains(group) {
+                                dropDownGroups.remove(group)
+                            } else {
+                                dropDownGroups.insert(group)
+                            }
+                        }
+                    }
+                    
+                    if dropDownGroups.contains(group) {
+                        GroupsFlowLayout(tags: tags, viewModel: viewModel)
+                    }
+                }
             }
         }
     }

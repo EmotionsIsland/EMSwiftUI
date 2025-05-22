@@ -15,25 +15,37 @@ enum SizeFormat: String {
 }
 
 protocol MangaListViewModel: ObservableObject {
-    var mangaList: MangaListModel? { get }
+    var mangaListPopular: [MangaData] { get }
+    var mangaListRecentlyAdded: [MangaData] { get }
+    var mangaListLastUpdates: [MangaData] { get }
+    var mangaListSeasonal: [MangaData] { get }
     var isLoading: Bool { get }
     func getData() async throws
     func getCoverURL(for manga: MangaData) -> URL?
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    @Published var mangaList: MangaListModel?
+    @Published private(set) var mangaListPopular: [MangaData] = []
+    @Published private(set) var mangaListRecentlyAdded: [MangaData] = []
+    @Published private(set) var mangaListLastUpdates: [MangaData] = []
+    @Published private(set) var mangaListSeasonal: [MangaData] = []
     @Published var isLoading: Bool = false
     private let service: MangaListService
-    
+
     init(service: MangaListService) {
         self.service = service
     }
     
     @MainActor func getData() async throws {
         isLoading = true
-        mangaList = try await service.getManga()
-        isLoading = false
+        let fetched = try await service.getManga().data
+        await MainActor.run {
+            mangaListPopular = fetched.sorted { $0.attributes.version > $1.attributes.version }
+            mangaListRecentlyAdded = fetched.sorted { $0.attributes.createdAt > $1.attributes.createdAt }
+            mangaListLastUpdates = fetched.sorted { $0.attributes.updatedAt > $1.attributes.updatedAt }
+            mangaListSeasonal = fetched.sorted { $0.attributes.version > $1.attributes.version }
+            isLoading = false
+        }
     }
     
     func getCoverURL(for manga: MangaData) -> URL? {

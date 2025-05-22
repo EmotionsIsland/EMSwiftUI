@@ -17,7 +17,7 @@ struct MangaSectionView: View {
             MangaSectionTitleView(title: title)
             
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 25) {
-                ForEach(mangas, id: \.id) { manga in
+                ForEach(mangas[0...5], id: \.id) { manga in
                     MangaSingleGridView(manga: manga, viewModel: viewModel)
                 }
             }

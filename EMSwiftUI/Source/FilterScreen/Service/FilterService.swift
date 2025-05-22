@@ -2,7 +2,7 @@ import Foundation
 import Netify
 
 protocol FilterService {
-    func fetchTags() async throws -> [Tag]
+    func fetchTags() async throws -> FilterListModel
 }
 
 final class FilterServiceImpl: FilterService {
@@ -12,8 +12,8 @@ final class FilterServiceImpl: FilterService {
         self.netify = netify
     }
     
-    func fetchTags() async throws -> [Tag] {
-        let tags = try await netify.request(API.mangaTags, type: FilterListModel.self).data
+    func fetchTags() async throws -> FilterListModel {
+        let tags = try await netify.request(API.mangaTags, type: FilterListModel.self)
         return tags
     }
 }
