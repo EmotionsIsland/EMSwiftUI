@@ -40,6 +40,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
         isLoading = true
         let fetched = try await service.getManga().data
         await MainActor.run {
+            isLoading = true
             mangaListPopular = fetched.sorted { $0.attributes.version > $1.attributes.version }
             mangaListRecentlyAdded = fetched.sorted { $0.attributes.createdAt > $1.attributes.createdAt }
             mangaListLastUpdates = fetched.sorted { $0.attributes.updatedAt > $1.attributes.updatedAt }
