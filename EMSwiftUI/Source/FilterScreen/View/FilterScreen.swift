@@ -36,7 +36,7 @@ struct FilterScreen<VM: FilterViewModel>: View {
 }
 
 private extension FilterScreen {
-    private var applyButton: some View {
+    var applyButton: some View {
         Button("Apply") {
             viewModel.applySelection()
         }
@@ -47,7 +47,7 @@ private extension FilterScreen {
         .cornerRadius(8)
     }
     
-    private var resetButton: some View {
+    var resetButton: some View {
         Button("Reset") {
             withAnimation {
                 viewModel.resetSelection()
@@ -59,7 +59,7 @@ private extension FilterScreen {
         .background(.clear)
     }
     
-    private var tagGroupsSection: some View {
+    var tagGroupsSection: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
                 ForEach(viewModel.groupedTags.sorted(by: { $0.key < $1.key }), id: \.key) { group, tags in
