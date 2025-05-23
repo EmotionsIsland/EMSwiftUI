@@ -9,9 +9,9 @@ import SwiftUI
 
 struct MangaListScreen<VM: MangaListViewModel>: View {
     @StateObject private var viewModel: VM
-    @State private var didAppear = false
     @State private var sections: [(String, [MangaData])] = []
-    
+    @State private var didAppear = false
+
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -24,7 +24,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     ForEach(sections, id: \.0) { title, mangas in
-                        MangaSectionView(title: title, mangas: mangas, viewModel: viewModel)
+                        MangaSectionView(viewModel: viewModel, mangas: mangas, title: title)
                             .padding(16)
                     }
                 }

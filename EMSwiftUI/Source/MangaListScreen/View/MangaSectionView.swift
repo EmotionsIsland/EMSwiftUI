@@ -7,10 +7,16 @@
 
 import SwiftUI
 
-struct MangaSectionView: View {
-    let title: String
+struct MangaSectionView<VM: MangaListViewModel>: View {
+    @StateObject var viewModel: VM
     let mangas: [MangaData]
-    let viewModel: any MangaListViewModel
+    let title: String
+
+    init(viewModel: VM, mangas: [MangaData], title: String) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        self.mangas = mangas
+        self.title = title
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,7 +24,7 @@ struct MangaSectionView: View {
             
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 25) {
                 ForEach(mangas[0...5], id: \.id) { manga in
-                    MangaSingleGridView(manga: manga, viewModel: viewModel)
+                    MangaSingleGridView(viewModel: viewModel, manga: manga)
                 }
             }
         }

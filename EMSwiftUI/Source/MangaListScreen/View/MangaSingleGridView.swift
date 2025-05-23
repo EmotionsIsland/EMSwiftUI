@@ -7,11 +7,16 @@
 
 import SwiftUI
 
-struct MangaSingleGridView: View {
+struct MangaSingleGridView<VM: MangaListViewModel>: View {
+    @StateObject var viewModel: VM
     let manga: MangaData
     let rating = Double.random(in: 3...5)
-    let viewModel: any MangaListViewModel
     
+    init(viewModel: VM, manga: MangaData) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        self.manga = manga
+    }
+
     var body: some View {
         let coverURL = viewModel.getCoverURL(for: manga)
         VStack(alignment: .leading) {
