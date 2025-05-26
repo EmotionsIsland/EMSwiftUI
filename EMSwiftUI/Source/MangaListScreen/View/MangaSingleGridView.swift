@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct MangaSingleGridView<VM: MangaListViewModel>: View {
-    @StateObject var viewModel: VM
+    @ObservedObject var viewModel: VM
     let manga: MangaData
     let rating = Double.random(in: 3...5)
     
     init(viewModel: VM, manga: MangaData) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = ObservedObject(wrappedValue: viewModel)
         self.manga = manga
     }
 

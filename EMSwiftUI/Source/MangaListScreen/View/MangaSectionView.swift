@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct MangaSectionView<VM: MangaListViewModel>: View {
-    @StateObject var viewModel: VM
+    @ObservedObject var viewModel: VM
     let mangas: [MangaData]
     let title: String
 
     init(viewModel: VM, mangas: [MangaData], title: String) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = ObservedObject(wrappedValue: viewModel)
         self.mangas = mangas
         self.title = title
     }
