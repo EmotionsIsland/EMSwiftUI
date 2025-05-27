@@ -35,7 +35,7 @@ private extension TabBar {
     
     var filterTab: some View {
         FilterScreenBuilder.build()
-            .tag(TabSelection.main)
+            .tag(TabSelection.filter)
             .tabItem {
                 Image(.tabBarSearch)
             }
