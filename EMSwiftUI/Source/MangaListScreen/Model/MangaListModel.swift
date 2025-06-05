@@ -60,6 +60,15 @@ struct AttributesDescription: Decodable {
     let ru: String?
 }
 
+struct TagsListModel: Decodable {
+    let result: String
+    let response: String
+    let data: [Tag]
+    let limit: Int
+    let offset: Int
+    let total: Int
+}
+
 struct Tag: Decodable, Identifiable {
     let id: String
     let type: String

@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct MangaSectionTitleView: View {
+    let sectionTitle: String
+
     var body: some View {
-        VStack {
-            // TODO: Create section title View
+        ZStack {
+            Text(sectionTitle)
+                .font(.SFPro.headline3)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
