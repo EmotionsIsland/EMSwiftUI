@@ -1,0 +1,33 @@
+//
+//  SearchBar.swift
+//  EMSwiftUI
+//
+//  Created by Илья Иванов on 29.05.2025.
+//
+
+import SwiftUI
+
+struct SearchBar: View {
+    @Binding var searchText: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+
+            TextField("Search", text: $searchText)
+                .foregroundColor(.primary)
+                .disableAutocorrection(true)
+        }
+        .padding(12)
+        .background(Color(.systemGray6))
+        .cornerRadius(10)
+        .padding(.horizontal)
+    }
+}
+
+struct SearchBar_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchBar(searchText: .constant(""))
+    }
+}

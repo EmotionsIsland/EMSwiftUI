@@ -9,14 +9,32 @@ import SwiftUI
 
 struct MangaListScreen<VM: MangaListViewModel>: View {
     @StateObject private var viewModel: VM
+    @State private var userInput: String = ""
     
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+        VStack {
+            SearchBar(searchText: $userInput)
+            
+            Divider()
+                .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                MangaSectionView(viewModel: viewModel, sectionName: "Popular", mangas: viewModel.mangaModel?.data ?? [])
+                
+                MangaSectionView(viewModel: viewModel, sectionName: "Recently Added", mangas: viewModel.sortByRecent())
+                
+                MangaSectionView(viewModel: viewModel, sectionName: "Last updates", mangas: viewModel.sortByLastUpdated())
+                
+                MangaSectionView(viewModel: viewModel, sectionName: "Seasonal", mangas: viewModel.sortBySeason(season: .summer))
+            }
         }
     }
+}
+
+#Preview {
+    MangaListScreenBuilder.build()
 }
