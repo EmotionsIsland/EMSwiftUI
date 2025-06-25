@@ -30,18 +30,14 @@ struct CategoryGroup<VM: FilterScreenViewModel>: View {
                 }
             }
         }
-        .padding(EdgeInsets(
-            top: 10,
-            leading: 0,
-            bottom: 10,
-            trailing: 0))
+        .padding(.vertical, 10)
     }
 }
 
 private extension CategoryGroup {
     /// The button for the `Category Title`
     func titleButton(title: String) -> some View {
-        return Button {
+        Button {
             withAnimation {
                 isExpanded.toggle()
             }
@@ -55,11 +51,6 @@ private extension CategoryGroup {
                 Image(systemName: "chevron.down")
                     .rotationEffect(.degrees(isExpanded ? 180 : 0))
                     .animation(.easeInOut(duration: 0.25), value: isExpanded)
-                    .onTapGesture {
-                        withAnimation {
-                            isExpanded.toggle()
-                        }
-                    }
                 
                 Spacer()
             }

@@ -10,7 +10,7 @@ struct SelectionCategoriesView<VM: FilterScreenViewModel>: View {
     var body: some View {
         VStack {
             Divider()
-                .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                .padding(.vertical, 5)
             
             HStack {
                 Text("Selection")
@@ -20,17 +20,14 @@ struct SelectionCategoriesView<VM: FilterScreenViewModel>: View {
                 Spacer()
             }
             
-            ScrollView(.vertical, showsIndicators: false) {
-                FlexibleView(
-                    data: viewModel.selectionCategories,
-                    spacing: viewModel.spacingBetweenCategories) { item, onLayoutChange in
-                        SingleCategoryView(
-                            viewModel: viewModel,
-                            model: item,
-                            onLayoutChange: onLayoutChange)
-                    }
-            }
-            .frame(minHeight: 0, maxHeight: 100)
+            FlexibleView(
+                data: viewModel.selectionCategories,
+                spacing: viewModel.spacingBetweenCategories) { item, onLayoutChange in
+                    SingleCategoryView(
+                        viewModel: viewModel,
+                        model: item,
+                        onLayoutChange: onLayoutChange)
+                }
             
             buttonsStack(
                 applyAction: {},
@@ -38,7 +35,7 @@ struct SelectionCategoriesView<VM: FilterScreenViewModel>: View {
                     viewModel.selectionCategories = []})
             
             Divider()
-                .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                .padding(.vertical, 5)
         }
     }
 }
@@ -46,7 +43,7 @@ struct SelectionCategoriesView<VM: FilterScreenViewModel>: View {
 private extension SelectionCategoriesView {
     /// Stack with `Apply` and `Reset` buttons
     func buttonsStack(applyAction: @escaping () -> Void, resetAction: @escaping () -> Void) -> some View {
-        return VStack(spacing: 10) {
+        VStack(spacing: 10) {
             Button(action: applyAction) {
                 Text("Apply")
                     .font(.system(size: 16, weight: .medium))

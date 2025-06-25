@@ -31,11 +31,7 @@ struct SingleCategoryView<VM: FilterScreenViewModel>: View {
                 .font(Font.custom("SF-Pro-Text-Black", size: 16))
                 .foregroundStyle(isSelected ? Color.whiteText : Color.black)
         }
-        .padding(EdgeInsets(
-            top: 0,
-            leading: 8,
-            bottom: 0,
-            trailing: 8))
+        .padding(.horizontal, 8)
         .frame(height: 36)
         .background(isSelected ? Color.orangeBase : Color.grayBase)
         .cornerRadius(8)

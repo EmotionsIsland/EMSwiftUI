@@ -21,11 +21,7 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
         self.mangas = mangas
     }
     
-    private let columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25)
-    ]
+    private let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 25), count: 3)
     
     var body: some View {
         VStack {
@@ -48,15 +44,6 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
 }
 
 private extension MangaSectionView {
-//    func coverURL(for manga: MangaData) -> String {
-//        let baseURL = "https://uploads.mangadex.org/covers/"
-//        if let cover = manga.relationships.first(where: { $0.type == "cover_art" }),
-//           let fileName = cover.attributes?.fileName {
-//            return baseURL + manga.id + "/" + fileName
-//        }
-//        return "https://via.placeholder.com/300x450.png?text=No+Image"
-//    }
-
     func genresString(for manga: MangaData) -> String {
         let genres = manga.attributes.tags.map { $0.attributes.name.en ?? "" }.joined(separator: ", ")
         return genres.isEmpty ? "Unknown" : genres

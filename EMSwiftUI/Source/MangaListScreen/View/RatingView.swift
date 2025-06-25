@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct RatingView: View {
-    var rating: Double
-    var maxRating: Int = 5
+    let rating: Double
+    let maxRating: Int = 5
 
     var body: some View {
         HStack(spacing: 4) {

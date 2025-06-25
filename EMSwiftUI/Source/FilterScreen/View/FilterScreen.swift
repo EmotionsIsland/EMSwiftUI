@@ -15,24 +15,23 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
     }
     
     var body: some View {
-        VStack {
-            FilterListScreenHeader()
-            
-            SelectionCategoriesView(viewModel: viewModel)
-            
-            scrollWithCategories()
+        ScrollView {
+            VStack {
+                FilterListScreenHeader()
+                
+                SelectionCategoriesView(viewModel: viewModel)
+                
+                groupWithCategories()
+                
+            }
+            .padding(.horizontal, 8)
         }
-        .padding(EdgeInsets(
-            top: 0,
-            leading: 8,
-            bottom: 0,
-            trailing: 8))
     }
 }
 
 private extension FilterScreen {
-    func scrollWithCategories() -> some View {
-        return ScrollView {
+    func groupWithCategories() -> some View {
+        Group {
             CategoryGroup(
                 viewModel: viewModel,
                 title: "Format",
@@ -48,6 +47,5 @@ private extension FilterScreen {
                 title: "Theme",
                 data: viewModel.filterByTheme())
         }
-        .padding(.bottom, 40)
     }
 }
