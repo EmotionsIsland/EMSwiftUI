@@ -27,7 +27,7 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
         VStack {
             MangaSectionTitleView(titleText: sectionName) {
             }
-            .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+            .padding(.vertical, 10)
             
             LazyVGrid(columns: columns, spacing: 25) {
                 ForEach(mangas, id: \.id) { manga in
@@ -39,7 +39,7 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
                 }
             }
         }
-        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+        .padding(.horizontal, 15)
     }
 }
 

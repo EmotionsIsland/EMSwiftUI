@@ -20,7 +20,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             SearchBar(searchText: $userInput)
             
             Divider()
-                .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                .padding(.vertical, 10)
             
             ScrollView(.vertical, showsIndicators: false) {
                 MangaSectionView(viewModel: viewModel, sectionName: "Popular", mangas: viewModel.mangaModel?.data ?? [])

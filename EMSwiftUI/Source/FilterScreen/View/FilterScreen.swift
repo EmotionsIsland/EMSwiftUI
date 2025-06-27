@@ -22,7 +22,6 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
                 SelectionCategoriesView(viewModel: viewModel)
                 
                 groupWithCategories()
-                
             }
             .padding(.horizontal, 8)
         }

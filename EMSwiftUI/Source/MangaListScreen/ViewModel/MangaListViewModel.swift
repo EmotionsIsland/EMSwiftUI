@@ -39,7 +39,6 @@ final class MangaListViewModelImpl: MangaListViewModel {
         self.service = service
         Task {
             try? await getData()
-            await print(mangaModel)
         }
     }
     
