@@ -40,6 +40,17 @@ struct Attributes: Decodable {
     let updatedAt: String
     let version: Int
     let availableTranslatedLanguages: [String?]
+    
+    // local
+    var rating: Double = Double.random(in: 0.0...5.0)
+    
+    private enum CodingKeys: String, CodingKey {
+        case altTitles, title, description, isLocked,
+             originalLanguage, publicationDemographic,
+             status, year, contentRating, tags,
+             state, createdAt, updatedAt, version,
+             availableTranslatedLanguages
+    }
 }
 
 struct Title: Decodable {
