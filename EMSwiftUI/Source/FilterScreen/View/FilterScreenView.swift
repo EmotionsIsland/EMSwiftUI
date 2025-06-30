@@ -17,14 +17,7 @@ struct FilterScreenView<VM: FilterViewModel>: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    if !viewModel.selectedTags.isEmpty {
-                        selectionView
-                    }
-                    Divider()
-                    tagsGroup
-                }
-                .padding(.horizontal, 16)
+                contentView
             }
             .navigationTitle("Filters")
             .navigationBarBackButtonHidden()
@@ -36,13 +29,60 @@ struct FilterScreenView<VM: FilterViewModel>: View {
                 }
             }
             .task {
-                await viewModel.getTags()
+                if viewModel.groupedTags.isEmpty {
+                    await viewModel.getTags()
+                }
             }
         }
     }
     
     @ViewBuilder
-    var tagsGroup: some View {
+    private var contentView: some View {
+        switch viewModel.viewState {
+        case .idle, .loading:
+            LoadingView()
+        case .success:
+            successView
+        case .error(let error):
+            ErrorView(error: error) {
+                Task {
+                    await viewModel.getTags()
+                }
+            }
+        }
+    }
+    
+    // MARK: - Subviews
+    private var successView: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            if !viewModel.selectedTags.isEmpty {
+                selectionView
+            }
+            Divider()
+            tagsGroupSection
+        }
+        .padding(.horizontal, 16)
+    }
+    
+    private var selectionView: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Selection")
+                .font(.SFPro.headline3)
+                .foregroundStyle(Color.blackBase)
+            FlexibleView(
+                data: viewModel.selectedTags,
+                spacing: 8,
+                alignment: HorizontalAlignment.leading
+            ) { tag in
+                tapedTagButton(tag: tag) {
+                    viewModel.selectedTags.removeAll { $0.id == tag.id }
+                }
+            }
+            actionButtons
+        }
+    }
+    
+    private var tagsGroupSection: some View {
         VStack(alignment: .leading, spacing: 24) {
             ForEach($viewModel.groupedTags, id: \.id) { $group in
                 VStack(alignment: .leading, spacing: 8) {
@@ -69,7 +109,7 @@ struct FilterScreenView<VM: FilterViewModel>: View {
                             alignment: HorizontalAlignment.leading
                         ) { tag in
                             tapedTagButton(tag: tag) {
-                                    viewModel.selectedTags.append(tag)
+                                viewModel.selectedTags.append(tag)
                             }
                             .disabled(viewModel.selectedTags.contains(tag))
                         }
@@ -80,8 +120,11 @@ struct FilterScreenView<VM: FilterViewModel>: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-    
-    func tapedTagButton(tag: Tag, _ action: @escaping () -> Void) -> some View {
+}
+
+// MARK: - Button Views
+private extension FilterScreenView {
+     func tapedTagButton(tag: Tag, _ action: @escaping () -> Void) -> some View {
         Button {
             action()
         } label: {
@@ -97,45 +140,13 @@ struct FilterScreenView<VM: FilterViewModel>: View {
         }
     }
     
-    var buttonsSection: some View {
+     var actionButtons: some View {
         VStack(spacing: 8) {
-            Button {
-                //
-            } label: {
-                Text("Apply")
-                    .font(Font.SFPro.bodyNormal)
-                    .foregroundStyle(.whiteText)
-                    .padding(.vertical, 12)
-                    .frame(maxWidth: .infinity, alignment: .center)
-            }
-            .background(.orangeBase)
-            .cornerRadius(8)
+            Button("Apply", action: viewModel.applyFilters)
+                .primaryButtonStyle()
             
-            Button {
-                viewModel.selectedTags.removeAll()
-            } label: {
-                Text("Reset")
-            }
-            .font(Font.SFPro.bodyNormal)
-            .foregroundStyle(.blackBase)
-        }
-    }
-    
-    var selectionView: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Selection")
-                .font(.SFPro.headline3)
-                .foregroundStyle(Color.blackBase)
-            FlexibleView(
-                data: viewModel.selectedTags,
-                spacing: 8,
-                alignment: HorizontalAlignment.leading
-            ) { tag in
-                tapedTagButton(tag: tag) {
-                    viewModel.selectedTags.removeAll { $0.id == tag.id }
-                }
-            }
-            buttonsSection
+            Button("Reset", action: viewModel.resetFilters)
+                .secondaryButtonStyle()
         }
     }
 }

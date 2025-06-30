@@ -19,37 +19,36 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 24) {
-                    content
+                    contentView
                 }
                 .padding(.horizontal, 16 )
             }
             .background(Color.whiteText)
             .task {
-                await viewModel.getData()
+                if viewModel.filteredMangaDataBySection.isEmpty {
+                    await viewModel.getData()
+                }
             }
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer)
     }
     
     @ViewBuilder
-    private var content: some View {
+    private var contentView: some View {
         switch viewModel.viewState {
         case .idle, .loading:
-            loadingView
+            LoadingView()
         case .success:
             successView
         case .error(let error):
-            errorView(error)
+            ErrorView(error: error) {
+                Task {
+                    await viewModel.getData()
+                }
+            }
         }
     }
     
-    @ViewBuilder
-    private var loadingView: some View {
-        ProgressView()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-    
-    @ViewBuilder
     private var successView: some View {
         ForEach(viewModel.visibleSections, id: \.title) { section in
             MangaSectionView(
@@ -58,25 +57,5 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 mangaProtocol: viewModel
             )
         }
-    }
-    
-    @ViewBuilder
-    private func errorView(_ error: String) -> some View {
-        VStack(spacing: 12) {
-            Text("Something went wrong:")
-                .font(.headline)
-            Text(error)
-                .font(.subheadline)
-            Button("Please try again!") {
-                Task {
-                    await viewModel.getData()
-                }
-            }
-            .foregroundStyle(.blackBase)
-            .padding()
-            .background(Color.orangeBase)
-            .cornerRadius(12)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

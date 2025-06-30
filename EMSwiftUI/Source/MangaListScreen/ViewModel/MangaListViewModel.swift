@@ -37,9 +37,10 @@ final class MangaListViewModelImpl: MangaListViewModel {
     private var sections: [MangaSectionType] = [.popular, .recentlyAdded, .lastUpdates, .seasonal]
     private var cancellables = Set<AnyCancellable>()
     var visibleSections: [MangaSectionType] {
-        filteredMangaDataBySection
-            .filter { !$0.value.isEmpty }
-            .map { $0.key }
+        sections.filter { section in
+            guard let data = filteredMangaDataBySection[section] else { return false }
+            return !data.isEmpty
+        }
     }
     
     // MARK: Initialization
@@ -89,8 +90,8 @@ extension MangaListViewModelImpl {
         guard let date = ISO8601DateFormatter().date(from: dateString) else { return false }
         let now = Date()
         guard Calendar.current.component(.year, from: date) == Calendar.current.component(.year, from: now) else {
-                return false
-            }
+            return false
+        }
         let season = { (date: Date) -> Int in
             switch Calendar.current.component(.month, from: date) {
             case 3...5: return 1

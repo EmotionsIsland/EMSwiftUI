@@ -71,10 +71,18 @@ struct AttributesDescription: Decodable {
     let ru: String?
 }
 
-struct Tag: Decodable, Identifiable {
+struct Tag: Decodable, Identifiable, Hashable {
     let id: String
     let type: String
     let attributes: TagAttributes
+    
+    static func == (lhs: Tag, rhs: Tag) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
 struct TagAttributes: Decodable {

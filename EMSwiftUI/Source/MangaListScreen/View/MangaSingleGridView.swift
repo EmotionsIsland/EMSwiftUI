@@ -30,30 +30,23 @@ struct MangaSingleGridView: View {
         }
     }
     
-    @ViewBuilder
     private var imageBlock: some View {
         AsyncImage(url: coverURL) { image in
             image
                 .resizable()
-                .scaledToFill()
-                .aspectRatio(contentMode: .fill)
-                .frame(maxWidth: .infinity, minHeight: 144)
-                .aspectRatio(contentMode: .fill)
-                .clipped()
         } placeholder: {
             Rectangle()
                 .fill(Color.gray.opacity(0.3))
-                .frame(maxWidth: .infinity, minHeight: 144)
                 .redacted(reason: .placeholder)
                 .overlay(
                     ShimmerView()
                         .mask(
                             Rectangle()
-                                .frame(height: 144)
                         )
                 )
         }
-        .cornerRadius(6)
+        .aspectRatio(100 / 144, contentMode: .fill)
+        .cornerRadius(4)
         .padding(.bottom, 4)
     }
 }
