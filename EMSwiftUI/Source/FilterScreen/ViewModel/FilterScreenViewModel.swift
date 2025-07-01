@@ -13,9 +13,7 @@ protocol FilterScreenViewModel: ObservableObject {
     
     var selectedTags: [MangaTagRepresentable] { get set }
     
-    func loadTags()
-    
-    func didTapOnTap(tagId: String, isSelected: Bool)
+    func didTapOnTag(tagId: String, isSelected: Bool)
     
     func filterForSection(group: TagGroup) -> [MangaTagRepresentable]
     
@@ -23,7 +21,7 @@ protocol FilterScreenViewModel: ObservableObject {
 }
 
 final class FilterScreenViewModelIml: FilterScreenViewModel {
-    let service: TagService
+    private let service: TagService
     
     @Published var tags: [MangaTagRepresentable] = []
     
@@ -34,7 +32,7 @@ final class FilterScreenViewModelIml: FilterScreenViewModel {
         loadTags()
     }
     
-    func loadTags() {
+    private func loadTags() {
         Task {
             do {
                 let data = try await service.loadTags().data
@@ -46,7 +44,12 @@ final class FilterScreenViewModelIml: FilterScreenViewModel {
         }
     }
     
-    func didTapOnTap(tagId: String, isSelected: Bool) {
+    func didTapOnTag(tagId: String, isSelected: Bool) {
+        guard let index = tags.firstIndex(where: { $0.id == tagId }) else {
+            return
+        }
+            tags[index].isSelected.toggle()
+        
         if isSelected {
             selectedTags.removeAll(where: { $0.id == tagId })
         } else {

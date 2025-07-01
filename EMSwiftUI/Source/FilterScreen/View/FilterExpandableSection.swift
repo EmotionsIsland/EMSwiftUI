@@ -10,11 +10,11 @@ import SwiftUI
 struct FilterExpandableSection: View {
     let name: String
     
-    var action: (String, Bool) -> Void = { _,_ in }
+    let action: (String, Bool) -> Void
     
-    var tags: [MangaTagRepresentable]
+    let tags: [MangaTagRepresentable]
     
-    @State var isExpanded: Bool = false
+    @State private var isExpanded: Bool = false
     
     var body: some View {
         VStack {
@@ -25,6 +25,8 @@ struct FilterExpandableSection: View {
                 
                 Image(uiImage: .moreIcon)
                     .rotationEffect(.init(degrees: isExpanded ? 90 : 0))
+                
+                Spacer()
             }
             .onTapGesture {
                 withAnimation {
@@ -32,9 +34,10 @@ struct FilterExpandableSection: View {
                 }
             }
             
-            if isExpanded {
-                TagListView(tags: tags, spacing: 5, action: action)
-            }
+            TagListView(tags: tags, spacing: 5, action: action)
+            .allowsHitTesting(isExpanded)
+            .frame(height: isExpanded ? nil : 0)
+            .clipped()
         }
         .frame(minHeight: 50)
     }

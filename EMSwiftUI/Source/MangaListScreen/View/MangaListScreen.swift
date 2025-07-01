@@ -15,8 +15,13 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
     }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+        NavigationView {
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVStack {
+                    MangaSectionView(title: "Some title", mangas: viewModel.mangas)
+                }
+            }
         }
+        .searchable(text: $viewModel.searchText)
     }
 }

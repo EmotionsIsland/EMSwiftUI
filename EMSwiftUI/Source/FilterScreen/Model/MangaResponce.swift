@@ -7,7 +7,7 @@
 
 import Foundation
 
-    // MARK: - MangaResponce
+// MARK: - MangaResponce
     struct MangaResponce: Codable {
         let result, response: String
         let data: [Datum]
@@ -22,12 +22,11 @@ struct Datum: Codable {
 
 extension Datum {
     // MARK: - Attributes
-    
     struct Attributes: Codable {
         let name: Name
         let group: TagGroup
-        
     }
+    
     // MARK: - Name
     struct Name: Codable {
         let en: String

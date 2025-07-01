@@ -8,26 +8,21 @@
 import SwiftUI
 
 struct TagListView: View {
-    var tags: [MangaTagRepresentable]
-    
-    var elementsSize: [MangaTagRepresentable: CGSize] = [:]
-    
-    @State var width = CGFloat.zero
-    
-    @State var sizes: [MangaTagRepresentable: CGFloat] = [:]
+    let tags: [MangaTagRepresentable]
     
     let spacing: CGFloat
     
-    var action: (String, Bool) -> Void = {_,_ in}
+    let action: (String, Bool) -> Void
     
     var body: some View {
-        FlexibleView<[MangaTagRepresentable], FilterTagView>(
+        FlexibleView<[MangaTagRepresentable], TagView>(
             data: tags,
             spacing: 5,
             alignment: .leading,
         ) { tag in
-            FilterTagView(name: tag.name, isSelected: tag.isSelected)
+            TagView(name: tag.name, isSelected: tag.isSelected) { bool in
+                action(tag.id, bool)
+            }
         }
     }
 }
-
