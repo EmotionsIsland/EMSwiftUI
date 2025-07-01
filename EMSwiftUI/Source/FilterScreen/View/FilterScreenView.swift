@@ -17,8 +17,11 @@ struct FilterScreenView<VM: FilterViewModel>: View {
     var body: some View {
         NavigationView {
             ScrollView {
+                Color(.grayBase)
+                    .frame(height: 1)
                 contentView
             }
+            .background(Color.whiteText)
             .navigationTitle("Filters")
             .navigationBarBackButtonHidden()
             .navigationBarTitleDisplayMode(.inline)
@@ -58,7 +61,6 @@ struct FilterScreenView<VM: FilterViewModel>: View {
             if !viewModel.selectedTags.isEmpty {
                 selectionView
             }
-            Divider()
             tagsGroupSection
         }
         .padding(.horizontal, 16)
@@ -79,6 +81,7 @@ struct FilterScreenView<VM: FilterViewModel>: View {
                 }
             }
             actionButtons
+            Divider()
         }
     }
     
@@ -111,7 +114,7 @@ struct FilterScreenView<VM: FilterViewModel>: View {
                             tapedTagButton(tag: tag) {
                                 viewModel.selectedTags.append(tag)
                             }
-                            .disabled(viewModel.selectedTags.contains(tag))
+                            .disabled(viewModel.containsTag(tag))
                         }
                     }
                 }
@@ -129,13 +132,15 @@ private extension FilterScreenView {
             action()
         } label: {
             HStack(spacing: 4) {
-                Image(systemName: "plus")
+                if viewModel.containsTag(tag) {
+                    Image(systemName: "plus")
+                }
                 Text(tag.attributes.name.en ?? "")
                     .font(Font.SFPro.bodyNormal)
             }
             .padding(8)
-            .foregroundStyle(viewModel.selectedTags.contains(tag) ? .whiteText : .blackBase)
-            .background(viewModel.selectedTags.contains(tag) ? .orangeBase : .grayBase)
+            .foregroundStyle(viewModel.containsTag(tag) ? .whiteText : .blackBase)
+            .background(viewModel.containsTag(tag) ? .orangeBase : .grayBase)
             .cornerRadius(8)
         }
     }

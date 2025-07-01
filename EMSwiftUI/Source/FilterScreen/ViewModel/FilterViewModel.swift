@@ -15,6 +15,7 @@ protocol FilterViewModel: AnyObject, ObservableObject {
     func getTags() async
     func applyFilters()
     func resetFilters()
+    func containsTag(_ tag: Tag) -> Bool 
 }
 
 final class FilterViewModelImpl: FilterViewModel {
@@ -67,6 +68,10 @@ extension FilterViewModelImpl {
     
     func resetFilters() {
         self.selectedTags.removeAll()
+    }
+    
+    func containsTag(_ tag: Tag) -> Bool {
+        selectedTags.contains(tag) ? true : false
     }
 }
 

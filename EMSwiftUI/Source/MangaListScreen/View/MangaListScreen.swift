@@ -19,9 +19,11 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 24) {
+                    Color(.grayBase)
+                        .frame(height: 1)
                     contentView
+                        .padding(.horizontal, 16 )
                 }
-                .padding(.horizontal, 16 )
             }
             .background(Color.whiteText)
             .task {
