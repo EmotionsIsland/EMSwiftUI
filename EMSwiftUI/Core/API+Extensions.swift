@@ -15,7 +15,7 @@ extension API {
     
     static var mangaList: Endpoint {
         let queryItems = [
-            URLQueryItem(name: "limit", value: "6"),
+            URLQueryItem(name: "limit", value: "36"),
             URLQueryItem(name: "contentRating[]", value: "safe"),
             URLQueryItem(name: "order[followedCount]", value: "desc"),
             URLQueryItem(name: "includes[]", value: "cover_art")
