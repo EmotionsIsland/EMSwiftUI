@@ -1,5 +1,5 @@
 //
-//  FilterTagView.swift
+//  TagView.swift
 //  EMSwiftUI
 //
 //  Created by Ruslan on 25.06.2025.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct FilterTagView: View {
+struct TagView: View {
     let name: String
     
-    @State var isSelected: Bool
-    
-    var action: (Bool) -> Void = { _ in }
+    let isSelected: Bool
 
+    let action: (Bool) -> Void
+    
     var body: some View {
         HStack {
             Text(isSelected ? "-" : "+")
@@ -23,14 +23,13 @@ struct FilterTagView: View {
             Text(name)
                 .font(Font.SFPro.regularLarge)
         }
-        .padding(.horizontal, 5)
+        .padding(5)
         .padding(.vertical, 5)
         .background(isSelected ? Color.grayBase : Color.orangeBase)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .foregroundStyle(isSelected ? Color.black : Color.white)
         .onTapGesture {
             action(isSelected)
-            isSelected.toggle()
         }
     }
 }

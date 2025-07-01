@@ -10,7 +10,7 @@ import SwiftUI
 struct MangaSectionView: View {
     let title: String
     
-    var mangas: [MangaRepresentable]
+    let mangas: [MangaRepresentable]
     
     let gridItems: [GridItem] = .init(repeating: GridItem(.fixed(100), spacing: 25, alignment: .top), count: 3)
     

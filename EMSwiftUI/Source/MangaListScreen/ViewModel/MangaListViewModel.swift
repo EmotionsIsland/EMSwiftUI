@@ -41,7 +41,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
     }
     
     private func mapToRepresentable(manga: MangaData) -> MangaRepresentable {
-        let title = manga.attributes.title.en ?? "ERROR"
+        let title = manga.attributes.title.en ?? "No EN name"
         
         let genres = manga.attributes.tags.compactMap { $0.attributes.name.en }
         

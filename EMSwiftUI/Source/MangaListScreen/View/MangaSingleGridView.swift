@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct MangaSingleGridView: View {
-    var url: URL?
+    let url: URL?
     
-    var title: String
+    let title: String
     
-    var rating: Double
+    let rating: Double
     
-    var genres: [String]
+    let genres: [String]
     
     var body: some View {
         VStack(spacing: 5) {
