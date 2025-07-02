@@ -1,3 +1,5 @@
 EMSwiftUI.xcworkspace
 Pods/
 EMSwiftUI.xcodeproj
+.DS_Store
+**/.DS_Store
