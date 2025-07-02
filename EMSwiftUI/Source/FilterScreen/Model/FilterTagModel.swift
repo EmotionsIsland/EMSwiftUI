@@ -12,7 +12,6 @@ struct FilterTagGroup: Identifiable, Hashable {
     var tags: [FilterTag]
 }
 
-// Для парсинга из API
 struct FilterTagAPIResponse: Codable {
     let data: [FilterTagAPIData]
 }
@@ -25,4 +24,4 @@ struct FilterTagAPIData: Codable {
 struct FilterTagAttributes: Codable {
     let name: [String: String]
     let group: String
-} 
+}

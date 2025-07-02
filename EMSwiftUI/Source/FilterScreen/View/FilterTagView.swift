@@ -24,16 +24,3 @@ struct FilterTagView: View {
         .buttonStyle(.plain)
     }
 }
-
-#if DEBUG
-struct FilterTagView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack(spacing: 12) {
-            FilterTagView(tag: FilterTag(id: "1", name: "Shoujo", group: "genre"), isSelected: true, action: {})
-            FilterTagView(tag: FilterTag(id: "2", name: "Josei", group: "genre"), isSelected: false, action: {})
-        }
-        .padding()
-        .background(Color.white)
-    }
-}
-#endif 

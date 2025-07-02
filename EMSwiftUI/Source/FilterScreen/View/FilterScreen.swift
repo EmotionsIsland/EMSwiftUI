@@ -55,31 +55,12 @@ struct FilterScreen: View {
                     Divider()
                 }
                 
-                // Tag groups
                 ForEach(viewModel.groups) { group in
-                    VStack(alignment: .leading, spacing: 8) {
-                        Button {
-                            if expandedGroups.contains(group.id) {
-                                expandedGroups.remove(group.id)
-                            } else {
-                                expandedGroups.insert(group.id)
-                            }
-                        } label: {
-                            HStack {
-                                Text(group.name)
-                                Image(systemName: expandedGroups.contains(group.id) ? "chevron.up" : "chevron.down")
-                            }
-                            .font(.SFPro.regularLarge)
-                            .foregroundColor(.blackBase)
-                        }
-                        if expandedGroups.contains(group.id) {
-                            FlexibleLayout(data: group.tags, spacing: 8, alignment: .leading) { tag in
-                                FilterTagView(tag: tag, isSelected: viewModel.selectedTags.contains(tag)) {
-                                    viewModel.toggleTag(tag)
-                                }
-                            }
-                        }
-                    }
+                    FilterTagGroupView(
+                        group: group,
+                        selectedTags: viewModel.selectedTags,
+                        onTagTap: { viewModel.toggleTag($0) }
+                    )
                     .padding(.horizontal)
                     .padding(.vertical, 8)
                 }
@@ -91,11 +72,3 @@ struct FilterScreen: View {
         }
     }
 }
-
-#if DEBUG
-struct FilterScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        FilterScreen() {}
-    }
-}
-#endif
