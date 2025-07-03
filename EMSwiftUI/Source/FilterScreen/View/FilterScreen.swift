@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct FilterScreen: View {
-    let apply: () -> Void
-    
     @StateObject private var viewModel = FilterTagViewModel()
     @State private var expandedGroups: Set<String> = []
     
@@ -31,7 +29,7 @@ struct FilterScreen: View {
                 if !viewModel.selectedTags.isEmpty {
                     VStack(spacing: 16) {
                         Button {
-                            apply()
+                            viewModel.apply()
                         } label: {
                             Text("Apply")
                                 .font(.SFPro.bodyNormal)

@@ -34,16 +34,24 @@ final class MangaListViewModelImpl: MangaListViewModel {
         self.service = service
     }
     
-    @MainActor func getData() async throws {
-        isLoading = true
-        error = nil
+    func getData() async throws {
+        await MainActor.run {
+            isLoading = true
+            error = nil
+        }
+        
         do {
             let result = try await service.getManga()
-            mangaList = result.data
+            await MainActor.run {
+                mangaList = result.data
+            }
         } catch {
             print("*** Error in \(#function): \(error)")
         }
-        isLoading = false
+        
+        await MainActor.run {
+            isLoading = false
+        }
     }
     
     func getCover(for manga: MangaData) -> URL? {

@@ -21,7 +21,10 @@ struct MangaSingleGridView<VM: MangaListViewModel>: View {
                             .frame(width: 100, height: 144)
                     case .success(let image):
                         image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
                             .frame(width: 100, height: 144)
+                            .clipped()
                             .cornerRadius(4)
                     case .failure:
                         RoundedRectangle(cornerRadius: 4)

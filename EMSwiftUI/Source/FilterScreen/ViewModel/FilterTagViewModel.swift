@@ -41,4 +41,6 @@ final class FilterTagViewModel: ObservableObject {
     func reset() {
         selectedTags.removeAll()
     }
+    
+    func apply() { }
 }

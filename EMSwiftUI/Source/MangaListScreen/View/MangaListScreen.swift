@@ -58,7 +58,6 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         }
         .task {
             try? await viewModel.getData()
-            print("Manga count: \(viewModel.mangaList.count)")
         }
     }
 }

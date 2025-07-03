@@ -12,11 +12,7 @@ struct MangaSectionView<VM: MangaListViewModel>: View {
     let mangas: [MangaData]
     let viewModel: VM
     
-    private let columns = [
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25)
-    ]
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 25), count: 3)
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
