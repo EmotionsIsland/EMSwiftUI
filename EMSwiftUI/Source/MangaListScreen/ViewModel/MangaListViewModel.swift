@@ -69,13 +69,20 @@ extension MangaListViewModelImpl {
 
 // MARK: - Network
 extension MangaListViewModelImpl {
-    @MainActor func getData() async {
-        viewState = .loading
+    func getData() async {
+        await MainActor.run {
+            viewState = .loading
+        }
         do {
-            self.mangaData = try await service.getManga().data
-            viewState = .success
+            let result = try await service.getManga()
+            await MainActor.run {
+                self.mangaData = result.data
+                viewState = .success
+            }
         } catch {
-            viewState = .error(error.localizedDescription)
+            await MainActor.run {
+                viewState = .error(error.localizedDescription)
+            }
         }
     }
     

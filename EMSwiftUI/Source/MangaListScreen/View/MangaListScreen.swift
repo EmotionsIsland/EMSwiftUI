@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MangaListScreen<VM: MangaListViewModel>: View {
     @StateObject private var viewModel: VM
-    @State var searchText: String = ""
+    @State private var searchText: String = ""
     
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)

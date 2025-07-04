@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ErrorView: View {
-    var error: String
-    var action: () -> Void
+    let error: String
+    let action: () -> Void
     
     var body: some View {
         VStack(spacing: 12) {

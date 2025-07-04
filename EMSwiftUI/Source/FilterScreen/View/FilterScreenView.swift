@@ -94,10 +94,8 @@ struct FilterScreenView<VM: FilterViewModel>: View {
                             .font(.SFPro.regularLarge)
                             .foregroundStyle(Color.blackBase)
                         Button {
-                            withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
-                                group.isExpanded.toggle()
-                                group.isRotating = group.isExpanded ? 270 : 90
-                            }
+                            group.isExpanded.toggle()
+                            group.isRotating = group.isExpanded ? 270 : 90
                         } label: {
                             Image(.moreIcon)
                                 .rotationEffect(.degrees(group.isRotating))
@@ -127,7 +125,7 @@ struct FilterScreenView<VM: FilterViewModel>: View {
 
 // MARK: - Button Views
 private extension FilterScreenView {
-     func tapedTagButton(tag: Tag, _ action: @escaping () -> Void) -> some View {
+    func tapedTagButton(tag: Tag, _ action: @escaping () -> Void) -> some View {
         Button {
             action()
         } label: {
@@ -145,7 +143,7 @@ private extension FilterScreenView {
         }
     }
     
-     var actionButtons: some View {
+    var actionButtons: some View {
         VStack(spacing: 8) {
             Button("Apply", action: viewModel.applyFilters)
                 .primaryButtonStyle()

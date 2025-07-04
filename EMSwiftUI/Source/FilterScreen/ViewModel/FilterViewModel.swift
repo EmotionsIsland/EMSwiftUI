@@ -77,13 +77,20 @@ extension FilterViewModelImpl {
 
 // MARK: - Network
 extension FilterViewModelImpl {
-    @MainActor func getTags() async {
-        viewState = .loading
+    func getTags() async {
+        await MainActor.run {
+            viewState = .loading
+        }
         do {
-            self.tags = try await service.getTags().data
-            viewState = .success
+            let result = try await service.getTags()
+            await MainActor.run {
+                self.tags = result.data
+                viewState = .success
+            }
         } catch {
-            viewState = .error(error.localizedDescription)
+            await MainActor.run {
+                viewState = .error(error.localizedDescription)
+            }
         }
     }
 }

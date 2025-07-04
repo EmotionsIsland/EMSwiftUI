@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct RatingView: View {
-    var rating: Double
+    let rating: Double
     let maxRating = 5
     
     var body: some View {
