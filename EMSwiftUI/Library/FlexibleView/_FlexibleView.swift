@@ -12,7 +12,7 @@ struct _FlexibleView<Data: Collection, Content: View>: View where Data.Element: 
   let content: (Data.Element) -> Content
   @State var elementsSize: [Data.Element: CGSize] = [:]
 
-  var body : some View {
+  var body: some View {
     VStack(alignment: alignment, spacing: spacing) {
       ForEach(computeRows(), id: \.self) { rowElements in
         HStack(spacing: spacing) {

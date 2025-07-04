@@ -10,7 +10,7 @@ import Factory
 import Netify
 
 protocol MangaListService {
-    func getManga() async throws -> MangaListModel
+    func getManga(order: API.Order) async throws -> MangaListModel
 }
 
 final class MangaListServiceImpl: MangaListService {
@@ -20,7 +20,7 @@ final class MangaListServiceImpl: MangaListService {
         self.netify = netify
     }
     
-    func getManga() async throws -> MangaListModel {
-        try await netify.request(API.mangaList, type: MangaListModel.self)
+    func getManga(order: API.Order) async throws -> MangaListModel {
+        try await netify.request(API.makeEndpoint(for: order), type: MangaListModel.self)
     }
 }

@@ -16,20 +16,18 @@ struct TagView: View {
     
     var body: some View {
         HStack {
-            Text(isSelected ? "-" : "+")
+            Text(isSelected ? "+" : "")
             .font(Font.SFPro.regularLarge)
-            .frame(width: 15)
             
             Text(name)
                 .font(Font.SFPro.regularLarge)
         }
         .padding(5)
-        .padding(.vertical, 5)
-        .background(isSelected ? Color.grayBase : Color.orangeBase)
+        .background(isSelected ? Color.orangeBase : Color.grayBase)
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .foregroundStyle(isSelected ? Color.black : Color.white)
+        .foregroundStyle(isSelected ? Color.white : Color.black)
         .onTapGesture {
-            action(isSelected)
+                action(isSelected)
         }
     }
 }

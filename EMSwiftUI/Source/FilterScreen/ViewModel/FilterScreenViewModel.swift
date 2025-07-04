@@ -29,18 +29,19 @@ final class FilterScreenViewModelIml: FilterScreenViewModel {
     
     init(service: TagService) {
         self.service = service
-        loadTags()
+        Task {
+            try? await loadTags()
+        }
     }
     
-    private func loadTags() {
+    @MainActor private func loadTags() async throws {
         Task {
             do {
                 let data = try await service.loadTags().data
-                await MainActor.run { [weak self] in
-                    guard let self else { return }
-                    tags = data.map( { self.mapToRepresentable(tag: $0)})
-                }
-            } catch {}
+                tags = data.map( { self.mapToRepresentable(tag: $0)})
+            } catch {
+                throw(error)
+            }
         }
     }
     

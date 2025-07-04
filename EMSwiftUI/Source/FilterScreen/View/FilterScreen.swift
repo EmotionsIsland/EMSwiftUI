@@ -15,7 +15,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
     }
     
     var body: some View {
-            VStack {
+            ScrollView(showsIndicators: false) {
                 makeScreenHeader()
                 
                 makeSelectionSection()
@@ -40,12 +40,9 @@ private extension FilterScreen {
                 
                 Spacer()
             }
-            ScrollView {
                 TagListView(tags: viewModel.selectedTags, spacing: 5) { id, bool in
                     viewModel.didTapOnTag(tagId: id, isSelected: bool)
-                }
             }
-            .frame(height: 120)
         }
     }
     
@@ -73,7 +70,7 @@ private extension FilterScreen {
     }
     
     @ViewBuilder func makeSections() -> some View {
-        ScrollView(.vertical, showsIndicators: false) {
+//        ScrollView(.vertical, showsIndicators: false) {
             let action = viewModel.didTapOnTag
                 FilterExpandableSection(
                     name: "Content",
@@ -94,7 +91,7 @@ private extension FilterScreen {
                     name: "Format",
                     action: action,
                     tags: viewModel.filterForSection(group: .format))
-            }
+//            }
     }
     
     @ViewBuilder func makeScreenHeader() -> some View {

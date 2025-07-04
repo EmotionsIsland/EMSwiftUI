@@ -27,10 +27,27 @@ extension API {
     static var mangaTags: Endpoint {
         return api.endpoint(path: "/manga/tag")
     }
+    
+    static func makeEndpoint(for order: Order) -> Endpoint {
+        let queryItems = [
+            URLQueryItem(name: "limit", value: "6"),
+            URLQueryItem(name: "contentRating[]", value: "safe"),
+            URLQueryItem(name: "order[\(order.rawValue)]", value: "desc"),
+            URLQueryItem(name: "includes[]", value: "cover_art")
+        ]
+        
+        return api.endpoint(path: "/manga", queryItems: queryItems)
+    }
 
     static func coverURL(for manga: MangaData, _ sizeFormat: SizeFormat = .size512) -> URL? {
         guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" })?.attributes?.fileName else { return nil }
 
         return coverURL.endpoint(path: "/covers/\(manga.id)/\(fileName)\(sizeFormat.rawValue)").url
+    }
+    
+    enum Order: String {
+        case latest = "createdAt"
+        case popular = "followedCount"
+        case updated = "updatedAt"
     }
 }

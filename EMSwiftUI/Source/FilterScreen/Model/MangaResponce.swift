@@ -6,12 +6,11 @@
 //
 
 import Foundation
-
 // MARK: - MangaResponce
-    struct MangaResponce: Codable {
-        let result, response: String
-        let data: [Datum]
-        let limit, offset, total: Int
+struct MangaResponce: Codable {
+    let result, response: String
+    let data: [Datum]
+    let limit, offset, total: Int
     }
 
 // MARK: - Datum
@@ -21,13 +20,13 @@ struct Datum: Codable {
 }
 
 extension Datum {
-    // MARK: - Attributes
+// MARK: - Attributes
     struct Attributes: Codable {
         let name: Name
         let group: TagGroup
     }
     
-    // MARK: - Name
+// MARK: - Name
     struct Name: Codable {
         let en: String
     }

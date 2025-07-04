@@ -18,7 +18,9 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack {
-                    MangaSectionView(title: "Some title", mangas: viewModel.mangas)
+                    MangaSectionView(title: "Popular", mangas: viewModel.popularMangas)
+                    MangaSectionView(title: "Last updates", mangas: viewModel.updatedMangas)
+                    MangaSectionView(title: "Latest", mangas: viewModel.latestMangas)
                 }
             }
         }

@@ -15,7 +15,11 @@ enum SizeFormat: String {
 }
 
 protocol MangaListViewModel: ObservableObject {
-    var mangas: [MangaRepresentable] { get set }
+    var popularMangas: [MangaRepresentable] { get set }
+    
+    var latestMangas: [MangaRepresentable] { get set }
+    
+    var updatedMangas: [MangaRepresentable] { get set }
     
     var searchText: String { get set }
 }
@@ -25,17 +29,25 @@ final class MangaListViewModelImpl: MangaListViewModel {
     
     @Published var searchText: String = ""
     
-    @Published var mangas: [MangaRepresentable] = []
+    @Published var popularMangas: [MangaRepresentable] = []
     
-    private func getData() {
+    @Published var latestMangas: [MangaRepresentable] = []
+    
+    @Published var updatedMangas: [MangaRepresentable] = []
+    
+    @MainActor private func getData() async throws {
         Task {
             do {
-                let mangaList = try await service.getManga().data
-                await MainActor.run { [weak self] in
-                    guard let self else { return }
-                    mangas = mangaList.compactMap( { self.mapToRepresentable(manga: $0) })
-                }
+                let popularMangas = try await service.getManga(order: .popular).data
+                self.popularMangas = popularMangas.compactMap( { self.mapToRepresentable(manga: $0) })
+                
+                let updatedMangas = try await  service.getManga(order: .updated).data
+                self.updatedMangas = updatedMangas.compactMap( { self.mapToRepresentable(manga: $0) })
+                
+                let latestMangas = try await service.getManga(order: .latest).data
+                self.latestMangas = latestMangas.compactMap( { self.mapToRepresentable(manga: $0) })
             } catch {
+                throw(error)
             }
         }
     }
@@ -45,9 +57,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
         
         let genres = manga.attributes.tags.compactMap { $0.attributes.name.en }
         
-        let fileName = manga.relationships.first(where: { $0.attributes?.fileName != nil })?.attributes?.fileName
-        
-        let url = URL(string: "https://uploads.mangadex.org/covers/\(manga.id)/\(fileName ?? "")")
+        let url = API.coverURL(for: manga)
         
         return MangaRepresentable(
             id: manga.id,
@@ -58,8 +68,8 @@ final class MangaListViewModelImpl: MangaListViewModel {
     
     init(service: MangaListService) {
         self.service = service
-        getData()
+        Task {
+            try? await getData()
+        }
     }
-    
-    @MainActor private func getData() async throws { }
 }
