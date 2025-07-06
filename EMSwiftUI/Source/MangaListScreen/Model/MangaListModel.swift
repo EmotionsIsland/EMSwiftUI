@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // swiftlint:disable identifier_name
 struct MangaListModel: Decodable {
@@ -79,5 +80,19 @@ struct Relationship: Decodable {
 
 struct CoverAttributes: Decodable {
     let fileName: String
+}
+
+struct MangaPresentationModel: Identifiable {
+    let id: String
+    let title: String
+    let cover: UIImage?
+    let rating: CGFloat
+    let tags: [String]
+}
+
+struct TagPresentationModel: Hashable, Identifiable {
+    let id: String
+    let title: String
+    let group: String
 }
 // swiftlint:enable identifier_name
