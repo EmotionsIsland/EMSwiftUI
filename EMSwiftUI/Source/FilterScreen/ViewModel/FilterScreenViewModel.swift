@@ -17,6 +17,8 @@ protocol FilterScreenViewModel: ObservableObject {
     
     func filterForSection(group: TagGroup) -> [MangaTagRepresentable]
     
+    var showError: Bool { get set }
+    
     func reset()
 }
 
@@ -27,21 +29,21 @@ final class FilterScreenViewModelIml: FilterScreenViewModel {
     
     @Published var selectedTags: [MangaTagRepresentable] = []
     
+    @Published var showError: Bool = false
+    
     init(service: TagService) {
         self.service = service
         Task {
-            try? await loadTags()
+             await loadTags()
         }
     }
     
-    @MainActor private func loadTags() async throws {
-        Task {
-            do {
-                let data = try await service.loadTags().data
-                tags = data.map( { self.mapToRepresentable(tag: $0)})
-            } catch {
-                throw(error)
-            }
+    @MainActor private func loadTags() async {
+        do {
+            let data = try await service.loadTags().data
+            tags = data.map( { self.mapToRepresentable(tag: $0)})
+        } catch {
+            showError = true
         }
     }
     
@@ -84,5 +86,18 @@ final class FilterScreenViewModelIml: FilterScreenViewModel {
             id: id,
             name: name,
             group: group)
+    }
+}
+
+enum ViewModelError: Error {
+    case failedToLoadTags
+}
+
+extension ViewModelError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .failedToLoadTags:
+            "Failed to bring tags"
+        }
     }
 }

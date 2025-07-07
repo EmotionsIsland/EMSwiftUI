@@ -27,6 +27,10 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
                 makeSections()
             }
             .padding(.horizontal, 10)
+            .alert(isPresented: $viewModel.showError, error: ViewModelError.failedToLoadTags) {
+                Button("Ok") {
+                }
+            }
     }
 }
 
@@ -70,7 +74,6 @@ private extension FilterScreen {
     }
     
     @ViewBuilder func makeSections() -> some View {
-//        ScrollView(.vertical, showsIndicators: false) {
             let action = viewModel.didTapOnTag
                 FilterExpandableSection(
                     name: "Content",
@@ -91,7 +94,6 @@ private extension FilterScreen {
                     name: "Format",
                     action: action,
                     tags: viewModel.filterForSection(group: .format))
-//            }
     }
     
     @ViewBuilder func makeScreenHeader() -> some View {
