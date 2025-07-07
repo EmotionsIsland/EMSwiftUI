@@ -9,8 +9,10 @@ import SwiftUI
 
 struct FilterSectionView: View {
     let tags: [TagPresentationModel]
+    let chosenTagsIDs: Set<String>?
     let spacing: CGFloat = 8
     let horizontalPadding: CGFloat = 16
+    var didTapTag: (TagPresentationModel) -> Void
     
     @State private var totalHeight = CGFloat.zero
     
@@ -23,12 +25,16 @@ struct FilterSectionView: View {
         .frame(height: totalHeight)
     }
     
-    func generateRows(in avaliableWidth: CGFloat) -> some View {
+    private func generateRows(in avaliableWidth: CGFloat) -> some View {
         var width = CGFloat.zero
         var rows = [[TagPresentationModel]]()
         
         for tag in tags {
-            let tagWidth = tag.title.width(withFont: .SFPro.bodyNormal)
+            if rows.isEmpty {
+                rows.append([])
+            }
+            
+            let tagWidth = tag.title.width(withFont: UIFont(name: "SFPro-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)) + 32
             if width + tagWidth + spacing > avaliableWidth - horizontalPadding * 2 {
                 rows.append([tag])
                 width = tagWidth
@@ -42,7 +48,10 @@ struct FilterSectionView: View {
             ForEach(rows, id: \.self) { row in
                 HStack(spacing: spacing) {
                     ForEach(row) { tag in
-                        FilterSingleGridView(tagTitile: tag.title)
+                        let isPicked = chosenTagsIDs?.contains(tag.id) ?? true
+                        FilterSingleGridView(tagTitile: tag.title, isPicked: isPicked) {
+                            didTapTag(tag)
+                        }
                     }
                 }
             }
@@ -66,9 +75,4 @@ struct FilterSectionView: View {
             value = max(value, nextValue())
         }
     }
-}
-
-#Preview {
-    FilterSectionView(
-        tags: [TagPresentationModel(id: "", title: "Any Demographic", group: "")])
 }

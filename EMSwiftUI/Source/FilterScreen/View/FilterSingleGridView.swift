@@ -9,8 +9,8 @@ import SwiftUI
 
 struct FilterSingleGridView: View {
     let tagTitile: String
-    
-    @State private var isPicked = false
+    var isPicked: Bool
+    var didTap: () -> Void
     
     var body: some View {
         HStack(spacing: 4) {
@@ -26,12 +26,8 @@ struct FilterSingleGridView: View {
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .onTapGesture {
             withAnimation {
-                isPicked.toggle()
+                didTap()
             }
         }
     }
-}
-
-#Preview {
-    FilterSingleGridView(tagTitile: "Completed")
 }

@@ -27,10 +27,6 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
 }
 
 extension MangaListScreen {
-    enum LoadState {
-        case idle, loading, success, failure(Error)
-    }
-    
     @ViewBuilder
     private var content: some View {
         switch loadState {
@@ -47,7 +43,12 @@ extension MangaListScreen {
                         await reload()
                     }
                 }
-                .buttonStyle(.borderedProminent)
+                .foregroundStyle(.whiteText)
+                .padding(12)
+                .frame(maxWidth: .infinity)
+                .background(.orangeBase)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal)
             }
         case .success:
             ScrollView(.vertical, showsIndicators: false) {

@@ -90,9 +90,25 @@ struct MangaPresentationModel: Identifiable {
     let tags: [String]
 }
 
+struct TagModel: Decodable {
+    let result: String
+    let response: String
+    let data: [Tag]
+    let limit: Int
+    let offset: Int
+    let total: Int
+}
+
 struct TagPresentationModel: Hashable, Identifiable {
     let id: String
     let title: String
     let group: String
+}
+
+struct TagGroup: Identifiable {
+    let id = UUID()
+    let groupTitle: String
+    var tags: [TagPresentationModel]
+    var isExpanded = false
 }
 // swiftlint:enable identifier_name

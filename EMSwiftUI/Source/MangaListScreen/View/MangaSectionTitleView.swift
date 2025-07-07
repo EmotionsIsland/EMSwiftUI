@@ -28,7 +28,3 @@ struct MangaSectionTitleView: View {
         .padding(.horizontal)
     }
 }
-
-#Preview {
-    MangaSectionTitleView(sectionTitle: "popular")
-}

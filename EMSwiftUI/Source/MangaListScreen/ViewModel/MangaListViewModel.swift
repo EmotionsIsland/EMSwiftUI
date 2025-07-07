@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import Netify
 
 enum SizeFormat: String {
     case size256 = ".256.jpg"
@@ -68,7 +67,6 @@ final class MangaListViewModelImpl: MangaListViewModel {
             }
         } catch {
             print("An error occured while loading manga data: \(error.localizedDescription)")
-            throw NetworkError.decodingFailed
         }
     }
 }
