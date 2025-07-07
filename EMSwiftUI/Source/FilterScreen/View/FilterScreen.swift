@@ -62,10 +62,12 @@ extension FilterScreen {
                         FilterMainSectionButtonsView(isActive: !viewModel.chosenTags.isEmpty) {
                             viewModel.resetTags()
                         }
+                        .padding(.top)
                     } header: {
                         Text("Selection")
                             .font(.SFPro.headline2)
                     }
+                    Divider()
                     ForEach(viewModel.tagGroups) { tagGroup in
                         Section {
                             if tagGroup.isExpanded {
