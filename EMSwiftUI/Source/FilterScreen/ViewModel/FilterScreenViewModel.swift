@@ -10,6 +10,7 @@ import Foundation
 protocol FilterScreenViewModel: ObservableObject {
     var tagGroups: [TagGroup] { get }
     var chosenTags: [TagPresentationModel] { get }
+    var loadState: LoadState { get }
     func onAppear() async throws
     func resetTags()
     func toggleGroup(_ group: TagGroup)
@@ -19,6 +20,7 @@ protocol FilterScreenViewModel: ObservableObject {
 final class FilterScreenViewModelImpl: FilterScreenViewModel {
     @Published var tagGroups: [TagGroup] = []
     @Published var chosenTags: [TagPresentationModel] = []
+    @Published var loadState: LoadState = .idle
     
     private let service: FilterScreenService
     
@@ -26,18 +28,24 @@ final class FilterScreenViewModelImpl: FilterScreenViewModel {
         self.service = service
     }
     
-    public func onAppear() async throws {
-        try await getData()
+    @MainActor func onAppear() async throws {
+        loadState = .loading
+        do {
+            try await getData()
+            loadState = .success
+        } catch {
+            loadState = .failure(error)
+        }
     }
     
-    public func toggleGroup(_ group: TagGroup) {
+    func toggleGroup(_ group: TagGroup) {
         guard let index = tagGroups.firstIndex(where: { $0.id == group.id }) else {
             return
         }
         tagGroups[index].isExpanded.toggle()
     }
     
-    public func toggleTag(_ tag: TagPresentationModel) {
+    func toggleTag(_ tag: TagPresentationModel) {
         if let index = chosenTags.firstIndex(of: tag) {
             chosenTags.remove(at: index)
         } else {
@@ -45,7 +53,7 @@ final class FilterScreenViewModelImpl: FilterScreenViewModel {
         }
     }
     
-    public func resetTags() {
+    func resetTags() {
         guard !chosenTags.isEmpty else {
             return
         }

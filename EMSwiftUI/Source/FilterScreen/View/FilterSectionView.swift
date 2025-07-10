@@ -12,7 +12,7 @@ struct FilterSectionView: View {
     let chosenTagsIDs: Set<String>?
     let spacing: CGFloat = 8
     let horizontalPadding: CGFloat = 16
-    var didTapTag: (TagPresentationModel) -> Void
+    let didTapTag: (TagPresentationModel) -> Void
     
     @State private var totalHeight = CGFloat.zero
     

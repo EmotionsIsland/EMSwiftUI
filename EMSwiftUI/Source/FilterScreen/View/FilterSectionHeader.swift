@@ -10,7 +10,7 @@ import SwiftUI
 struct FilterSectionHeader: View {
     let sectionTitle: String
     let isExpanded: Bool
-    var expand: () -> Void
+    let expand: () -> Void
     
     var body: some View {
         HStack(spacing: 8) {

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FilterScreen<VM: FilterScreenViewModel>: View {
     @StateObject private var viewModel: VM
-    @State private var loadState: LoadState = .idle
     
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -29,73 +28,69 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
 extension FilterScreen {
     @ViewBuilder
     private var content: some View {
-        switch loadState {
+        switch viewModel.loadState {
         case .loading, .idle:
             ProgressView()
         case .failure:
-            VStack(spacing: 12) {
-                Text("Something went wrong while loading tags. Please try again later.")
-                    .font(.SFPro.semiboldNormal)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                Button("Try again") {
-                    Task {
-                        await reload()
-                    }
-                }
-                .foregroundStyle(.whiteText)
-                .padding(12)
-                .frame(maxWidth: .infinity)
-                .background(.orangeBase)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.horizontal)
-            }
+            failureContent
         case .success:
-            ScrollView {
-                LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                    Section {
-                        FilterSectionView(
-                            tags: viewModel.chosenTags,
-                            chosenTagsIDs: nil) { tag in
+            successContent
+        }
+    }
+    
+    private var failureContent: some View {
+        LoadingFailureView(errorMessage: "Something went wrong while loading tags. Please try again later.") {
+            await reload()
+        }
+    }
+    
+    private var successContent: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem()], alignment: .leading) {
+                chosenTagsSection
+                Divider()
+                tagsSection
+            }
+            .padding()
+        }
+    }
+    
+    private var chosenTagsSection: some View {
+        Section {
+            FilterSectionView(
+                tags: viewModel.chosenTags,
+                chosenTagsIDs: nil) { tag in
+                    viewModel.toggleTag(tag)
+                }
+            FilterMainSectionButtonsView(isActive: !viewModel.chosenTags.isEmpty) {
+                viewModel.resetTags()
+            }
+            .padding(.top)
+        } header: {
+            Text("Selection")
+                .font(.SFPro.headline2)
+        }
+    }
+    
+    private var tagsSection: some View {
+        ForEach(viewModel.tagGroups) { tagGroup in
+            Section {
+                if tagGroup.isExpanded {
+                    FilterSectionView(
+                        tags: tagGroup.tags,
+                        chosenTagsIDs: Set(viewModel.chosenTags.map(\.id))) { tag in
                             viewModel.toggleTag(tag)
                         }
-                        FilterMainSectionButtonsView(isActive: !viewModel.chosenTags.isEmpty) {
-                            viewModel.resetTags()
-                        }
-                        .padding(.top)
-                    } header: {
-                        Text("Selection")
-                            .font(.SFPro.headline2)
-                    }
-                    Divider()
-                    ForEach(viewModel.tagGroups) { tagGroup in
-                        Section {
-                            if tagGroup.isExpanded {
-                                FilterSectionView(
-                                    tags: tagGroup.tags,
-                                    chosenTagsIDs: Set(viewModel.chosenTags.map(\.id))) { tag in
-                                    viewModel.toggleTag(tag)
-                                }
-                            }
-                        } header: {
-                            FilterSectionHeader(sectionTitle: tagGroup.groupTitle, isExpanded: tagGroup.isExpanded) {
-                                viewModel.toggleGroup(tagGroup)
-                            }
-                        }
-                    }
                 }
-                .padding()
+            } header: {
+                FilterSectionHeader(sectionTitle: tagGroup.groupTitle, isExpanded: tagGroup.isExpanded) {
+                    viewModel.toggleGroup(tagGroup)
+                }
             }
         }
     }
     
     private func reload() async {
-        loadState = .loading
-        do {
-            try await viewModel.onAppear()
-            loadState = .success
-        } catch {
-            loadState = .failure(error)
-        }
+        try? await viewModel.onAppear()
     }
 }

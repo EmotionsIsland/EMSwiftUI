@@ -9,8 +9,8 @@ import SwiftUI
 
 struct FilterSingleGridView: View {
     let tagTitile: String
-    var isPicked: Bool
-    var didTap: () -> Void
+    let isPicked: Bool
+    let didTap: () -> Void
     
     var body: some View {
         HStack(spacing: 4) {

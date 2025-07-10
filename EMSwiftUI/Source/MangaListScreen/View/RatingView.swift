@@ -14,29 +14,23 @@ struct RatingView: View {
     private let starImage = Image("starIcon")
     
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<maxRating, id: \.self) { index in
-                ZStack {
-                    starImage
-                        .foregroundStyle(.grayBase)
-                    
-                    if rating >= Double(index + 1) {
-                        starImage
-                            .foregroundStyle(.yellow)
-                    } else if rating > Double(index) {
-                        starImage
-                            .foregroundStyle(.yellow)
-                            .mask {
-                                GeometryReader { geo in
-                                    Rectangle()
-                                        .size(
-                                            width: geo.size.width * (rating - Double(index)),
-                                            height: geo.size.height)
-                                }
-                            }
-                    }
+        let stars = HStack(spacing: 0) {
+            ForEach(0..<maxRating, id: \.self) { _ in
+                starImage
+                    .foregroundStyle(.grayBase)
+            }
+        }
+        
+        stars.overlay {
+            GeometryReader { geometry in
+                let width = rating / CGFloat(maxRating) * geometry.size.width
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .frame(width: width)
+                        .foregroundStyle(.yellow)
                 }
             }
+            .mask(stars)
         }
     }
 }

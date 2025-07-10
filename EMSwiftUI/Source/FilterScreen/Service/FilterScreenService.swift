@@ -21,6 +21,12 @@ final class FilterScreenServiceImpl: FilterScreenService {
     }
     
     func getTags() async throws -> TagModel {
-        try await netify.request(API.mangaTags, type: TagModel.self)
+        do {
+            let tagModels = try await netify.request(API.mangaTags, type: TagModel.self)
+            return tagModels
+        } catch {
+            print("Failed to download tags \(error)")
+            throw error
+        }
     }
 }
