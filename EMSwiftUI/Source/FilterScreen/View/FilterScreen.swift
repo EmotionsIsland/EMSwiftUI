@@ -20,7 +20,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
                 await reload()
             }
             .refreshable {
-                await reload()
+                try? await viewModel.reload()
             }
     }
 }
@@ -40,7 +40,7 @@ extension FilterScreen {
     
     private var failureContent: some View {
         LoadingFailureView(errorMessage: "Something went wrong while loading tags. Please try again later.") {
-            await reload()
+            try? await viewModel.reload()
         }
     }
     

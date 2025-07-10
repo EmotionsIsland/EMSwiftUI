@@ -18,12 +18,14 @@ protocol MangaListViewModel: ObservableObject {
     var data: [MangaPresentationModel] { get }
     var loadState: LoadState { get }
     func onAppear() async throws
+    func reload() async throws
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
     @Published var data: [MangaPresentationModel] = []
     @Published var loadState: LoadState = .idle
     
+    private var hasLoadedOnce = false
     private let service: MangaListService
 
     init(service: MangaListService) {
@@ -31,6 +33,20 @@ final class MangaListViewModelImpl: MangaListViewModel {
     }
     
     @MainActor func onAppear() async throws {
+        guard !hasLoadedOnce else { return }
+        
+        hasLoadedOnce = true
+        loadState = .loading
+        do {
+            try await getData()
+            loadState = .success
+        } catch {
+            loadState = .failure(error)
+            throw error
+        }
+    }
+    
+    @MainActor func reload() async throws {
         loadState = .loading
         do {
             try await getData()

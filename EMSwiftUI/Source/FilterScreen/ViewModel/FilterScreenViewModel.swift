@@ -12,6 +12,7 @@ protocol FilterScreenViewModel: ObservableObject {
     var chosenTags: [TagPresentationModel] { get }
     var loadState: LoadState { get }
     func onAppear() async throws
+    func reload() async throws
     func resetTags()
     func toggleGroup(_ group: TagGroup)
     func toggleTag(_ tag: TagPresentationModel)
@@ -22,6 +23,7 @@ final class FilterScreenViewModelImpl: FilterScreenViewModel {
     @Published var chosenTags: [TagPresentationModel] = []
     @Published var loadState: LoadState = .idle
     
+    private var hasLoadedOnce = false
     private let service: FilterScreenService
     
     init(service: FilterScreenService) {
@@ -29,6 +31,19 @@ final class FilterScreenViewModelImpl: FilterScreenViewModel {
     }
     
     @MainActor func onAppear() async throws {
+        guard !hasLoadedOnce else { return }
+        
+        hasLoadedOnce = true
+        loadState = .loading
+        do {
+            try await getData()
+            loadState = .success
+        } catch {
+            loadState = .failure(error)
+        }
+    }
+    
+    @MainActor func reload() async throws {
         loadState = .loading
         do {
             try await getData()

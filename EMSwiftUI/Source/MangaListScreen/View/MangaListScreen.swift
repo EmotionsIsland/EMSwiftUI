@@ -20,7 +20,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 await reload()
             }
             .refreshable {
-                await reload()
+                try? await viewModel.reload()
             }
     }
 }
@@ -40,7 +40,7 @@ extension MangaListScreen {
     
     private var failureContent: some View {
         LoadingFailureView(errorMessage: "Something went wrong while loading data. Please try again later.") {
-            await reload()
+            try? await viewModel.reload()
         }
     }
     
