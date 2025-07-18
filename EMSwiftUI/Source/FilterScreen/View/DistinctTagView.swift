@@ -10,7 +10,7 @@ import SwiftUI
 struct DistinctTagView: View {
     let title: String
     let isSelected: Bool
-    let actionHandler: () -> ()
+    let actionHandler: () -> Void
     
     var body: some View {
         HStack(spacing: 4) {

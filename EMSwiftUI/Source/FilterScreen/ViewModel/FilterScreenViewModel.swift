@@ -5,7 +5,6 @@
 //  Created by Alina Kazantseva on 7/15/25.
 //
 
-
 import Foundation
 
 protocol FilterScreenViewModel: ObservableObject {
@@ -74,7 +73,7 @@ final class FilterScreenViewModelImpl: FilterScreenViewModel {
             var tagsTable: [String: [SingleTagModel]] = [:]
             
             for tag in tagModels {
-                if let _ = tagsTable[tag.group] {
+                if tagsTable[tag.group] != nil {
                     tagsTable[tag.group]!.append(tag)
                 } else {
                     tagsTable[tag.group] = []

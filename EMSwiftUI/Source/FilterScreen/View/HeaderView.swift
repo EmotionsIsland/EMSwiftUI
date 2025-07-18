@@ -10,7 +10,7 @@ import SwiftUI
 struct HeaderView: View {
     var isUnfolded: Bool
     let groupTitle: String
-    let action: () -> ()
+    let action: () -> Void
     
     var body: some View {
         HStack(spacing: 8) {
