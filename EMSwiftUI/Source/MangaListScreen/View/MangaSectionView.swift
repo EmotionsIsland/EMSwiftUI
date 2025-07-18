@@ -11,6 +11,7 @@ struct MangaSectionView: View {
     var body: some View {
         VStack {
             // TODO: Create section View
+            // Не совсем понял предназначение этой вьюшки
         }
     }
 }

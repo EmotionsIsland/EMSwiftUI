@@ -11,10 +11,14 @@ import Netify
 
 extension Container {
     var netify: Factory<Netify> {
-        Factory(self) { NetifyImpl(session: .shared, log: self.logify()) }
+        Factory(self) {
+            NetifyImpl(session: .shared, log: self.logify())
+        }
     }
     
     var logify: Factory<Logify> {
-        Factory(self) { LogifyImpl(logLevel: .debug) }
+        Factory(self) {
+            LogifyImpl(logLevel: .debug)
+        }
     }
 }

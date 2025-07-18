@@ -14,4 +14,11 @@ extension Image {
             .aspectRatio(contentMode: .fill)
             .frame(width: width, height: height)
     }
+    
+    func resizedToFit(width: CGFloat, height: CGFloat) -> some View {
+        self
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: width, height: height)
+    }
 }
