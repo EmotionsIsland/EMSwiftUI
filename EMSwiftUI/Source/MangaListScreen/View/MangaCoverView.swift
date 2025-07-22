@@ -7,29 +7,12 @@
 
 import SwiftUI
 
-struct MangaCoverView<ViewModel: MangaListViewModel>: View {
-    var url: URL?
-    
-    @State private var image: UIImage?
-    @StateObject private var viewModel: ViewModel
-    
-    init(url: URL?, viewModel: ViewModel) {
-        self.url = url
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+struct MangaCoverView: View {
+    let url: URL
     
     var body: some View {
         VStack {
-            if let image {
-                Image(uiImage: image)
-                    .resizedToFill(width: 100, height: 144)
-                    .cornerRadius(4)
-            } else {
-                EmptyView()
-            }
-        }
-        .task {
-            image = await viewModel.loadImage(url)
+            AsyncImage(url: url)
         }
     }
 }

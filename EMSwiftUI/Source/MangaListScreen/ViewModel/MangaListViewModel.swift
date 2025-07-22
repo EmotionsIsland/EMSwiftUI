@@ -61,7 +61,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
     ///   - mangaObject: Объект, который будет конвертироваться
     /// - Returns: Сконвертированный объект типа SingleGridMangaModel
     private func convert(_ mangaObject: MangaData) -> SingleGridMangaModel {
-        let convertedObject = SingleGridMangaModel(url: getCoverUrl(for: mangaObject.id, getFileName(of: mangaObject)),
+        let convertedObject = SingleGridMangaModel(url: getCoverUrl(for: mangaObject.id, getFileName(of: mangaObject))!,
                                                    tags: mangaObject.attributes.tags.map { $0.attributes.name.en ?? ""},
                                                    title: mangaObject.attributes.title.en ?? "Unkown")
         
@@ -77,7 +77,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
             return nil
         }
         
-        return mangaObject.relationships[index].attributes?.fileName
+        return  mangaObject.relationships[index].attributes?.fileName
     }
     
     /// Метод, который строит URL обложки на основе id и имени обложки определённой манги.

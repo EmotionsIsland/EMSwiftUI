@@ -15,7 +15,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
     ]
     
     @StateObject private var viewModel: VM
-    @State var searchText = ""
+    @State private var searchText = ""
     
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)

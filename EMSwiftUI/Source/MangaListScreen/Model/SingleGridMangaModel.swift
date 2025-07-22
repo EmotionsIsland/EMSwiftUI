@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SingleGridMangaModel: Identifiable {
-    var url: URL?
+    let url: URL
     let tags: [String]
     let title: String
     

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MangaRatingView: View {
-    var rating: CGFloat
-    var maxRating: Int
+    let rating: CGFloat
+    let maxRating: Int
     
     var body: some View {
         let starsView = HStack(spacing: 4) {

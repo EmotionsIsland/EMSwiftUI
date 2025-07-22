@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MangaSingleGridView<ViewModel: MangaListViewModel>: View {
-    var manga: SingleGridMangaModel
+    let manga: SingleGridMangaModel
     @StateObject private var viewModel: ViewModel
     
     init(manga: SingleGridMangaModel, viewModel: ViewModel) {
@@ -18,7 +18,7 @@ struct MangaSingleGridView<ViewModel: MangaListViewModel>: View {
     
     var body: some View {
         VStack(spacing: 4) {
-            MangaCoverView(url: manga.url, viewModel: viewModel)
+            MangaCoverView(url: manga.url)
             VStack(spacing: 0) {
                 Text(manga.title)
                     .font(.custom("SFProText-Semibold", size: 16))
