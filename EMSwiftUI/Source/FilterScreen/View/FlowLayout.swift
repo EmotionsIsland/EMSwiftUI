@@ -7,77 +7,74 @@
 
 import SwiftUI
 
-struct FlowLayout: Layout {
+struct FlowLayout<Item: Identifiable, Content: View>: View {
+    var items: [Item]
     var spacing: CGFloat = 8
-    
-    @available(iOS 16.0, *)
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let sizes = subviews.map { $0.sizeThatFits(.unspecified) }
-        
-        var totalHeight: CGFloat = 0
-        var totalWidth: CGFloat = 0
-        
-        var lineWidth: CGFloat = 0
-        var lineHeight: CGFloat = 0
-        
-        for size in sizes {
-            let isFirstInLine = (lineWidth == 0)
-            let additionalSpacing = isFirstInLine ? 0 : spacing
-            
-            if lineWidth + additionalSpacing + size.width > (proposal.width ?? 0) {
-                // Переход на новую строку
-                totalHeight += lineHeight
-                lineWidth = size.width
-                lineHeight = size.height
-            } else {
-                lineWidth += additionalSpacing + size.width
-                lineHeight = max(lineHeight, size.height)
+    var content: (Item) -> Content
+
+    @State private var sizes: [CGSize] = []
+    @State private var containerWidth: CGFloat = 0
+
+    var body: some View {
+        let points = layout(sizes: sizes, spacing: spacing, containerWidth: containerWidth)
+
+        VStack(alignment: .leading, spacing: 0) {
+            GeometryReader { proxy in
+                Color.clear
+                    .preference(key: SizeKey.self, value: [proxy.size])
             }
-            totalWidth = max(totalWidth, lineWidth)
+            .frame(height: 0)
+            .onPreferenceChange(SizeKey.self) { arr in
+                containerWidth = arr.first?.width ?? 0
+            }
+
+            ZStack(alignment: .topLeading) {
+                ForEach(Array(zip(items, items.indices)), id: \.0.id) { item, idx in
+                    content(item)
+                        .fixedSize()
+                        .background(
+                            GeometryReader { geo in
+                                Color.clear.preference(key: SizeKey.self, value: [geo.size])
+                            }
+                        )
+                        .alignmentGuide(.leading) { _ in
+                            guard idx < points.count else { return 0 }
+                            return -points[idx].x
+                        }
+                        .alignmentGuide(.top) { _ in
+                            guard idx < points.count else { return 0 }
+                            return -points[idx].y
+                        }
+                }
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+            .onPreferenceChange(SizeKey.self) { prefs in
+                sizes = prefs
+            }
         }
-        
-        totalHeight += lineHeight
-        
-        return .init(width: totalWidth, height: totalHeight)
     }
-    
-    @available(iOS 16.0, *)
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        let sizes = subviews.map { $0.sizeThatFits(.unspecified) }
-        
-        var lineX = bounds.minX
-        var lineY = bounds.minY
-        var lineHeight: CGFloat = 0
-        
-        for index in subviews.indices {
-            let size = sizes[index]
-            
-            let isFirstInLine = (lineX == bounds.minX)
-            let additionalSpacing = isFirstInLine ? 0 : spacing
-            
-            if lineX + additionalSpacing + size.width > (proposal.width ?? 0) {
-                // Переход на новую строку
-                lineY += lineHeight
+
+    func layout(sizes: [CGSize], spacing: CGFloat, containerWidth: CGFloat) -> [CGPoint] {
+        var result: [CGPoint] = []
+        var xCoordinat: CGFloat = 0, yCoordinat: CGFloat = 0, lineHeight: CGFloat = 0
+
+        for size in sizes {
+            if xCoordinat + size.width > containerWidth {
+                xCoordinat = 0
+                yCoordinat += lineHeight + spacing
                 lineHeight = 0
-                lineX = bounds.minX
             }
-            
-            let isFirstInNewLine = (lineX == bounds.minX)
-            let currentSpacing = isFirstInNewLine ? 0 : spacing
-            
-            let placeX = lineX + currentSpacing
-            
-            subviews[index].place(
-                at: .init(
-                    x: placeX + size.width / 2,
-                    y: lineY + size.height / 2
-                ),
-                anchor: .center,
-                proposal: ProposedViewSize(size)
-            )
-            
+            result.append(.init(x: xCoordinat, y: yCoordinat))
+            xCoordinat += size.width + spacing
             lineHeight = max(lineHeight, size.height)
-            lineX = placeX + size.width
         }
+        return result
+    }
+}
+
+private struct SizeKey: PreferenceKey {
+    static var defaultValue: [CGSize] = []
+    static func reduce(value: inout [CGSize], nextValue: () -> [CGSize]) {
+        value.append(contentsOf: nextValue())
     }
 }

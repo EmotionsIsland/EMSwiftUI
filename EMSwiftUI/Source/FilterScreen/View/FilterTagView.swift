@@ -19,18 +19,18 @@ struct FilterTagView: View {
             HStack(spacing: 4) {
                 if isSelected {
                     Image(systemName: "plus")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.whiteText)
                 }
                 Text(tag.attributes.name.en ?? "No title")
                     .font(.subheadline)
                     .lineLimit(1)
-                    .foregroundColor(isSelected ? Color.white : Color.black)
+                    .foregroundColor(isSelected ? Color.whiteText : Color.blackBase)
                     .padding(.trailing, 8)
             }
             .padding(8)
         }
         .buttonStyle(PlainButtonStyle())
-        .background(isSelected ? Color.init(cgColor: #colorLiteral(red: 1, green: 0.4928947091, blue: 0.3157388568, alpha: 1)) : Color.init(cgColor: #colorLiteral(red: 0.9098039216, green: 0.9098039216, blue: 0.9137254902, alpha: 1)))
+        .background(isSelected ? Color.orangeBase : Color.whiteText)
         .cornerRadius(10)
     }
 }

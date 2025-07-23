@@ -25,7 +25,7 @@ struct MangaSectionView: View {
                         .resizable()
                         .frame(width: 12, height: 12)
                 }
-                .foregroundStyle(Color.init(cgColor: #colorLiteral(red: 0.21960783, green: 0.21960783, blue: 0.21960783, alpha: 1)))
+                .foregroundStyle(Color.blackBase)
             }
         }
     }

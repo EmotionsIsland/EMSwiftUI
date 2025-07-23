@@ -7,13 +7,9 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct FilterSectionView: View {
     @State private var isExpanded = false
-    var category: String
-    var tags: [Tag]
-    var isSelected: [Bool]
-    var isSelectedTag: (Tag) -> Void
+    let model: FilterSectionModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -23,35 +19,41 @@ struct FilterSectionView: View {
                 }
             } label: {
                 HStack(spacing: 16) {
-                    Text(category)
+                    Text(model.category)
                         .font(Font.SFPro.regularLarge)
-                        .foregroundStyle(Color.init(cgColor: #colorLiteral(red: 0.2834452093, green: 0.2834451795, blue: 0.2834452093, alpha: 1)))
-                        
+                        .foregroundStyle(Color.blackBase)
+                    
                     Image(systemName: "chevron.down")
                         .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                        .foregroundColor(Color.init(cgColor: #colorLiteral(red: 0.2834452093, green: 0.2834451795, blue: 0.2834452093, alpha: 1)))
+                        .foregroundColor(Color.blackBase)
                         .animation(.easeInOut, value: isExpanded)
                     Spacer()
                 }
             }
             .frame(maxWidth: .infinity)
+            .padding(.bottom, 8)
             
             if isExpanded {
-                FlowLayout {
-                    ForEach(tags.indices,
-                            id: \.self) { index in
-                        let tag = tags[index]
-                        let isSelected = self.isSelected[index]
-                        FilterTagView(tag: tag,
-                                      isSelected: isSelected,
-                                      action: { tag in
-                            isSelectedTag(tag)
-                        })
-                    }
-                    .padding(.vertical, 8)
+                FlowLayout(items: model.tags, spacing: 8) { tag in
+                    let index = model.tags.firstIndex(where: { $0.id == tag.id }) ?? 0
+                    let isSelected = model.isSelected[index]
+                    
+                    return FilterTagView(tag: tag,
+                                         isSelected: isSelected,
+                                         action: { tappedTag in
+                        model.onTagSelect(tappedTag)
+                    })
                 }
+                .padding(.vertical, 8)
             }
         }
         .cornerRadius(12)
     }
+}
+
+struct FilterSectionModel {
+    let category: String
+    let tags: [Tag]
+    let isSelected: [Bool]
+    let onTagSelect: (Tag) -> Void
 }

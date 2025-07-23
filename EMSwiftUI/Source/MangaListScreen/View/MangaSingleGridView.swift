@@ -8,27 +8,22 @@
 import SwiftUI
 
 struct MangaSingleGridView: View {
-    let image: Data
-    let title: String
-    let rating: Float
-    let maxRating: Int
-    let tag: String
+    let model: MangaGridModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            dataToImage(image)
+            dataToImage(model.image)
                 .frame(height: 150)
-            Text(title)
+            Text(model.title)
                 .lineLimit(1)
                 .font(Font.SFPro.semiboldNormal)
-            RatingView(rating: CGFloat(rating),
-                       maxRating: maxRating)
-            Text(tag)
+            RatingView(rating: CGFloat(model.rating),
+                       maxRating: model.maxRating)
+            Text(model.tag)
                 .font(Font.SFPro.lightSmall)
                 .lineLimit(1)
                 .foregroundStyle(
-                    Color.init(
-                        cgColor: #colorLiteral(red: 0.8110429645, green: 0.8110429049, blue: 0.8110429049, alpha: 1))
+                    Color.grayBase
                 )
         }
         .frame(width: 100)
@@ -52,9 +47,17 @@ struct MangaSingleGridView: View {
 }
 
 #Preview {
-    MangaSingleGridView(image: Data(),
+    MangaSingleGridView(model: MangaGridModel(image: Data(),
                         title: "Spy X Family",
                         rating: 4.5,
                         maxRating: 5,
-                        tag: "Award winning")
+                        tag: "Award winning"))
+}
+
+struct MangaGridModel {
+    let image: Data
+    let title: String
+    let rating: Float
+    let maxRating: Int
+    let tag: String
 }

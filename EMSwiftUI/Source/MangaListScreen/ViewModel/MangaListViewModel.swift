@@ -16,15 +16,17 @@ enum SizeFormat: String {
 
 protocol MangaListViewModel: ObservableObject {
     var mangaModel: MangaListModel? { get }
-    var imagesArray: [Data?] { get set }
     var isLoading: Bool { get set }
     @MainActor func getData() async
+    func mangaGridItem(at index: Int) -> MangaGridModel?
+    func category(index: Int) -> String
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
     // published
     @Published var mangaModel: MangaListModel?
-    @Published var imagesArray: [Data?] = []
+    var imagesArray: [Data?] = []
+    private let category: [String] = ["Popular", "New", "The Best"]
     @Published var isLoading = false
     
     private let service: MangaListService
@@ -38,8 +40,8 @@ final class MangaListViewModelImpl: MangaListViewModel {
         do {
             isLoading = true
             let result = try await service.getManga()
-            self.mangaModel = result
             await loadCovers(for: result.data)
+            self.mangaModel = result
         } catch {
             isLoading = false
             print(error)
@@ -72,5 +74,29 @@ final class MangaListViewModelImpl: MangaListViewModel {
             isLoading = false
             print("Ошибка загрузки обложек \(error)")
         }
+    }
+     
+    // MARK: mangaGridItem
+    func mangaGridItem(at index: Int) -> MangaGridModel? {
+        guard let manga = mangaModel?.data[safe: index] else { return nil }
+        
+        let title = manga.attributes.title.en ?? "No title"
+        let image = imagesArray[safe: index] ?? Data()
+        let rating: Float = 4.5
+        let maxRating = 5
+        let tag = manga.attributes.tags.first?.attributes.name.en ?? "No tag"
+        
+        return MangaGridModel(
+                image: image ?? Data(),
+                title: title,
+                rating: rating,
+                maxRating: maxRating,
+                tag: tag
+            )
+    }
+    
+    // MARK: category
+    func category(index: Int) -> String {
+        return category[safe: index] ?? "No category"
     }
 }

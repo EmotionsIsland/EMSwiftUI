@@ -12,7 +12,6 @@ enum TabSelection {
     case filter
 }
 
-@available(iOS 16.0, *)
 struct TabBar: View {
     @State private var selection: TabSelection = .main
     
@@ -25,7 +24,6 @@ struct TabBar: View {
     }
 }
 
-@available(iOS 16.0, *)
 private extension TabBar {
     var mainTab: some View {
         MangaListScreenBuilder.build()
@@ -36,7 +34,7 @@ private extension TabBar {
     }
     
     var filterTab: some View {
-        FilterScreenBuilder.build(tabSelected: $selection)
+        FilterScreenBuilder.build()
             .tag(TabSelection.filter)
             .tabItem {
                 Image(.tabBarSearch)

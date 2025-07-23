@@ -7,14 +7,11 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct FilterScreen<VM: FilterViewModel>: View {
     @StateObject private var viewModel: VM
-    @Binding var tabSelect: TabSelection
     
-    init(viewModel: VM, tabSelected: Binding<TabSelection>) {
+    init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)
-        self._tabSelect = tabSelected
     }
     
     let columns = [
@@ -22,46 +19,27 @@ struct FilterScreen<VM: FilterViewModel>: View {
     ]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             FilterScreenTitleView(
                 title: viewModel.navigationTitle,
                 dismiss: {
-                    tabSelect = .main
+                    print("dismiss")
                 })
-                .padding(.bottom, 32)
             ScrollView {
                 LazyVGrid(columns: columns,
                           alignment: .leading) {
                     ForEach(viewModel.category.indices, id: \.self) { index in
-                        if index == 0 {
-                            let titleSection = viewModel.category[index]
-                            let selectedTags = viewModel.tagsSelected
-                            
-                            FilterSelectionView(
-                                selectionTitle: titleSection,
-                                tagsSelected: selectedTags,
-                                isSelectedTag: { tag in
-                                    viewModel.changeStateTag(for: tag)
-                                }, resetAction: {
-                                    viewModel.tagsSelected = []
-                                })
-                                .padding(.horizontal, 16)
-                        } else {
-                            let tags = viewModel.filterCategory(viewModel.category[index])
-                            let category = viewModel.category[index]
-                            let isSelected = viewModel.checkIsSelected(tags)
-                            
-                            FilterSectionView(
-                                category: category,
-                                tags: tags,
-                                isSelected: isSelected, isSelectedTag: { tag in
-                                    viewModel.changeStateTag(for: tag)
-                                })
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 16)
+                        Group {
+                            if index == 0, let model = viewModel.filterSelectionModel {
+                                FilterSelectionView(model: model)
+                            } else if let model = viewModel.filterSectionModel(at: index) {
+                                FilterSectionView(model: model)
+                            }
                         }
+                        .padding(16)
                     }
                 }
+                .padding(.top)
             }
         }
         .task {
@@ -70,7 +48,6 @@ struct FilterScreen<VM: FilterViewModel>: View {
     }
 }
 
-@available(iOS 16.0, *)
 #Preview {
-    FilterScreenBuilder.build(tabSelected: .constant(.filter))
+    FilterScreenBuilder.build()
 }

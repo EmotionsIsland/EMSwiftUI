@@ -9,15 +9,12 @@ import Foundation
 import Netify
 
 protocol FilterViewModel: ObservableObject {
-    var tag: FilterTagModel? {get set}
-    var tagsSelected: [Tag] {get set}
     var isLoading: Bool {get set}
     var navigationTitle: String {get set}
     var category: [String] {get set}
+    var filterSelectionModel: FilterSelectionModel? {get}
+    func filterSectionModel(at index: Int) -> FilterSectionModel?
     @MainActor func getTags() async
-    func filterCategory(_ category: String) -> [Tag]
-    func checkIsSelected(_ tags: [Tag]) -> [Bool]
-    func changeStateTag(for tag: Tag)
 }
 
 final class FilterViewModelImpl: FilterViewModel {
@@ -27,10 +24,18 @@ final class FilterViewModelImpl: FilterViewModel {
     @Published var tag: FilterTagModel?
     @Published var tagsSelected: [Tag] = []
     @Published var isLoading = false
-    @Published var category: [String] = ["Selection",
-                                         "Content Rating",
-                                         "Publication Status",
-                                         "Magazine Demographic"]
+    @Published var category: [String] = ["Selection"]
+    
+    var filterSelectionModel: FilterSelectionModel? {
+        guard let title = category.first else { return nil }
+        return FilterSelectionModel(
+            category: title,
+            selectedTags: tagsSelected,
+            onTagSelect: { [weak self] tag in self?.changeStateTag(for: tag) },
+            onReset: { [weak self] in self?.resetTags() }
+        )
+    }
+    
     var navigationTitle = "Filters"
     
     init(service: FilterService) {
@@ -70,23 +75,41 @@ final class FilterViewModelImpl: FilterViewModel {
         self.category += result
     }
     // MARK: filterCategory
-    func filterCategory(_ category: String) -> [Tag] {
+    private func filterCategory(_ category: String) -> [Tag] {
         return tag?.data.filter { $0.attributes.group == category.lowercased() } ?? []
     }
     
-    // MARK: checkIsSelected
-    func checkIsSelected(_ tags: [Tag]) -> [Bool] {
-        return tags.map { tag in
-            tagsSelected.contains(where: { $0.id == tag.id })
-        }
-    }
-    
     // MARK: changeStateTag
-    func changeStateTag(for tag: Tag) {
+    private func changeStateTag(for tag: Tag) {
         if let index = tagsSelected.firstIndex(where: { $0.id == tag.id }) {
             self.tagsSelected.remove(at: index)
         } else {
             self.tagsSelected.append(tag)
         }
+    }
+    
+    // MARK: resetTags
+    private func resetTags() {
+        tagsSelected = []
+    }
+    
+    // MARK: filterSectionModel
+    func filterSectionModel(at index: Int) -> FilterSectionModel? {
+        guard category.indices.contains(index) else { return nil }
+        
+        let currentCategory = category[index]
+        let tags = filterCategory(currentCategory)
+        let selectedStates = tags.map { tag in
+            tagsSelected.contains(where: { $0.id == tag.id })
+        }
+
+        return FilterSectionModel(
+            category: currentCategory,
+            tags: tags,
+            isSelected: selectedStates,
+            onTagSelect: { [weak self] tag in
+                self?.changeStateTag(for: tag)
+            }
+        )
     }
 }

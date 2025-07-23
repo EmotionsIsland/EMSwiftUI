@@ -10,7 +10,7 @@ import SwiftUI
 
 struct FilterScreenTitleView: View {
     let title: String
-    var dismiss: () -> Void
+    let dismiss: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -26,13 +26,13 @@ struct FilterScreenTitleView: View {
                         Image("close")
                             .resizable()
                             .frame(width: 30, height: 30)
-                            .foregroundStyle(Color.init(cgColor: #colorLiteral(red: 0.2834452093, green: 0.2834451795, blue: 0.2834452093, alpha: 1)))
+                            .foregroundStyle(Color.blackBase)
                     }
                     .padding(.horizontal, 16)
                 }
             }
             Divider()
-                .foregroundStyle(Color.init(cgColor: #colorLiteral(red: 0.8110429645, green: 0.8110429049, blue: 0.8110429049, alpha: 1)))
+                .foregroundStyle(Color.whiteText)
                 .padding(.top, 8)
         }
     }

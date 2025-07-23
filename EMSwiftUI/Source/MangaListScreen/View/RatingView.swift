@@ -19,7 +19,7 @@ struct RatingView: View {
                 ZStack {
                     Image("starIcon")
                         .resizable()
-                        .foregroundStyle(Color.init(cgColor: #colorLiteral(red: 0.9294117689, green: 0.9333333373, blue: 0.9490196705, alpha: 1)))
+                        .foregroundStyle(Color.whiteText)
                         .frame(width: 17, height: 17)
                     
                     if rating >= starValue {
