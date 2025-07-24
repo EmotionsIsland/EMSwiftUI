@@ -18,14 +18,14 @@ protocol MangaListViewModel: ObservableObject {
     var mangaModel: MangaListModel? { get }
     var isLoading: Bool { get set }
     @MainActor func getData() async
-    func mangaGridItem(at index: Int) -> MangaGridModel?
+    func mangaGridItem(at mangaData: MangaData) -> MangaGridModel
     func category(index: Int) -> String
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
     // published
     @Published var mangaModel: MangaListModel?
-    var imagesArray: [Data?] = []
+    var imagesDict: [String: Data] = [:]
     private let category: [String] = ["Popular", "New", "The Best"]
     @Published var isLoading = false
     
@@ -51,48 +51,45 @@ final class MangaListViewModelImpl: MangaListViewModel {
     // MARK: loadCovers
     @MainActor private func loadCovers(for mangaList: [MangaData]) async {
         do {
-            let result = try await withThrowingTaskGroup(of: (Int, Data).self) { group in
-                for (index, manga) in mangaList.enumerated() {
+            let result = try await withThrowingTaskGroup(of: (String, Data).self) { group in
+                for manga in mangaList {
                     group.addTask {
                         let data = try await self.service.downloadCoverImage(mangaData: manga, size: .size512)
-                        return (index, data)
+                        return (manga.id, data)
                     }
                 }
                 
-                var tempArray: [(Int, Data)] = []
-                for try await element in group {
-                    tempArray.append(element)
+                var tempDict: [String: Data] = [:]
+                for try await (id, data) in group {
+                    tempDict[id] = data
                 }
                 
-                let sortedData = tempArray.sorted { $0.0 < $1.0 }.map { $0.1 }
-                return sortedData
+                return tempDict
             }
             
             isLoading = false
-            self.imagesArray = result
+            self.imagesDict = result
         } catch {
             isLoading = false
             print("Ошибка загрузки обложек \(error)")
         }
     }
-     
+    
     // MARK: mangaGridItem
-    func mangaGridItem(at index: Int) -> MangaGridModel? {
-        guard let manga = mangaModel?.data[safe: index] else { return nil }
-        
-        let title = manga.attributes.title.en ?? "No title"
-        let image = imagesArray[safe: index] ?? Data()
+    func mangaGridItem(at mangaData: MangaData) -> MangaGridModel {
+        let title = mangaData.attributes.title.en ?? "No title"
+        let image = imagesDict[mangaData.id] ?? Data()
         let rating: Float = 4.5
         let maxRating = 5
-        let tag = manga.attributes.tags.first?.attributes.name.en ?? "No tag"
+        let tag = mangaData.attributes.tags.first?.attributes.name.en ?? "No tag"
         
         return MangaGridModel(
-                image: image ?? Data(),
-                title: title,
-                rating: rating,
-                maxRating: maxRating,
-                tag: tag
-            )
+            image: image,
+            title: title,
+            rating: rating,
+            maxRating: maxRating,
+            tag: tag
+        )
     }
     
     // MARK: category

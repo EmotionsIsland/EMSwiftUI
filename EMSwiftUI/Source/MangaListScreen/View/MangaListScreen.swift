@@ -24,17 +24,17 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                     ForEach(0..<3) { index in
                         MangaSectionView(title: viewModel.category(index: index))
                             .padding(.horizontal, 16)
-                        LazyVGrid(columns: gridItem, spacing: 25) {
-                            ForEach(viewModel.mangaModel?.data.indices ?? 0..<0, id: \.self) { index in
-                                if let model = viewModel.mangaGridItem(at: index) {
-                                    MangaSingleGridView(model: model)
+                        LazyVGrid(columns: gridItem,
+                                  spacing: 25) {
+                            if let mangaData = viewModel.mangaModel?.data {
+                                ForEach(mangaData) { manga in
+                                    MangaSingleGridView(model: viewModel.mangaGridItem(at: manga))
                                 }
                             }
                         }
                     }
                 }
-                .padding(.top, 16)
-                .padding(.bottom, 16)
+                .padding(.vertical, 16)
             }
         }
         .overlay(

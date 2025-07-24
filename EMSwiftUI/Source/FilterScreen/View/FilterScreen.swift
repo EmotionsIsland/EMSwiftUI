@@ -28,12 +28,12 @@ struct FilterScreen<VM: FilterViewModel>: View {
             ScrollView {
                 LazyVGrid(columns: columns,
                           alignment: .leading) {
-                    ForEach(viewModel.category.indices, id: \.self) { index in
+                    ForEach(viewModel.category, id: \.self) { category in
                         Group {
-                            if index == 0, let model = viewModel.filterSelectionModel {
-                                FilterSelectionView(model: model)
-                            } else if let model = viewModel.filterSectionModel(at: index) {
-                                FilterSectionView(model: model)
+                            if category == "Selection" {
+                                FilterSelectionView(model: viewModel.filterSelectionModel)
+                            } else {
+                                FilterSectionView(model: viewModel.filterSectionModel(at: category))
                             }
                         }
                         .padding(16)

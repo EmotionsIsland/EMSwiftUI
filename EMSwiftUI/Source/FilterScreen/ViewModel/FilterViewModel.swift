@@ -12,8 +12,8 @@ protocol FilterViewModel: ObservableObject {
     var isLoading: Bool {get set}
     var navigationTitle: String {get set}
     var category: [String] {get set}
-    var filterSelectionModel: FilterSelectionModel? {get}
-    func filterSectionModel(at index: Int) -> FilterSectionModel?
+    var filterSelectionModel: FilterSelectionModel {get}
+    func filterSectionModel(at category: String) -> FilterSectionModel
     @MainActor func getTags() async
 }
 
@@ -26,8 +26,8 @@ final class FilterViewModelImpl: FilterViewModel {
     @Published var isLoading = false
     @Published var category: [String] = ["Selection"]
     
-    var filterSelectionModel: FilterSelectionModel? {
-        guard let title = category.first else { return nil }
+    var filterSelectionModel: FilterSelectionModel {
+        let title = category.first ?? "Selection"
         return FilterSelectionModel(
             category: title,
             selectedTags: tagsSelected,
@@ -94,17 +94,14 @@ final class FilterViewModelImpl: FilterViewModel {
     }
     
     // MARK: filterSectionModel
-    func filterSectionModel(at index: Int) -> FilterSectionModel? {
-        guard category.indices.contains(index) else { return nil }
-        
-        let currentCategory = category[index]
-        let tags = filterCategory(currentCategory)
+    func filterSectionModel(at category: String) -> FilterSectionModel {
+        let tags = filterCategory(category)
         let selectedStates = tags.map { tag in
             tagsSelected.contains(where: { $0.id == tag.id })
         }
 
         return FilterSectionModel(
-            category: currentCategory,
+            category: category,
             tags: tags,
             isSelected: selectedStates,
             onTagSelect: { [weak self] tag in

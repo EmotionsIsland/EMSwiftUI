@@ -52,10 +52,3 @@ struct FilterSelectionView: View {
         }
     }
 }
-
-struct FilterSelectionModel {
-    let category: String
-    let selectedTags: [Tag]
-    let onTagSelect: (Tag) -> Void
-    let onReset: () -> Void
-}

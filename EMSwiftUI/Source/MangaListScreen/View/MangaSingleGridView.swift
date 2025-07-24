@@ -53,11 +53,3 @@ struct MangaSingleGridView: View {
                         maxRating: 5,
                         tag: "Award winning"))
 }
-
-struct MangaGridModel {
-    let image: Data
-    let title: String
-    let rating: Float
-    let maxRating: Int
-    let tag: String
-}
