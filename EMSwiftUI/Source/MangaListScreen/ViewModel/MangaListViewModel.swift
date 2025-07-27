@@ -7,6 +7,7 @@
 
 import Foundation
 import Netify
+import Combine
 
 enum SizeFormat: String {
     case size256 = ".256.jpg"
@@ -14,16 +15,75 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-protocol MangaListViewModel: ObservableObject { }
+protocol MangaListViewModel: ObservableObject {
+    var sections: [MangaSection] { get }
+    var isLoading: Bool { get }
+    var error: Error? { get }
+    func fetchData() async
+}
+
+enum MangaListError: Error {
+    case networkError(String)
+    case invalidData
+    case unknown(Error)
+    
+    var errorDescription: String? {
+        switch self {
+        case .networkError(let message):
+            return "Ошибка сети \(message)"
+        case .invalidData:
+            return "Неверный формат данных"
+        case .unknown(let error):
+            return "Неизвестная ошибка: \(error.localizedDescription)"
+        }
+    }
+}
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    // TODO: create Published variables
-    // TODO: create getData func
+    @Published var sections: [MangaSection] = []
+    @Published var isLoading: Bool = false
+    @Published var error: Error?
+    
     private let service: MangaListService
 
     init(service: MangaListService) {
         self.service = service
     }
     
-    @MainActor private func getData() async throws { }
+    @MainActor
+    private func getData() async throws {
+        do {
+            let mangaListModel = try await service.getManga()
+            sections = [
+                MangaSection(title: "Популярное", items: mangaListModel.data),
+                MangaSection(title: "Популярное", items: mangaListModel.data),
+                MangaSection(title: "Популярное", items: mangaListModel.data)
+            ]
+        } catch let error as NSError where error.domain == NSURLErrorDomain {
+            throw MangaListError.networkError(error.localizedDescription)
+        } catch {
+            throw MangaListError.unknown(error)
+        }
+    }
+    
+    @MainActor
+    func fetchData() async {
+        isLoading = true
+        error = nil
+        
+        do {
+            try await getData()
+        } catch {
+            self.error = error as? MangaListError ?? .unknown(error)
+            print("Ошибка при получении данных: \(error.localizedDescription)")
+        }
+        
+        isLoading = false
+    }
+}
+
+extension MangaData {
+    var coverURL: URL? {
+        API.coverURL(for: self)
+    }
 }

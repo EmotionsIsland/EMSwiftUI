@@ -80,4 +80,10 @@ struct Relationship: Decodable {
 struct CoverAttributes: Decodable {
     let fileName: String
 }
+
+struct MangaSection: Identifiable {
+    let id = UUID()
+    let title: String
+    let items: [MangaData]
+}
 // swiftlint:enable identifier_name

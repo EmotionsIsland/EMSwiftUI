@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct MangaSectionView: View {
+    let section: MangaSection
+    
     var body: some View {
         VStack {
-            // TODO: Create section View
+            MangaSectionTitleView(title: section.title)
+            
+            LazyVGrid(columns: [
+                GridItem(.adaptive(minimum: 100), spacing: 25),
+                GridItem(.adaptive(minimum: 100), spacing: 25),
+                GridItem(.adaptive(minimum: 100), spacing: 25)
+            ],
+                spacing: 25) {
+                ForEach(section.items, id: \.id) { item in
+                    MangaSingleGridView(item: item)
+                }
+            }
         }
     }
 }
