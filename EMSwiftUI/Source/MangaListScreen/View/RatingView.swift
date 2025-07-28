@@ -27,7 +27,7 @@ struct RatingView: View {
                             .resizable()
                             .renderingMode(.original)
                             .frame(width: 17, height: 17)
-                    } else if rating + 0.5 >= starValue {
+                    } else if round(rating) >= starValue {
                         Image("starIcon")
                             .resizable()
                             .renderingMode(.original)

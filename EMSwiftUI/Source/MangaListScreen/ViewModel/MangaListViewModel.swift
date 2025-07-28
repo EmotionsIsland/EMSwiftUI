@@ -37,14 +37,16 @@ final class MangaListViewModelImpl: MangaListViewModel {
     
     // MARK: getData
     @MainActor func getData() async {
-        do {
-            isLoading = true
-            let result = try await service.getManga()
-            await loadCovers(for: result.data)
-            self.mangaModel = result
-        } catch {
-            isLoading = false
-            print(error)
+        if mangaModel == nil {
+            do {
+                isLoading = true
+                let result = try await service.getManga()
+                await loadCovers(for: result.data)
+                self.mangaModel = result
+            } catch {
+                isLoading = false
+                print(error)
+            }            
         }
     }
     
