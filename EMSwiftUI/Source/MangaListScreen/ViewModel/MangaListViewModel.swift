@@ -63,7 +63,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
     private func convert(_ mangaObject: MangaData) -> SingleGridMangaModel {
         let convertedObject = SingleGridMangaModel(url: getCoverUrl(for: mangaObject.id, getFileName(of: mangaObject))!,
                                                    tags: mangaObject.attributes.tags.map { $0.attributes.name.en ?? ""},
-                                                   title: mangaObject.attributes.title.en ?? "Unkown")
+                                                   title: mangaObject.attributes.title.en ?? "Unknown")
         
         return convertedObject
     }
