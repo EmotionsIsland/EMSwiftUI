@@ -16,8 +16,8 @@ enum SizeFormat: String {
 
 protocol MangaListViewModel: ObservableObject {
     var mangaModel: MangaListModel? { get }
-    var isLoading: Bool { get set }
-    @MainActor func getData() async
+    var loadState: MangaLoadState { get set }
+    @MainActor func getData(refresh: Bool) async
     func mangaGridItem(at mangaData: MangaData) -> MangaGridModel
     func category(index: Int) -> String
 }
@@ -27,7 +27,7 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @Published var mangaModel: MangaListModel?
     var imagesDict: [String: Data] = [:]
     private let category: [String] = ["Popular", "New", "The Best"]
-    @Published var isLoading = false
+    @Published var loadState: MangaLoadState = .idle
     
     private let service: MangaListService
     
@@ -36,17 +36,17 @@ final class MangaListViewModelImpl: MangaListViewModel {
     }
     
     // MARK: getData
-    @MainActor func getData() async {
-        if mangaModel == nil {
-            do {
-                isLoading = true
-                let result = try await service.getManga()
-                await loadCovers(for: result.data)
-                self.mangaModel = result
-            } catch {
-                isLoading = false
-                print(error)
-            }            
+    @MainActor func getData(refresh: Bool = false) async {
+        guard loadState != .loaded && refresh == false else { return }
+        loadState = refresh ? .refreshing : .loading
+        
+        do {
+            let result = try await service.getManga()
+            await loadCovers(for: result.data)
+            self.mangaModel = result
+            loadState = .loaded
+        } catch {
+            loadState = .failed(error)
         }
     }
     
@@ -69,10 +69,8 @@ final class MangaListViewModelImpl: MangaListViewModel {
                 return tempDict
             }
             
-            isLoading = false
             self.imagesDict = result
         } catch {
-            isLoading = false
             print("Ошибка загрузки обложек \(error)")
         }
     }

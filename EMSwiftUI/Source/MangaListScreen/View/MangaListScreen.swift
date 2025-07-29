@@ -39,7 +39,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         }
         .overlay(
             Group {
-                if viewModel.isLoading {
+                if viewModel.loadState == .loading {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: Color.grayBase))
                         .scaleEffect(2)
@@ -47,7 +47,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             }
         )
         .task {
-            await viewModel.getData()
+            await viewModel.getData(refresh: false)
         }
     }
 }
