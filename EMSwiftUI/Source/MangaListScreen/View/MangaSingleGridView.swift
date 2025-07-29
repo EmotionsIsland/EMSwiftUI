@@ -9,11 +9,11 @@ import SwiftUI
 
 struct MangaSingleGridView<ViewModel: MangaListViewModel>: View {
     let manga: SingleGridMangaModel
-    @StateObject private var viewModel: ViewModel
+    @ObservedObject private var viewModel: ViewModel
     
     init(manga: SingleGridMangaModel, viewModel: ViewModel) {
         self.manga = manga
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = ObservedObject(wrappedValue: viewModel)
     }
     
     var body: some View {
