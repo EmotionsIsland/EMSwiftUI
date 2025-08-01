@@ -8,35 +8,35 @@
 import Foundation
 
 // swiftlint:disable identifier_name
-struct TagListModel: Codable {
+struct TagListModel: Decodable {
     let result, response: String
     let data: [TagDatum]
     let limit, offset, total: Int
 }
 
-struct TagDatum: Codable, Identifiable {
+struct TagDatum: Decodable, Identifiable {
     let id: String
     let type: String
     let attributes: TagAttributesModel
 }
 
-struct TagAttributesModel: Codable {
+struct TagAttributesModel: Decodable {
     let name: Name
     let description: TagDescription
     let group: String
     let version: Int
 }
 
-struct TagDescription: Codable {
+struct TagDescription: Decodable {
     let en: String?
     let ru: String?
 }
 
-struct Name: Codable {
+struct Name: Decodable {
     let en: String
 }
 
-struct TagDisplayItem: Identifiable {
+struct TagDisplayItem: Identifiable, Hashable {
     let id: String
     let name: String
     let group: String

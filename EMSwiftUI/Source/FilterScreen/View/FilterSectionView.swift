@@ -1,10 +1,3 @@
-//
-//  FilterSectionView.swift
-//  EMSwiftUI
-//
-//  Created by Pavel Plyago on 24.07.2025.
-//
-
 import SwiftUI
 
 struct FilterSectionView<VM: TagViewModel>: View {

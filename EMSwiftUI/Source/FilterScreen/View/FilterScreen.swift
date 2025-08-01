@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+enum FilterViewState {
+    case loading
+    case error(Error)
+    case success
+}
+
 struct FilterScreen<VM: TagViewModel>: View {
     @StateObject private var viewModel: VM
     
@@ -14,57 +20,66 @@ struct FilterScreen<VM: TagViewModel>: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
+    private var viewState: FilterViewState {
+        if viewModel.isLoading {
+            return .loading
+        } else if let error = viewModel.error {
+            return .error(error)
+        } else {
+            return .success
+        }
+    }
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
-                if viewModel.isLoading {
+                switch viewState {
+                case .loading:
                     ProgressView("Загрузка тегов...")
                         .padding()
-                } else if let error = viewModel.error {
+                case .error(let error):
                     Text("Ошибка: \(error.localizedDescription)")
                         .foregroundColor(.red)
                         .padding()
-                } else {
-                    // Секция Selection
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Selection")
-                            .font(Font.SFPro.headline3)
-                        if viewModel.selectedTags.isEmpty {
-                            Text("Нет выбранных тегов")
-                                .font(Font.SFPro.lightSmall)
-                                .foregroundColor(.grayBase)
-                        } else {
-                            FlexibleTagGrid(tags: viewModel.selectedTags)
-                        }
-                        
-                        Spacer().frame(height: 2)
-                        
-                        applyButton
-                        resetButton
-                    }
-                    .padding(.horizontal, 16)
-                    
-                    Divider()
-                        .padding(.horizontal)
-                    
-                    // Секции с тегами
-                    ForEach(viewModel.sections, id: \.group) { group in
-                        FilterSectionView<VM>(section: TagSection(
-                            title: group.group,
-                            items: group.tags
-                        ))
-                        .environmentObject(viewModel)
-                        .padding(.horizontal, 16)
-                    }
+                case .success:
+                    SelectionSectionView(viewModel: viewModel)
+
+                    Divider().padding(.horizontal)
+
+                    TagSectionsView(viewModel: viewModel)
                 }
             }
             .padding(.vertical)
         }
     }
-    
-    @ViewBuilder
-    var applyButton: some View {
-        Button("Apply") {}
+}
+
+private struct SelectionSectionView<VM: TagViewModel>: View {
+    @ObservedObject var viewModel: VM
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Selection")
+                .font(Font.SFPro.headline3)
+
+            if viewModel.selectedTags.isEmpty {
+                Text("Нет выбранных тегов")
+                    .font(Font.SFPro.lightSmall)
+                    .foregroundColor(.grayBase)
+            } else {
+                FlexibleTagGrid(tags: viewModel.selectedTags)
+            }
+
+            Spacer().frame(height: 2)
+
+            applyButton
+            resetButton
+        }
+        .padding(.horizontal, 16)
+    }
+
+    private var applyButton: some View {
+        Button("Apply") { }
         .font(Font.SFPro.mediumNormal)
         .foregroundColor(.white)
         .frame(maxWidth: .infinity)
@@ -72,9 +87,8 @@ struct FilterScreen<VM: TagViewModel>: View {
         .background(Color.orangeBase)
         .cornerRadius(8)
     }
-    
-    @ViewBuilder
-    var resetButton: some View {
+
+    private var resetButton: some View {
         Button("Reset") {
             viewModel.reset()
         }
@@ -82,5 +96,20 @@ struct FilterScreen<VM: TagViewModel>: View {
         .foregroundColor(.blackBase)
         .frame(maxWidth: .infinity)
         .cornerRadius(8)
+    }
+}
+
+private struct TagSectionsView<VM: TagViewModel>: View {
+    @ObservedObject var viewModel: VM
+
+    var body: some View {
+        ForEach(viewModel.sections, id: \.group) { group in
+            FilterSectionView<VM>(section: TagSection(
+                title: group.group,
+                items: group.tags
+            ))
+            .environmentObject(viewModel)
+            .padding(.horizontal, 16)
+        }
     }
 }

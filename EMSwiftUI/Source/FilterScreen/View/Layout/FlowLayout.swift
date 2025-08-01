@@ -7,54 +7,93 @@
 
 import SwiftUI
 
-struct FlowLayout: Layout {
-     var spacing: CGFloat = 8
- 
-    @available(iOS 16.0, *)
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let containerWidth = proposal.width ?? .infinity
-        let sizes = subviews.map { $0.sizeThatFits(.unspecified) }
-        return layout(sizes: sizes,
-                       spacing: spacing,
-                       containerWidth: containerWidth).size
-     }
-     
-    @available(iOS 16.0, *)
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-         let sizes = subviews.map { $0.sizeThatFits(.unspecified) }
-         let offsets =
-             layout(sizes: sizes,
-                    spacing: spacing,
-                    containerWidth: bounds.width).offsets
-         for (offset, subview) in zip(offsets, subviews) {
-             subview.place(at: .init(x: offset.x + bounds.minX,
-                                     y: offset.y + bounds.minY),
-                           proposal: .unspecified)
-         }
-     }
-    
-    func layout(sizes: [CGSize], spacing: CGFloat = 8, containerWidth: CGFloat) -> (offsets: [CGPoint], size: CGSize) {
-         var result: [CGPoint] = []
+struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: Hashable {
+  let data: Data
+  let spacing: CGFloat
+  let alignment: HorizontalAlignment
+  let content: (Data.Element) -> Content
 
-        var currentPosition: CGPoint = .zero
+  @State private var availableWidth: CGFloat = 10
 
-        var lineHeight: CGFloat = 0
+  var body: some View {
+    ZStack(alignment: Alignment(horizontal: alignment, vertical: .center)) {
+      Color.clear
+        .frame(height: 1)
+        .readSize { size in
+          availableWidth = size.width
+        }
 
-        var maxX: CGFloat = 0
-         for size in sizes {
-            if currentPosition.x + size.width > containerWidth {
-                 currentPosition.x = 0
-                 currentPosition.y += lineHeight + spacing
-                 lineHeight = 0
-             }
-             result.append(currentPosition)
-             currentPosition.x += size.width
+      _FlexibleView(
+        availableWidth: availableWidth,
+        data: data,
+        spacing: spacing,
+        alignment: alignment,
+        content: content
+      )
+    }
+  }
+}
 
-            maxX = max(maxX, currentPosition.x)
-             currentPosition.x += spacing
-             lineHeight = max(lineHeight, size.height)
-         }
-         return (result,
-             .init(width: maxX, height: currentPosition.y + lineHeight))
-     }
- }
+struct _FlexibleView<Data: Collection, Content: View>: View where Data.Element: Hashable {
+  let availableWidth: CGFloat
+  let data: Data
+  let spacing: CGFloat
+  let alignment: HorizontalAlignment
+  let content: (Data.Element) -> Content
+  @State var elementsSize: [Data.Element: CGSize] = [:]
+
+  var body: some View {
+    VStack(alignment: alignment, spacing: spacing) {
+      ForEach(computeRows(), id: \.self) { rowElements in
+        HStack(spacing: spacing) {
+          ForEach(rowElements, id: \.self) { element in
+            content(element)
+              .fixedSize()
+              .readSize { size in
+                elementsSize[element] = size
+              }
+          }
+        }
+      }
+    }
+  }
+
+  func computeRows() -> [[Data.Element]] {
+    var rows: [[Data.Element]] = [[]]
+    var currentRow = 0
+    var remainingWidth = availableWidth
+
+    for element in data {
+      let elementSize = elementsSize[element, default: CGSize(width: availableWidth, height: 1)]
+
+      if remainingWidth - (elementSize.width + spacing) >= 0 {
+        rows[currentRow].append(element)
+      } else {
+        currentRow += 1
+        rows.append([element])
+        remainingWidth = availableWidth
+      }
+
+      remainingWidth -= (elementSize.width + spacing)
+    }
+
+    return rows
+  }
+}
+
+extension View {
+  func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
+    background(
+      GeometryReader { geometryProxy in
+        Color.clear
+          .preference(key: SizePreferenceKey.self, value: geometryProxy.size)
+      }
+    )
+    .onPreferenceChange(SizePreferenceKey.self, perform: onChange)
+  }
+}
+
+private struct SizePreferenceKey: PreferenceKey {
+  static var defaultValue: CGSize = .zero
+  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
+}

@@ -25,7 +25,7 @@ struct MangaSingleGridView: View {
                 .font(Font.SFPro.semiboldNormal)
                 .lineLimit(1)
             
-            RatingView(rating: 4, maxRating: 5)
+            RatingView(rating: 4.2, maxRating: 5)
             
             Text(genresText)
                 .font(Font.SFPro.lightSmall)

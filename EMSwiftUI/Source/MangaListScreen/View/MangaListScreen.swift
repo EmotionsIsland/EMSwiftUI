@@ -7,12 +7,31 @@
 
 import SwiftUI
 
+enum MangaListViewState {
+    case loading
+    case error(Error)
+    case empty
+    case success([MangaSection])
+}
+
 struct MangaListScreen<VM: MangaListViewModel>: View {
     @StateObject private var viewModel: VM
     @State private var searchText: String = ""
     
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
+    private var viewState: MangaListViewState {
+        if viewModel.isLoading {
+            return .loading
+        } else if let error = viewModel.error {
+            return .error(error)
+        } else if viewModel.sections.isEmpty {
+            return .empty
+        } else {
+            return .success(viewModel.sections)
+        }
     }
     
     var body: some View {
@@ -35,10 +54,11 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 20) {
-                    if viewModel.isLoading {
+                    switch viewState {
+                    case .loading:
                         ProgressView("Загрузка...")
                             .padding()
-                    } else if let error = viewModel.error {
+                    case .error(let error):
                         VStack {
                             Text("Ошибка: \(error.localizedDescription)")
                                 .foregroundColor(.red)
@@ -46,19 +66,18 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                                 Task { await viewModel.fetchData() }
                             }
                         }.padding()
-                    } else if viewModel.sections.isEmpty {
+                    case .empty:
                         Text("Нет данных для отображения")
                             .foregroundColor(.gray)
                             .padding()
-                    } else {
-                        ForEach(viewModel.sections, id: \.id) { section in
+                    case .success(let array):
+                        ForEach(array, id: \.id) { section in
                             MangaSectionView(section: section)
                             .padding(.horizontal)
                         }
                     }
                 }
                 .padding(.vertical)
-                .animation(.easeInOut, value: viewModel.isLoading)
             }
         }.task {
             await viewModel.fetchData()

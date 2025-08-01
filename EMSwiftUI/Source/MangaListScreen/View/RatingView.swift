@@ -27,15 +27,23 @@ struct RatingView: View {
     }
     
     private func starImageType(for index: Int) -> String {
-            let fullStars = Int(rating)
-            let hasHalfStar = rating - CGFloat(fullStars) >= 0.25 && rating - CGFloat(fullStars) < 0.75
-
-            if index < fullStars {
-                return "star.fill"
-            } else if index == fullStars && hasHalfStar {
-                return "star.leadinghalf.filled"
-            } else {
-                return "star"
-            }
+        let fullStars = Int(rating)
+        let decimalPart = rating - CGFloat(fullStars)
+        
+        if index < fullStars {
+            return "star.fill"
+        } else if index == fullStars && decimalPart >= 0.1 && decimalPart < 0.9 {
+            return "star.leadinghalf.filled"
+        } else {
+            return "star"
         }
+    }
+}
+
+#Preview {
+    VStack {
+        RatingView(rating: 4.2, maxRating: 5)
+        RatingView(rating: 2.7, maxRating: 5)
+        RatingView(rating: 3.8, maxRating: 5)
+    }
 }
