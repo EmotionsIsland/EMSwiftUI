@@ -2,8 +2,9 @@ import SwiftUI
 
 struct FilterSectionView<VM: TagViewModel>: View {
     let section: TagSection
-    @EnvironmentObject var viewModel: VM 
+    let viewModel: VM
     @State private var isExpanded: Bool = false
+    @State private var gridHeight: CGFloat = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -18,7 +19,7 @@ struct FilterSectionView<VM: TagViewModel>: View {
                         Text(section.title.capitalized)
                             .font(Font.SFPro.regularLarge)
                             .foregroundColor(.blackBase)
-                        Image(systemName: "chevron.down")
+                        Image("expandDown")
                             .rotationEffect(.degrees(isExpanded ? 180 : 0))
                             .foregroundColor(.blackBase)
                             .animation(.easeInOut, value: isExpanded)
@@ -30,7 +31,11 @@ struct FilterSectionView<VM: TagViewModel>: View {
                 FlexibleTagGrid(tags: section.items) { tag in
                     viewModel.toggleTag(tag)
                 }
+                .frame(height: gridHeight)
                 .transition(.opacity)
+                .onPreferenceChange(GridHeightPreferenceKey.self) { height in
+                    gridHeight = height
+                }
             }
         }
     }

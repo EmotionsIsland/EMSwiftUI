@@ -14,9 +14,16 @@ protocol TagViewModel: ObservableObject {
     var selectedTags: [TagDisplayItem] { get }
     var isLoading: Bool { get }
     var error: Error? { get }
+    var viewState: FilterViewState { get }
     func fetchDataTags() async
     func toggleTag(_ tag: TagDisplayItem)
     func reset()
+}
+
+enum FilterViewState {
+    case loading
+    case error(Error)
+    case success
 }
 
 final class TagViewModelImpl: ObservableObject, TagViewModel {
@@ -32,6 +39,16 @@ final class TagViewModelImpl: ObservableObject, TagViewModel {
         self.service = service
         
         Task { await fetchDataTags() }
+    }
+    
+    var viewState: FilterViewState {
+        if isLoading {
+            return .loading
+        } else if let error = error {
+            return .error(error)
+        } else {
+            return .success
+        }
     }
     
     @MainActor
@@ -59,6 +76,10 @@ final class TagViewModelImpl: ObservableObject, TagViewModel {
     
     @MainActor
     func fetchDataTags() async {
+        if !sections.isEmpty {
+            return
+        }
+        
         do {
             try await getTags()
         } catch {

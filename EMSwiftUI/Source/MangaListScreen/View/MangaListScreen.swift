@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-enum MangaListViewState {
-    case loading
-    case error(Error)
-    case empty
-    case success([MangaSection])
-}
-
 struct MangaListScreen<VM: MangaListViewModel>: View {
     @StateObject private var viewModel: VM
     @State private var searchText: String = ""
@@ -22,22 +15,10 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
-    private var viewState: MangaListViewState {
-        if viewModel.isLoading {
-            return .loading
-        } else if let error = viewModel.error {
-            return .error(error)
-        } else if viewModel.sections.isEmpty {
-            return .empty
-        } else {
-            return .success(viewModel.sections)
-        }
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Image(systemName: "magnifyingglass")
+                Image("search")
                     .foregroundColor(.gray)
                 
                 TextField("Search", text: $searchText)
@@ -54,7 +35,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 20) {
-                    switch viewState {
+                    switch viewModel.viewState {
                     case .loading:
                         ProgressView("Загрузка...")
                             .padding()

@@ -11,7 +11,7 @@ struct FlexibleTagGrid: View {
                 .padding(.vertical, 4)
                 .padding(.horizontal, 8)
                 .background(item.isSelected ? Color.orangeBase : Color.grayBase)
-                .foregroundColor(item.isSelected ? .white : .black)
+                .foregroundColor(item.isSelected ? .whiteText : .blackBase)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .onTapGesture {
                     onTap?(item)

@@ -19,7 +19,7 @@ struct MangaSectionTitleView: View {
             
             HStack(spacing: 16) {
                 Text("more")
-                Image(systemName: "chevron.right")
+                Image("moreIcon")
             }
             .font(Font.SFPro.bodyNormal)
         }

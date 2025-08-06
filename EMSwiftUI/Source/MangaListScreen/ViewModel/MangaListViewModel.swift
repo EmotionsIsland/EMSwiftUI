@@ -20,6 +20,7 @@ protocol MangaListViewModel: ObservableObject {
     var isLoading: Bool { get }
     var error: Error? { get }
     func fetchData() async
+    var viewState: MangaListViewState { get }
 }
 
 enum MangaListError: Error {
@@ -39,6 +40,13 @@ enum MangaListError: Error {
     }
 }
 
+enum MangaListViewState {
+    case loading
+    case error(Error)
+    case empty
+    case success([MangaSection])
+}
+
 final class MangaListViewModelImpl: MangaListViewModel {
     @Published var sections: [MangaSection] = []
     @Published var isLoading: Bool = false
@@ -48,6 +56,18 @@ final class MangaListViewModelImpl: MangaListViewModel {
 
     init(service: MangaListService) {
         self.service = service
+    }
+    
+    var viewState: MangaListViewState {
+        if isLoading {
+            return .loading
+        } else if let error = error {
+            return .error(error)
+        } else if sections.isEmpty {
+            return .empty
+        } else {
+            return .success(sections)
+        }
     }
     
     @MainActor
@@ -68,6 +88,10 @@ final class MangaListViewModelImpl: MangaListViewModel {
     
     @MainActor
     func fetchData() async {
+        if !sections.isEmpty {
+            return
+        }
+        
         isLoading = true
         error = nil
         

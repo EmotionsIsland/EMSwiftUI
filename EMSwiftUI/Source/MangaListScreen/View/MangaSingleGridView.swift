@@ -18,7 +18,7 @@ struct MangaSingleGridView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             mangaCoverView
 
             Text(item.attributes.title.en ?? "No eng title")
