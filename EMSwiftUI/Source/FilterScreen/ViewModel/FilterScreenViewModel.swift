@@ -31,6 +31,7 @@ final class TagViewModelImpl: ObservableObject, TagViewModel {
     @Published var selectedTags: [TagDisplayItem] = []
     @Published var isLoading: Bool = false
     @Published var error: Error?
+    @Published var viewState: FilterViewState = .loading
     
     private let service: TagService
     private var cancellables = Set<AnyCancellable>()
@@ -41,19 +42,10 @@ final class TagViewModelImpl: ObservableObject, TagViewModel {
         Task { await fetchDataTags() }
     }
     
-    var viewState: FilterViewState {
-        if isLoading {
-            return .loading
-        } else if let error = error {
-            return .error(error)
-        } else {
-            return .success
-        }
-    }
-    
     @MainActor
     private func getTags() async throws {
         isLoading = true
+        viewState = .loading
         error = nil
         
         do {
@@ -66,8 +58,10 @@ final class TagViewModelImpl: ObservableObject, TagViewModel {
                 .sorted { $0.group < $1.group }
             
             sections = Array(groupedTags)
+            viewState = .success
         } catch {
             self.error = error
+            viewState = .error(error)
             print("Ошибка при загрузке тегов: \(error.localizedDescription)")
         }
         
@@ -77,6 +71,7 @@ final class TagViewModelImpl: ObservableObject, TagViewModel {
     @MainActor
     func fetchDataTags() async {
         if !sections.isEmpty {
+            viewState = .success
             return
         }
         
@@ -84,6 +79,7 @@ final class TagViewModelImpl: ObservableObject, TagViewModel {
             try await getTags()
         } catch {
             self.error = error
+            viewState = .error(error)
             print(("Ошибка при получении данных: \(error.localizedDescription)"))
         }
     }

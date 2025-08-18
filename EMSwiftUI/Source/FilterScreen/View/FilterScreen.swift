@@ -47,7 +47,6 @@ struct FilterScreen<VM: TagViewModel>: View {
 }
 
 private extension FilterScreen {
-    @ViewBuilder
     func selectionSectionView() -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Selection")

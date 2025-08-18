@@ -51,23 +51,12 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @Published var sections: [MangaSection] = []
     @Published var isLoading: Bool = false
     @Published var error: Error?
+    @Published var viewState: MangaListViewState = .loading
     
     private let service: MangaListService
 
     init(service: MangaListService) {
         self.service = service
-    }
-    
-    var viewState: MangaListViewState {
-        if isLoading {
-            return .loading
-        } else if let error = error {
-            return .error(error)
-        } else if sections.isEmpty {
-            return .empty
-        } else {
-            return .success(sections)
-        }
     }
     
     @MainActor
@@ -89,16 +78,21 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @MainActor
     func fetchData() async {
         if !sections.isEmpty {
+            viewState = .success(sections)
             return
         }
         
         isLoading = true
+        viewState = .loading
         error = nil
         
         do {
             try await getData()
+            viewState = sections.isEmpty ? .empty : .success(sections)
         } catch {
-            self.error = error as? MangaListError ?? .unknown(error)
+            let mangaError = error as? MangaListError ?? .unknown(error)
+            self.error = mangaError
+            viewState = .error(mangaError)
             print("Ошибка при получении данных: \(error.localizedDescription)")
         }
         

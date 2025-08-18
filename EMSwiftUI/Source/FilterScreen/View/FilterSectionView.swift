@@ -2,7 +2,7 @@ import SwiftUI
 
 struct FilterSectionView<VM: TagViewModel>: View {
     let section: TagSection
-    let viewModel: VM
+    @ObservedObject var viewModel: VM
     @State private var isExpanded: Bool = false
     @State private var gridHeight: CGFloat = 0
     
