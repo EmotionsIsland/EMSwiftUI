@@ -14,9 +14,35 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
+    let gridItem = [GridItem(.adaptive(minimum: 120))]
+    
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+        VStack(spacing: 0) {
+            MangaSectionTitleView()
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    ForEach(0..<3) { index in
+                        MangaSectionView(title: viewModel.category(index: index))
+                            .padding(.horizontal, 16)
+                        LazyVGrid(columns: gridItem,
+                                  spacing: 25) {
+                            if let mangaData = viewModel.mangaModel?.data {
+                                ForEach(mangaData) { manga in
+                                    MangaSingleGridView(model: viewModel.mangaGridItem(at: manga))
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(.vertical, 16)
+            }
+        }
+        .task {
+            await viewModel.getData(refresh: false)
         }
     }
+}
+
+#Preview {
+    MangaListScreenBuilder.build()
 }
