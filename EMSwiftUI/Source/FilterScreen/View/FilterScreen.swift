@@ -26,7 +26,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
                             if category == "Selection" {
                                 FilterSelectionView(model: viewModel.filterSelectionModel)
                             } else {
-                                FilterSectionView(model: viewModel.filterSectionModel(at: category))
+                                FilterSectionView(model: viewModel.filterSectionModel(at: category), viewModel: viewModel)
                             }
                         }
                         .padding(16)

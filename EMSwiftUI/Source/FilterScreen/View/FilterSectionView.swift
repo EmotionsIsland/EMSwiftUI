@@ -1,9 +1,10 @@
 import SwiftUI
 
-struct FilterSectionView: View {
+struct FilterSectionView<VM: FilterScreenViewModel>: View {
     @State private var isExpanded = false
     let model: FilterSectionModel
-    
+    @ObservedObject var viewModel: VM
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Button {
@@ -27,17 +28,14 @@ struct FilterSectionView: View {
             .padding(.bottom, 8)
             
             if isExpanded {
-                FlowLayout(items: model.tags, spacing: 8) { tag in
-                    let index = model.tags.firstIndex(where: { $0.id == tag.id }) ?? 0
-                    let isSelected = model.isSelected[index]
-                    
-                    return FilterTagView(tag: tag,
-                                         isSelected: isSelected,
-                                         action: { tappedTag in
-                        model.onTagSelect(tappedTag)
-                    })
+                    FlowLayout(items: viewModel.filterSectionModel(at: model.category).tags, spacing: 8) { tag in
+                        FilterTagView(tag: tag,
+                                      isSelected: true,
+                                      action: { _ in
+                            viewModel.toggleTag(for: tag, in: model.category)
+                        })
                 }
-                .padding(.vertical, 8)
+                    .padding(.vertical, 8)
             }
         }
         .cornerRadius(12)
