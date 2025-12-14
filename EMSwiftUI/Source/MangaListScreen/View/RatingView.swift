@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct RatingView: View {
-    public let rating: Double
-    public var maxRating: Int = 5
-    public var size: CGFloat = 20
-    public var spacing: CGFloat = 4
-    public var filledColor: Color = .yellow
+    let rating: Double
+    let maxRating = Constants.maxRating
+    let size = Constants.ratingSize
+    let spacing = Constants.ratingSpacing
+    var filledColor: Color = .yellow
     
     var body: some View {
         VStack {
