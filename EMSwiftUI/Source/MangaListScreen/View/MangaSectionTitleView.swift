@@ -13,7 +13,7 @@ struct MangaSectionTitleView: View {
     var body: some View {
         VStack(spacing: 0) {
             TextField("Search", text: $searchText)
-                .padding(.leading, 30)
+                .padding(.leading, 22)
                 .padding(8)
                 .background(Color.grayBase)
                 .overlay(

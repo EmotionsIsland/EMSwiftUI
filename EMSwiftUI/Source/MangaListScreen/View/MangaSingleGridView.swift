@@ -18,11 +18,13 @@ struct MangaSingleGridView: View {
                 .padding(4)
             } placeholder: {
                 Color.gray
+                .frame(width: 120, height: 144)
             }
             Text(model.title)
                 .font(Font.SFPro.semiboldNormal)
                 .lineLimit(1)
                 .padding(.bottom, 2)
+                .frame(width: 120)
             RatingView(rating: model.rating)
             Text(model.tags)
                 .foregroundStyle(.grayBase)

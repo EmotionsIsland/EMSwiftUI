@@ -23,7 +23,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 VStack {
                     ForEach(0..<3) { index in
                         MangaSectionView(title: viewModel.category(index: index))
-                            .padding(.horizontal, 16)
+                            .padding(16)
                         LazyVGrid(columns: gridItem,
                                   spacing: 25) {
                             if let mangaData = viewModel.mangaModel?.data {
