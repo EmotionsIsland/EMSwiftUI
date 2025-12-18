@@ -28,14 +28,14 @@ struct FilterSectionView<VM: FilterScreenViewModel>: View {
             .padding(.bottom, 8)
             
             if isExpanded {
-                    FlowLayout(items: viewModel.filterSectionModel(at: model.category).tags, spacing: 8) { tag in
+                    FlowLayout(items: model.tags, spacing: 8) { tag in
                         FilterTagView(tag: tag,
                                       isSelected: true,
                                       action: { _ in
                             viewModel.toggleTag(for: tag, in: model.category)
                         })
+                        .padding(.vertical, 8)
                 }
-                    .padding(.vertical, 8)
             }
         }
         .cornerRadius(12)
