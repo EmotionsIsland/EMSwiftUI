@@ -1,8 +1,8 @@
 import Foundation
 
 struct MangaGridModel {
-    var title: String
-    var imageUrl: URL?
-    var rating: Double = 3.4
-    var tags: String
+    let title: String
+    let imageUrl: URL?
+    let rating: Double = 3.4
+    let tags: String
 }
