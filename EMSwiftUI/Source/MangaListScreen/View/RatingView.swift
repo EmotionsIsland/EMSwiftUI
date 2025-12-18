@@ -9,18 +9,15 @@ import SwiftUI
 
 struct RatingView: View {
     let rating: Double
-    let maxRating = Constants.maxRating
-    let size = Constants.ratingSize
-    let spacing = Constants.ratingSpacing
     var filledColor: Color = .yellow
     
     var body: some View {
         VStack {
-            HStack(spacing: spacing) {
-                ForEach(0..<maxRating, id: \.self) { index in
+            HStack(spacing: Constants.ratingSpacing) {
+                ForEach(0..<Constants.maxRating, id: \.self) { index in
                     ZStack {
                         Image(systemName: "star.fill")
-                            .resizedToFill(width: size, height: size)
+                            .resizedToFill(width: Constants.ratingSize, height: Constants.ratingSize)
                             .foregroundStyle(Color.gray.opacity(0.3))
                         if rating > CGFloat(index) {
                             Image(systemName: "star.fill")
