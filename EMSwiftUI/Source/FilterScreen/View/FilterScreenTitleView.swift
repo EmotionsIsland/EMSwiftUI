@@ -7,10 +7,10 @@ struct FilterScreenTitleView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ZStack {
+            
                 Text(title)
                     .font(.SFPro.headline2)
-                
+            
                 HStack {
                     Spacer()
                     Button {
@@ -23,7 +23,6 @@ struct FilterScreenTitleView: View {
                     }
                     .padding(.horizontal, 16)
                 }
-            }
             Divider()
                 .foregroundStyle(Color.whiteText)
                 .padding(.top, 8)
