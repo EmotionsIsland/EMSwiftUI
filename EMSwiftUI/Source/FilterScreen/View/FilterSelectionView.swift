@@ -17,7 +17,6 @@ struct FilterSelectionView: View {
             }
             .padding(.vertical, 8)
             Button {
-                print("Apply")
             } label: {
                 Text("Apply")
                     .font(.SFPro.mediumNormal)

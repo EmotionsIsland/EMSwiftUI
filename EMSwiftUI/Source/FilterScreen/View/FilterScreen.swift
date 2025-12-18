@@ -32,7 +32,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
                         .padding(16)
                     }
                 }
-                .padding(.top)
+                .padding(.top, 16)
             }
         }
         .task {

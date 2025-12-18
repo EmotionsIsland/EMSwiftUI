@@ -23,7 +23,7 @@ struct MangaSectionTitleView: View {
                         .padding(.leading, 10)
                 )
                 .cornerRadius(8)
-                .padding(.horizontal)
+                .padding(.horizontal, 4)
                 .padding(.bottom, 16)
             Divider()
                 .frame(height: 1)
