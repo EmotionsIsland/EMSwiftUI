@@ -15,7 +15,7 @@ extension API {
     
     static var mangaList: Endpoint {
         let queryItems = [
-            URLQueryItem(name: "limit", value: "6"),
+            URLQueryItem(name: "limit", value: "12"),
             URLQueryItem(name: "contentRating[]", value: "safe"),
             URLQueryItem(name: "order[followedCount]", value: "desc"),
             URLQueryItem(name: "includes[]", value: "cover_art")
@@ -24,6 +24,10 @@ extension API {
         return api.endpoint(path: "/manga", queryItems: queryItems)
     }
     
+    static func manga(category: MangaCategory) -> Endpoint {
+        return api.endpoint(path: "/manga", queryItems: category.queryItems)
+    }
+
     static var mangaTags: Endpoint {
         return api.endpoint(path: "/manga/tag")
     }

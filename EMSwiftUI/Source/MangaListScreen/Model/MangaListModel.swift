@@ -81,3 +81,28 @@ struct CoverAttributes: Decodable {
     let fileName: String
 }
 // swiftlint:enable identifier_name
+
+extension MangaData {
+    var displayTitle: String {
+        if let enTitle = attributes.title.en, !enTitle.isEmpty {
+            return enTitle
+        }
+        
+        if let ruTitle = attributes.altTitles.first {
+            return ruTitle.ru ?? "Без имени"
+        }
+        
+        return "манга №\(id)"
+    }
+    
+    var genres: [String] {
+         attributes.tags
+             .filter { $0.attributes.group == "genre" }
+             .compactMap { $0.attributes.name.en }
+     }
+     
+     // Строка с жанрами через запятую
+     var genresString: String {
+         genres.joined(separator: ", ")
+     }
+}
