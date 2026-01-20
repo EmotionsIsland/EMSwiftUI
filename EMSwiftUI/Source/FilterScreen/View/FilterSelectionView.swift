@@ -8,7 +8,7 @@ struct FilterSelectionView: View {
             Text(model.category)
                 .font(.SFPro.headline3)
                 .padding(.bottom, 8)
-            FlowLayout(items: model.selectedTags, spacing: 8) { tag in
+            FlowLayout(items: model.selectedTags) { tag in
                 FilterTagView(tag: tag,
                               isSelected: true,
                               action: { tappedTag in

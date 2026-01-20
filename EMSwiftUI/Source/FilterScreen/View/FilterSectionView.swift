@@ -28,7 +28,7 @@ struct FilterSectionView<VM: FilterScreenViewModel>: View {
             .padding(.bottom, 8)
             
             if isExpanded {
-                FlowLayout(items: model.tags, spacing: 8) { tag in
+                FlowLayout(items: model.tags) { tag in
                     FilterTagView(tag: tag,
                                   isSelected: true,
                                   action: { _ in

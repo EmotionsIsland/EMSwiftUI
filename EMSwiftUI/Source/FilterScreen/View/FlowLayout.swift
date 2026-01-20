@@ -2,7 +2,7 @@ import SwiftUI
 
 struct FlowLayout<Item: Identifiable, Content: View>: View {
     var items: [Item]
-    var spacing: CGFloat = 8
+    let spacing: CGFloat = 8
     var content: (Item) -> Content
 
     @State private var sizes: [CGSize] = []
