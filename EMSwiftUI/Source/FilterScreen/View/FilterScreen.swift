@@ -16,7 +16,6 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
             FilterScreenTitleView(
                 title: viewModel.navigationTitle,
                 dismiss: {
-                    print("dismiss")
                 })
             ScrollView {
                 LazyVGrid(columns: columns,
