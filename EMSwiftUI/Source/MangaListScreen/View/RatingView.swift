@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RatingView: View {
     let rating: Double
-    let filledColor: Color = .yellow
+    private let filledColor: Color = .yellow
     
     var body: some View {
         HStack(spacing: Constants.ratingSpacing) {
@@ -20,7 +20,7 @@ struct RatingView: View {
                         .scaledToFit()
                         .frame(width: Constants.ratingWidth, height: Constants.ratingHeight)
                         .foregroundStyle(Color.gray.opacity(0.3))
-
+                    
                     if rating > Double(index) {
                         Image(.starIcon)
                             .resizable()

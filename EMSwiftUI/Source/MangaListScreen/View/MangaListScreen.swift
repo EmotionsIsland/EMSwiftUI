@@ -14,7 +14,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
-    let gridItem = [GridItem(.adaptive(minimum: 120))]
+   private let gridItem = [GridItem(.adaptive(minimum: 120))]
     
     var body: some View {
         VStack(spacing: 0) {
