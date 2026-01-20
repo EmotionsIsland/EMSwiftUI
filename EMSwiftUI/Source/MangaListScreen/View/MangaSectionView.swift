@@ -15,14 +15,11 @@ struct MangaSectionView: View {
                 .font(Font.SFPro.headline3)
             Spacer()
             Button {
-                print("more")
             } label: {
                 HStack {
                     Text("more")
                         .font(Font.SFPro.bodyNormal)
-                    Image("moreIcon")
-                        .resizable()
-                        .frame(width: 12, height: 12)
+                    Image(.moreIcon)
                 }
                 .foregroundStyle(Color.blackBase)
             }

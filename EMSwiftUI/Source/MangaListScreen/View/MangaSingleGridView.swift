@@ -24,13 +24,14 @@ struct MangaSingleGridView: View {
                 .font(Font.SFPro.semiboldNormal)
                 .lineLimit(1)
                 .padding(.bottom, 2)
-                .padding(.horizontal, 8)
-                .frame(width: 120)
+                .frame(width: 100, alignment: .leading)
             RatingView(rating: model.rating)
+                .frame(width: 100)
             Text(model.tags)
                 .foregroundStyle(.grayBase)
                 .font(Font.SFPro.lightSmall)
                 .lineLimit(1)
+                .frame(width: 100, alignment: .leading)
         }
     }
 }

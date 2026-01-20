@@ -9,39 +9,33 @@ import SwiftUI
 
 struct RatingView: View {
     let rating: Double
-    var filledColor: Color = .yellow
+    let filledColor: Color = .yellow
     
     var body: some View {
-        VStack {
-            HStack(spacing: Constants.ratingSpacing) {
-                ForEach(0..<Constants.maxRating, id: \.self) { index in
-                    ZStack {
-                        Image(systemName: "star.fill")
-                            .resizedToFill(width: Constants.ratingSize, height: Constants.ratingSize)
-                            .foregroundStyle(Color.gray.opacity(0.3))
-                        if rating > CGFloat(index) {
-                            Image(systemName: "star.fill")
-                                .resizable()
-                                .renderingMode(.original)
-                                .foregroundStyle(Color.yellow)
-                                .frame(width: 17, height: 17)
-                                .mask(
-                                    GeometryReader { geometry in
-                                        let fillPercentage = min(rating - CGFloat(index), 1.0)
-                                        Rectangle()
-                                            .frame(width: geometry.size.width * fillPercentage,
-                                                   height: geometry.size.height)
-                                            .position(x: (geometry.size.width * fillPercentage) / 2,
-                                                      y: geometry.size.height / 2)
-                                    }
-                                )
-                        }
+        HStack(spacing: Constants.ratingSpacing) {
+            ForEach(0..<Constants.maxRating, id: \.self) { index in
+                ZStack {
+                    Image(.starIcon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: Constants.ratingWidth, height: Constants.ratingHeight)
+                        .foregroundStyle(Color.gray.opacity(0.3))
+
+                    if rating > Double(index) {
+                        Image(.starIcon)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: Constants.ratingWidth, height: Constants.ratingHeight)
+                            .foregroundStyle(filledColor)
+                            .mask(
+                                Rectangle()
+                                    .frame(width: CGFloat(min(rating - Double(index), 1.0)) * Constants.ratingWidth, height: Constants.ratingHeight)
+                                    .position(x: (CGFloat(min(rating - Double(index), 1.0)) * Constants.ratingWidth) / 2,
+                                              y: Constants.ratingHeight / 2)
+                            )
                     }
                 }
             }
         }
     }
-}
-#Preview {
-    RatingView(rating: 3.4)
 }
