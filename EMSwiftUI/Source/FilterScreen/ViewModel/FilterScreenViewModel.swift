@@ -4,6 +4,7 @@ final class FilterScreenViewModel: ObservableObject {
     @Published var tag: FilterTagModel?
     @Published private(set) var tagsSelected: [Tag] = []
     @Published private(set) var isLoading = false
+    @Published private(set) var hasFetchedTags: Bool = false
     @Published var category: [String] = ["Selection"]
     
     private let service: FilterListService
@@ -28,16 +29,16 @@ final class FilterScreenViewModel: ObservableObject {
         self.isLoading = true
         do {
             let tag = try await service.getTags()
-            await getCategory(from: tag)
+            getCategory(from: tag)
             self.tag = tag
+            hasFetchedTags = true
         } catch {
             print(error)
         }
         self.isLoading = false
     }
     
-    @MainActor
-    private func getCategory(from tag: FilterTagModel) async {
+    private func getCategory(from tag: FilterTagModel) {
         var result: [String] = []
         var seen: Set<String> = []
         
