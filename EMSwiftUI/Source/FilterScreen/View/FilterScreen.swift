@@ -7,7 +7,7 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
-    let columns = [
+   private let columns = [
         GridItem(.flexible(minimum: 80))
     ]
     
@@ -35,7 +35,9 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
             }
         }
         .task {
-            await viewModel.getTags()
+            if !viewModel.hasFetchedTags {
+                await viewModel.getTags()
+            }
         }
     }
 }
