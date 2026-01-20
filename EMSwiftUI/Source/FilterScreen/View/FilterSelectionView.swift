@@ -20,12 +20,12 @@ struct FilterSelectionView: View {
             } label: {
                 Text("Apply")
                     .font(.SFPro.mediumNormal)
-                    .foregroundColor(Color.whiteText)
+                    .foregroundColor(.whiteText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.orangeBase)
+                            .fill(.orangeBase)
                     )
             }
             .padding(.top, 16)
@@ -36,7 +36,7 @@ struct FilterSelectionView: View {
                 } label: {
                     Text("Reset")
                         .font(.SFPro.mediumNormal)
-                        .foregroundColor(Color.blackBase)
+                        .foregroundColor(.blackBase)
                 }
                 Spacer()
             }

@@ -21,7 +21,7 @@ struct MangaSingleGridView: View {
                 .frame(width: 100, height: 144)
             }
             Text(model.title)
-                .font(Font.SFPro.semiboldNormal)
+                .font(.SFPro.semiboldNormal)
                 .lineLimit(1)
                 .padding(.bottom, 2)
                 .frame(width: 100, alignment: .leading)
@@ -29,7 +29,7 @@ struct MangaSingleGridView: View {
                 .frame(width: 100)
             Text(model.tags)
                 .foregroundStyle(.grayBase)
-                .font(Font.SFPro.lightSmall)
+                .font(.SFPro.lightSmall)
                 .lineLimit(1)
                 .frame(width: 100, alignment: .leading)
         }

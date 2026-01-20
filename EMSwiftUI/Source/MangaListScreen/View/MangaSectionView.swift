@@ -12,16 +12,16 @@ struct MangaSectionView: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(Font.SFPro.headline3)
+                .font(.SFPro.headline3)
             Spacer()
             Button {
             } label: {
                 HStack {
                     Text("more")
-                        .font(Font.SFPro.bodyNormal)
+                        .font(.SFPro.bodyNormal)
                     Image(.moreIcon)
                 }
-                .foregroundStyle(Color.blackBase)
+                .foregroundStyle(.blackBase)
             }
         }
     }

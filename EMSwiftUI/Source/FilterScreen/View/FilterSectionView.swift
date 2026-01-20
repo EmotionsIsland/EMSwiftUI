@@ -15,11 +15,11 @@ struct FilterSectionView<VM: FilterScreenViewModel>: View {
                 HStack(spacing: 16) {
                     Text(model.category)
                         .font(Font.SFPro.regularLarge)
-                        .foregroundStyle(Color.blackBase)
+                        .foregroundStyle(.blackBase)
                     
                     Image(systemName: "chevron.down")
                         .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                        .foregroundColor(Color.blackBase)
+                        .foregroundColor(.blackBase)
                         .animation(.easeInOut, value: isExpanded)
                     Spacer()
                 }
