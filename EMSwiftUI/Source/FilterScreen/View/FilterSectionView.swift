@@ -34,7 +34,6 @@ struct FilterSectionView<VM: FilterScreenViewModel>: View {
                                   action: { _ in
                         viewModel.toggleTag(for: tag, in: model.category)
                     })
-                    .padding(.vertical, 8)
                 }
             }
         }
