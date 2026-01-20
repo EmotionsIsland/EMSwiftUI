@@ -7,7 +7,6 @@ struct FilterScreenTitleView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            
                 Text(title)
                     .font(.SFPro.headline2)
             
