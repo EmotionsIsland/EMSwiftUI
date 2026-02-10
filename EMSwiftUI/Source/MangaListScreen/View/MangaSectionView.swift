@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MangaSectionView: View {
     let title: String
-    let items: [MangaUIModel]
+    let items: [MangaData]
     let onTapMore: () -> Void
 
     var body: some View {
