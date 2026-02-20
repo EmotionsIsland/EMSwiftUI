@@ -9,14 +9,22 @@ import SwiftUI
 
 struct MangaListScreen<VM: MangaListViewModel>: View {
     @StateObject private var viewModel: VM
-    
+
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+        VStack(spacing: 24) {
+            SearchBarView()
+
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 24) {
+                    ForEach(viewModel.sections, id: \.self) { sectionTitle in
+                        MangaSectionView(title: sectionTitle, mangaList: viewModel.mangaList)
+                    }
+                }
+            }
         }
     }
 }

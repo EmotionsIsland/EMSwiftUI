@@ -13,7 +13,6 @@ final class MangaListScreenBuilder {
         let service: MangaListService = MangaListServiceImpl(netify: Container.shared.netify())
         let viewModel = MangaListViewModelImpl(service: service)
         let view = MangaListScreen(viewModel: viewModel)
-        
         return view
     }
 }
