@@ -55,15 +55,16 @@ struct MangaGridItemView: View {
             }
 
             Text(title)
-                .font(.subheadline)
+                .font(.SFPro.semiboldNormal)
                 .fontWeight(.semibold)
+                .foregroundStyle(Color.blackBase)
                 .lineLimit(1)
 
             RatingView(rating: 4.5, maxRating: 5)
 
             Text(subtitle.isEmpty ? " " : subtitle)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+                .font(.SFPro.lightSmall)
+                .foregroundStyle(Color.grayBase)
                 .lineLimit(1)
         }
     }

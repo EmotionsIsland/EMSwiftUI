@@ -46,13 +46,11 @@ struct FilterScreen: View {
                         isExpanded: section.isExpanded,
                         onToggle: { viewModel.toggleSection(section.id) },
                         content: {
-                            AnyView(
                                 TagChipsGrid(
                                     tags: section.tags,
                                     isSelected: { viewModel.isSelected($0) },
                                     onTap: { viewModel.toggleTag($0) }
                                 )
-                            )
                         }
                     )
                 }
