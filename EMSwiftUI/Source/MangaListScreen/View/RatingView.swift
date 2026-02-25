@@ -28,7 +28,7 @@ struct RatingView: View {
                     Image("starIcon")
                         .resizable()
                         .renderingMode(.template)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(Color.grayBase)
                         .opacity(0.3)
                 }
             }

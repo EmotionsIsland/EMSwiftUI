@@ -25,7 +25,8 @@ struct MangaSectionTitleView: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
             Text(title)
-                .font(.title3)
+                .font(.SFPro.headline3)
+                .foregroundStyle(Color.blackBase)
                 .fontWeight(.semibold)
 
             Spacer()
@@ -33,7 +34,8 @@ struct MangaSectionTitleView: View {
             Button(action: onTapMore) {
                 HStack(spacing: 6) {
                     Text(actionTitle)
-                        .font(.subheadline)
+                        .font(.SFPro.bodyNormal)
+                        .foregroundStyle(Color.blackBase)
                     Image("moreIcon")
                         .font(.subheadline)
                 }

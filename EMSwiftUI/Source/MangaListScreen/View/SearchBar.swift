@@ -16,7 +16,8 @@ struct SearchBar: View {
                 .foregroundColor(.gray)
 
             TextField("Search", text: $searchText)
-                .foregroundColor(.primary)
+                .foregroundColor(Color.grayBase)
+                .font(.SFPro.lightSmall)
                 .disableAutocorrection(true)
         }
         .padding(12)
