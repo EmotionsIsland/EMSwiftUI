@@ -18,6 +18,9 @@ protocol MangaListViewModel: ObservableObject {
     var items: [MangaData] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
+    var popular: [MangaData] { get }
+    var recentlyAdded: [MangaData] { get }
+    var lastUpdates: [MangaData] { get }
     
     func getData() async
 }
@@ -26,6 +29,9 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @Published var items: [MangaData] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published private(set) var popular: [MangaData] = []
+    @Published private(set) var recentlyAdded: [MangaData] = []
+    @Published private(set) var lastUpdates: [MangaData] = []
     
     private let service: MangaListService
 
@@ -38,10 +44,17 @@ final class MangaListViewModelImpl: MangaListViewModel {
         isLoading = true
         errorMessage = nil
         defer { isLoading = false }
-        
+
         do {
-            let response = try await service.getManga()
-            items = response.data
+            async let popularResponse = service.getManga(sort: .popular)
+            async let recentlyAddedResponse = service.getManga(sort: .recentlyAdded)
+            async let lastUpdatesResponse = service.getManga(sort: .lastUpdates)
+
+            let (popularModel, recentlyAddedModel, lastUpdatesModel) = try await (popularResponse, recentlyAddedResponse, lastUpdatesResponse)
+
+            popular = popularModel.data
+            recentlyAdded = recentlyAddedModel.data
+            lastUpdates = lastUpdatesModel.data
         } catch {
             errorMessage = error.localizedDescription
         }
