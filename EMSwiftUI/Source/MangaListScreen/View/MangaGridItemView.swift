@@ -22,37 +22,12 @@ struct MangaGridItemView: View {
         API.coverURL(for: manga, .size512)
     }
 
+    private let coverHeight: CGFloat = 144
+    private let cornerRadius: CGFloat = 12
+
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            AsyncImage(url: coverURL) { phase in
-                switch phase {
-                case .empty:
-                    RoundedRectangle(cornerRadius: 12)
-                        .frame(height: 150)
-                        .foregroundStyle(.quaternary)
-
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 150)
-                        .frame(maxWidth: .infinity)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .clipped()
-
-                case .failure:
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12)
-                            .foregroundStyle(.quaternary)
-                        Image(systemName: "photo")
-                            .foregroundStyle(.secondary)
-                    }
-                    .frame(height: 150)
-
-                @unknown default:
-                    EmptyView()
-                }
-            }
+            cover
 
             Text(title)
                 .font(.SFPro.semiboldNormal)
@@ -67,5 +42,39 @@ struct MangaGridItemView: View {
                 .foregroundStyle(Color.grayBase)
                 .lineLimit(1)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var cover: some View {
+        GeometryReader { geometry in
+            ZStack {
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .foregroundStyle(.quaternary)
+                
+                AsyncImage(url: coverURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                        
+                    case .failure:
+                        Image(systemName: "photo")
+                            .foregroundStyle(.secondary)
+                        
+                    case .empty:
+                        EmptyView()
+                        
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+            }
+            .frame(width: geometry.size.width)
+            .frame(height: coverHeight)
+            .clipped()
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+        }
+        .frame(height: coverHeight)
     }
 }

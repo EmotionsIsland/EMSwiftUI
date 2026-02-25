@@ -15,14 +15,10 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
-    private var filtered: [MangaData] {
-        let textToSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !textToSearch.isEmpty else { return viewModel.items }
-        
-        return viewModel.items.filter {
-            ($0.attributes.title.en ?? "")
-                .localizedCaseInsensitiveContains(textToSearch)
-        }
+    private func filtered(_ items: [MangaData]) -> [MangaData] {
+        let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return items }
+        return items.filter { ($0.attributes.mangaTitle).localizedCaseInsensitiveContains(text) }
     }
     
     var body: some View {
@@ -48,19 +44,19 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 
                 MangaSectionView(
                     title: "Popular",
-                    items: filtered,
+                    items: filtered(viewModel.popular),
                     onTapMore: { print("Popular") }
                 )
 
                 MangaSectionView(
                     title: "Recently Added",
-                    items: filtered,
+                    items: filtered(viewModel.recentlyAdded),
                     onTapMore: { print("Recently Added") }
                 )
                 
                 MangaSectionView(
                     title: "Last updates",
-                    items: filtered,
+                    items: filtered(viewModel.lastUpdates),
                     onTapMore: { print("Last updates") }
                 )
             }
