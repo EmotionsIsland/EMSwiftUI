@@ -11,11 +11,11 @@ struct MangaGridItemView: View {
     let manga: MangaData
 
     private var title: String {
-        manga.attributes.title.en ?? "No eng title"
+        manga.attributes.mangaTitle
     }
 
     private var subtitle: String {
-        manga.attributes.tags.first?.attributes.name.en ?? ""
+        manga.attributes.mangaSubtitle
     }
 
     private var coverURL: URL? {
@@ -62,7 +62,7 @@ struct MangaGridItemView: View {
 
             RatingView(rating: 4.5, maxRating: 5)
 
-            Text(subtitle.isEmpty ? " " : subtitle)
+            Text(subtitle)
                 .font(.SFPro.lightSmall)
                 .foregroundStyle(Color.grayBase)
                 .lineLimit(1)

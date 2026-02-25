@@ -53,6 +53,7 @@ struct Description: Decodable {
 
 struct AlternativeTitle: Decodable {
     let ru: String?
+    let en: String? 
 }
 
 struct AttributesDescription: Decodable {
@@ -79,5 +80,27 @@ struct Relationship: Decodable {
 
 struct CoverAttributes: Decodable {
     let fileName: String
+}
+
+extension Attributes {
+    var mangaTitle: String {
+        if let en = title.en, !en.isEmpty {
+            return en
+        }
+        
+        if let altEN = altTitles.compactMap({$0.en}).first {
+            return altEN
+        }
+        
+        if let altRU = altTitles.compactMap({$0.ru}).first {
+            return altRU
+        }
+        
+        return "No title"
+    }
+    
+    var mangaSubtitle: String {
+        tags.first?.attributes.name.en ?? "No Description"
+    }
 }
 // swiftlint:enable identifier_name
