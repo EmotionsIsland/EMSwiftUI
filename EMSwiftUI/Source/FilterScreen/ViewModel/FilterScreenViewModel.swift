@@ -13,27 +13,38 @@ final class FilterScreenViewModel: ObservableObject {
     @Published var selectedIDs: Set<String> = []
 
     private let service: FilterTagsServiceProtocol
+    private let options: StaticFilterAttributesProtocol
 
-    init(service: FilterTagsServiceProtocol) {
+    init(
+        service: FilterTagsServiceProtocol,
+        options: StaticFilterAttributesProtocol = StaticFilterAttributes()
+    ) {
         self.service = service
+        self.options = options
     }
 
     @MainActor func load() async {
         do {
             let tags = try await service.fetchTags()
-            allTagsByID = Dictionary(uniqueKeysWithValues: tags.map { ($0.id, $0) })
+
+            let all = tags + options.staticTags
+            allTagsByID = Dictionary(uniqueKeysWithValues: all.map { ($0.id, $0) })
 
             let grouped = Dictionary(grouping: tags, by: { $0.group })
-            sections = FilterTagGroup.allCases
-                .filter { $0 != .other }
+
+            var result = options.staticSections
+
+            result += options.apiOrder
                 .map { group in
                     FilterSection(id: group, isExpanded: false, tags: grouped[group] ?? [])
                 }
                 .filter { !$0.tags.isEmpty }
 
             if let other = grouped[.other], !other.isEmpty {
-                sections.append(FilterSection(id: .other, isExpanded: false, tags: other))
+                result.append(FilterSection(id: .other, isExpanded: false, tags: other))
             }
+
+            sections = result
         } catch {
             print("Filter tags load error:", error)
         }
