@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var searchText: String
+    @FocusState private var isSearchFocused: Bool
 
     var body: some View {
         HStack {
@@ -19,6 +20,10 @@ struct SearchBar: View {
                 .foregroundColor(Color.grayBase)
                 .font(.SFPro.lightSmall)
                 .disableAutocorrection(true)
+                .focused($isSearchFocused)
+                .onSubmit {
+                    isSearchFocused = false
+                }
         }
         .padding(12)
         .background(Color(.systemGray6))
