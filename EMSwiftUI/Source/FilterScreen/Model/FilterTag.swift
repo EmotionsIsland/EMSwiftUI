@@ -14,6 +14,9 @@ struct FilterTag: Identifiable, Hashable {
 }
 
 enum FilterTagGroup: String, CaseIterable, Hashable {
+    case contentRating
+    case publicationDemographic
+    case status
     case format
     case genre
     case theme
@@ -21,6 +24,12 @@ enum FilterTagGroup: String, CaseIterable, Hashable {
 
     var title: String {
         switch self {
+        case .contentRating:
+            return "Content rating"
+        case .publicationDemographic:
+            return "Publication demographic"
+        case .status:
+            return "Status"
         case .format:
             return "Format"
         case .genre:
@@ -35,5 +44,31 @@ enum FilterTagGroup: String, CaseIterable, Hashable {
     static func from(apiGroup: String?) -> FilterTagGroup {
         guard let apiGroup else { return .other }
         return FilterTagGroup(rawValue: apiGroup) ?? .other
+    }
+}
+
+extension FilterTag {
+    static func contentRating(_ value: String, title: String? = nil) -> FilterTag {
+        FilterTag(
+            id: "contentRating:\(value)",
+            title: title ?? value,
+            group: .contentRating
+        )
+    }
+    
+    static func publicationDemographic(_ value: String, title: String? = nil) -> FilterTag {
+        FilterTag(
+            id: "publicationDemographic:\(value)",
+            title: title ?? value,
+            group: .publicationDemographic
+        )
+    }
+
+    static func status(_ value: String, title: String? = nil) -> FilterTag {
+        FilterTag(
+            id: "status:\(value)",
+            title: title ?? value,
+            group: .status
+        )
     }
 }
