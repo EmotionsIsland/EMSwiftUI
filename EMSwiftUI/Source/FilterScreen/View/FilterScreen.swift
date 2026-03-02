@@ -20,7 +20,7 @@ struct FilterScreen<VM: FilterViewModel>: View {
             
             ScrollView {
                 FilterSelectionSectionView(
-                    selectedTags: viewModel.selectedTags,
+                    selectedTags: viewModel.getSelectedTagsFormatted(),
                     onTagTap: { id in viewModel.toggleTag(id) },
                     resetAction: { viewModel.reset() }
                 )

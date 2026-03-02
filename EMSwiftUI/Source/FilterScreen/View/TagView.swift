@@ -23,8 +23,7 @@ struct TagView: View {
                 
                 Text(title)
                     .font(.SFPro.bodyNormal)
-                    .padding(.vertical, 8)
-                    .padding(.trailing, 8)
+                    .padding([.vertical, .trailing], 8)
                     .padding(.leading, isSelected ? 0 : 8)
             }
             .frame(height: 36)

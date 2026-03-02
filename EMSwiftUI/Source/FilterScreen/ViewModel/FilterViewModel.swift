@@ -9,8 +9,8 @@ import Foundation
 import Netify
 
 protocol FilterViewModel: ObservableObject {
-    var selectedTags: [Tag] { get }
     var selectedTagIds: Set<String> { get }
+    func getSelectedTagsFormatted() -> [Tag]
     func getTags(for section: FilterSectionType) -> [Tag]
     func toggleTag(_ id: String, for section: FilterSectionType?)
     func reset()
@@ -22,53 +22,46 @@ extension FilterViewModel {
     }
 }
 
-enum FilterSectionType: String, CaseIterable {
-    case contentRating = "Content Rating"
-    case status = "Publication Status"
-    case demographic = "Magazine Demographic"
-    case format = "Format"
-    case genre = "Genre"
-    case theme = "Theme"
-    
-    var apiKey: String {
-        switch self {
-        case .contentRating: return "content"
-        case .format: return "format"
-        case .genre: return "genre"
-        case .theme: return "theme"
-        default: return ""
-        }
-    }
-    
-    var idPrefix: String {
-        switch self {
-        case .status: return "status"
-        case .demographic: return "demographic"
-        default:
-            return apiKey.isEmpty
-            ? self.rawValue.lowercased().replacingOccurrences(of: " ", with: "_")
-            : apiKey
-        }
-    }
-}
-
-enum PublicationStatus: String, CaseIterable {
-    case ongoing, completed, cancelled, hiatus
-}
-
-enum MagazineDemographic: String, CaseIterable {
-    case shounen, shoujo, seinen, josei
-}
-
 final class FilterViewModelImpl: FilterViewModel {
-    @Published var tags: [Tag] = []
+    @Published var remoteTags: [Tag] = []
     @Published var selectedTagIds: Set<String> = []
     
-    var selectedTags: [Tag] {
-        let allTags = tags + allLocalTags
+    private var selectedTags: [Tag] {
+        allTags.filter { selectedTagIds.contains($0.id) }
+    }
+
+    private var allTags: [Tag] = []
+    private var localTags: [Tag] = []
+    private let service: FilterService
+
+    init(service: FilterService) {
+        self.service = service
         
-        return allTags
-            .filter { selectedTagIds.contains($0.id) }
+        Task {
+            try await getData()
+        }
+    }
+    
+// MARK: - Methods
+    func getTags(for section: FilterSectionType) -> [Tag] {
+        let prefix = section.idPrefix
+        let localTags = localTags.filter {
+            $0.id == "\(prefix)_any" || $0.id == "\(prefix)_none"
+        }
+        
+        switch section {
+        case .status:
+            return getPublicationStatusTags() + localTags
+        case .demographic:
+            return getMagazineDemographicTags() + localTags
+        default:
+            let apiTags = remoteTags.filter { $0.attributes.group == section.apiKey }
+            return apiTags + localTags
+        }
+    }
+    
+    func getSelectedTagsFormatted() -> [Tag] {
+        return selectedTags
             .map { tag in
                 let name = tag.attributes.name.en ?? ""
                 if name == "Any" || name == "None" {
@@ -84,78 +77,6 @@ final class FilterViewModelImpl: FilterViewModel {
             }
             .sorted { ($0.attributes.name.en ?? "") < ($1.attributes.name.en ?? "") }
     }
-    
-    private var allPublicationStatusTags: [Tag] {
-        PublicationStatus.allCases.map {
-            createLocalTag(
-                id: "status_\($0.rawValue)",
-                name: $0.rawValue.capitalized,
-                group: "status"
-            )
-        }
-    }
-    
-    private var allMagazineDemographicTags: [Tag] {
-        MagazineDemographic.allCases.map {
-            createLocalTag(
-                id: "demographic_\($0.rawValue)",
-                name: $0.rawValue.capitalized,
-                group: "demographic"
-            )
-        }
-    }
-    
-    private var allLocalTags: [Tag] {
-        var local: [Tag] = []
-        local.append(contentsOf: allPublicationStatusTags)
-        local.append(contentsOf: allMagazineDemographicTags)
-        FilterSectionType.allCases.forEach { section in
-            let prefix = section.idPrefix
-            local.append(
-                createLocalTag(
-                    id: "\(prefix)_none",
-                    name: "None",
-                    group: section.rawValue
-                )
-            )
-            local.append(
-                createLocalTag(
-                    id: "\(prefix)_any",
-                    name: "Any",
-                    group: section.rawValue
-                )
-            )
-        }
-        return local
-    }
-
-    private let service: FilterService
-
-    init(service: FilterService) {
-        self.service = service
-        
-        Task {
-            try await getData()
-        }
-    }
-    
-// MARK: - Methods
-    func getTags(for section: FilterSectionType) -> [Tag] {
-        let prefix = section.idPrefix
-        let localTags = allLocalTags.filter {
-            $0.id == "\(prefix)_any" || $0.id == "\(prefix)_none"
-        }
-        
-        switch section {
-        case .status:
-            return allPublicationStatusTags + localTags
-        case .demographic:
-            return allMagazineDemographicTags + localTags
-        default:
-            let apiTags = tags.filter { $0.attributes.group == section.apiKey }
-            return apiTags + localTags
-        }
-    }
 
     func toggleTag(_ id: String, for section: FilterSectionType? = nil) {
         if selectedTagIds.contains(id) {
@@ -167,7 +88,7 @@ final class FilterViewModelImpl: FilterViewModel {
                 selectedTagIds = selectedTagIds.filter { !$0.starts(with: "\(prefix)_") }
                 if !section.apiKey.isEmpty {
                     selectedTagIds = selectedTagIds.filter { selectedId in
-                        !tags.contains(where: {
+                        !remoteTags.contains(where: {
                             $0.id == selectedId && $0.attributes.group == section.apiKey
                         })
                     }
@@ -184,21 +105,76 @@ final class FilterViewModelImpl: FilterViewModel {
         selectedTagIds.removeAll()
     }
     
-    // MARK: - Private Methods
+    // MARK: - Service Methods
     @MainActor private func getData() async throws {
         do {
             let result = try await service.getTags()
-            self.tags = result.data
+            self.remoteTags = result.data
+            self.localTags = getLocalTags()
+            self.allTags = getAllTags()
         } catch {
             print("Ошибка загрузки: \(error)")
         }
     }
     
+    // MARK: - Private Methods
     private func createLocalTag(id: String, name: String, group: String) -> Tag {
         Tag(
             id: id,
             type: "tag",
             attributes: TagAttributes(name: Title(en: name), group: group)
         )
+    }
+    
+    private func getAllTags() -> [Tag] {
+        var allTags: [Tag] = []
+        allTags.append(contentsOf: remoteTags)
+        allTags.append(contentsOf: localTags)
+        return allTags
+    }
+    
+    private func getLocalTags() -> [Tag] {
+        var localTags: [Tag] = []
+        localTags.append(contentsOf: getPublicationStatusTags())
+        localTags.append(contentsOf: getMagazineDemographicTags())
+        
+        FilterSectionType.allCases.forEach { section in
+            let prefix = section.idPrefix
+            localTags.append(
+                createLocalTag(
+                    id: "\(prefix)_none",
+                    name: "None",
+                    group: section.rawValue
+                )
+            )
+            localTags.append(
+                createLocalTag(
+                    id: "\(prefix)_any",
+                    name: "Any",
+                    group: section.rawValue
+                )
+            )
+        }
+        return localTags
+    }
+    
+    private func getPublicationStatusTags() -> [Tag] {
+        PublicationStatus.allCases.map {
+            createLocalTag(
+                id: "status_\($0.rawValue)",
+                name: $0.rawValue.capitalized,
+                group: "status"
+            )
+        }
+    }
+    
+    private func getMagazineDemographicTags() -> [Tag] {
+        MagazineDemographic.allCases.map {
+            createLocalTag(
+                id: "demographic_\($0.rawValue)",
+                name: $0.rawValue.capitalized,
+                group: "demographic"
+            )
+        }
     }
 }
