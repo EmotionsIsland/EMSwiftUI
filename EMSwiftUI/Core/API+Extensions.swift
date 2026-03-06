@@ -13,12 +13,12 @@ extension API {
     static let api: Self = API(host: "api.mangadex.org")
     static let coverURL: Self = API(host: "uploads.mangadex.org")
     
-    static func mangaList(sort: MangaSort, limit: Int = 6) -> Endpoint {
-        let queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "limit", value: "\(limit)"),
+    static var mangaList: Endpoint {
+        let queryItems = [
+            URLQueryItem(name: "limit", value: "6"),
             URLQueryItem(name: "contentRating[]", value: "safe"),
-            URLQueryItem(name: "includes[]", value: "cover_art"),
-            sort.queryItem
+            URLQueryItem(name: "order[followedCount]", value: "desc"),
+            URLQueryItem(name: "includes[]", value: "cover_art")
         ]
         
         return api.endpoint(path: "/manga", queryItems: queryItems)

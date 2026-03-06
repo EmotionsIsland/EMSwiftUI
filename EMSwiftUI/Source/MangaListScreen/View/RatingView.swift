@@ -8,30 +8,12 @@
 import SwiftUI
 
 struct RatingView: View {
-    let rating: Double
+    let rating: CGFloat
     let maxRating: Int
-
+    
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<maxRating, id: \.self) { index in
-                let value = rating - Double(index)
-                
-                if value >= 1.0 {
-                    Image("starIcon")
-                        .resizable()
-                        .renderingMode(.original)
-                } else if value >= 0.5 {
-                    Image("starIconHalf")
-                        .resizable()
-                        .renderingMode(.original)
-                } else {
-                    Image("starIcon")
-                        .resizable()
-                        .renderingMode(.template)
-                        .foregroundStyle(Color.grayBase)
-                        .opacity(0.3)
-                }
-            }
+        VStack {
+            // TODO: Create star rating View
         }
     }
 }

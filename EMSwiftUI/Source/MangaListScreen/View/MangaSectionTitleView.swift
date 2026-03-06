@@ -8,43 +8,9 @@
 import SwiftUI
 
 struct MangaSectionTitleView: View {
-    let title: String
-    let actionTitle: String
-    let onTapMore: () -> Void
-
-    init(
-        title: String,
-        actionTitle: String = "more",
-        onTapMore: @escaping () -> Void
-    ) {
-        self.title = title
-        self.actionTitle = actionTitle
-        self.onTapMore = onTapMore
-    }
-
     var body: some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text(title)
-                .font(.SFPro.headline3)
-                .foregroundStyle(Color.blackBase)
-                .fontWeight(.semibold)
-
-            Spacer()
-
-            Button(action: onTapMore) {
-                HStack(spacing: 6) {
-                    Text(actionTitle)
-                        .font(.SFPro.bodyNormal)
-                        .foregroundStyle(Color.blackBase)
-                    Image("moreIcon")
-                        .font(.subheadline)
-                }
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(.secondary)
+        VStack {
+            // TODO: Create section title View
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 8)
-        .padding(.bottom, 6)
     }
 }
