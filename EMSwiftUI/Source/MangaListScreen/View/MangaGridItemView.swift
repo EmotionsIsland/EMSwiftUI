@@ -8,7 +8,7 @@ import SwiftUI
 import Netify
 
 struct MangaGridItemView: View {
-    @ObservedObject var vm: MangaGridItemViewModel
+    @ObservedObject var viewModel: MangaGridItemViewModel
 
     private let coverHeight: CGFloat = 144
     private let cornerRadius: CGFloat = 12
@@ -17,14 +17,14 @@ struct MangaGridItemView: View {
         VStack(alignment: .leading, spacing: 6) {
             cover
 
-            Text(vm.title)
+            Text(viewModel.title)
                 .font(.SFPro.semiboldNormal)
                 .foregroundStyle(Color.blackBase)
                 .lineLimit(1)
 
-            RatingView(rating: vm.rating)
+            RatingView(rating: viewModel.rating)
 
-            Text(vm.subtitle)
+            Text(viewModel.subtitle)
                 .font(.SFPro.lightSmall)
                 .foregroundStyle(Color.grayBase)
                 .lineLimit(1)
@@ -33,12 +33,11 @@ struct MangaGridItemView: View {
     }
 
     private var cover: some View {
-        GeometryReader { geometry in
             ZStack {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .foregroundStyle(.quaternary)
                 
-                AsyncImage(url: vm.coverURL) { phase in
+                AsyncImage(url: viewModel.coverURL) { phase in
                     switch phase {
                     case .success(let image):
                         image
@@ -57,11 +56,8 @@ struct MangaGridItemView: View {
                     }
                 }
             }
-            .frame(width: geometry.size.width)
             .frame(height: coverHeight)
             .clipped()
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-        }
-        .frame(height: coverHeight)
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIFlowLayout
 
 struct TagChipsGrid: View {
     let tags: [FilterTag]
@@ -14,16 +13,14 @@ struct TagChipsGrid: View {
     let onTap: (FilterTag) -> Void
 
     var body: some View {
-        FlowLayout(
-            mode: .scrollable,
-            items: tags,
-            itemSpacing: 10
-        ) { tag in
-            TagChipView(
-                title: tag.title,
-                isSelected: isSelected(tag),
-                action: {onTap(tag)}
-            )
+        FlowLayout(spacing: 10) {
+            ForEach(tags, id: \.id) { tag in
+                TagChipView(
+                    title: tag.title,
+                    isSelected: isSelected(tag),
+                    action: { onTap(tag) }
+                )
+            }
         }
     }
 }

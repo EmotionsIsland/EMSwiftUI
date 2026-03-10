@@ -15,7 +15,7 @@ struct MangaSingleGridView: View {
     var body: some View {
         LazyVGrid(columns: columns, spacing: 25) {
             ForEach(items) { itemVM in
-                MangaGridItemView(vm: itemVM)
+                MangaGridItemView(viewModel: itemVM)
             }
         }
         .padding(.horizontal, 16)
