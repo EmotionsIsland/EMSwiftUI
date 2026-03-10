@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct MangaSingleGridView: View {
+    let items: [MangaGridItemViewModel]
+
+    private let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
+
     var body: some View {
-        VStack {
-            // TODO: Create single grid View
+        LazyVGrid(columns: columns, spacing: 25) {
+            ForEach(items) { itemVM in
+                MangaGridItemView(vm: itemVM)
+            }
         }
     }
 }

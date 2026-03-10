@@ -21,6 +21,10 @@ protocol MangaListViewModel: ObservableObject {
     var recentlyAdded: [MangaData] { get }
     var lastUpdates: [MangaData] { get }
     
+    var popularVM: [MangaGridItemViewModel] { get }
+    var recentlyAddedVM: [MangaGridItemViewModel] { get }
+    var lastUpdatesVM: [MangaGridItemViewModel] { get }
+    
     func getData() async
 }
 
@@ -30,13 +34,17 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @Published private(set) var popular: [MangaData] = []
     @Published private(set) var recentlyAdded: [MangaData] = []
     @Published private(set) var lastUpdates: [MangaData] = []
-    
+
+    @Published var popularVM: [MangaGridItemViewModel] = []
+    @Published var recentlyAddedVM: [MangaGridItemViewModel] = []
+    @Published var lastUpdatesVM: [MangaGridItemViewModel] = []
+
     private let service: MangaListService
 
     init(service: MangaListService) {
         self.service = service
     }
-    
+
     @MainActor func getData() async {
         do {
             async let popularResponse = service.getManga(sort: .popular)
@@ -48,7 +56,11 @@ final class MangaListViewModelImpl: MangaListViewModel {
             popular = popularModel.data
             recentlyAdded = recentlyAddedModel.data
             lastUpdates = lastUpdatesModel.data
-            
+
+            popularVM = popular.map { MangaGridItemViewModel(manga: $0) }
+            recentlyAddedVM = recentlyAdded.map { MangaGridItemViewModel(manga: $0) }
+            lastUpdatesVM = lastUpdates.map { MangaGridItemViewModel(manga: $0) }
+
             screenState = .isLoaded
         } catch {
             screenState = .failed(error: error.localizedDescription)
