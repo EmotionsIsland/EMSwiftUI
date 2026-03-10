@@ -29,36 +29,35 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 Rectangle()
                     .fill(Color.black.opacity(0.1))
                     .frame(height: 1)
-
-                if viewModel.isLoading && viewModel.items.isEmpty {
-                    ProgressView().padding(.top, 12)
-                }
                 
-                if let error = viewModel.errorMessage {
+                switch viewModel.screenState {
+                case .isLoading:
+                    ProgressView().padding(.top, 12)
+                case .isLoaded:
+                    MangaSectionView(
+                        title: "Popular",
+                        items: filtered(viewModel.popular),
+                        onTapMore: { print("Popular") }
+                    )
+
+                    MangaSectionView(
+                        title: "Recently Added",
+                        items: filtered(viewModel.recentlyAdded),
+                        onTapMore: { print("Recently Added") }
+                    )
+                    
+                    MangaSectionView(
+                        title: "Last updates",
+                        items: filtered(viewModel.lastUpdates),
+                        onTapMore: { print("Last updates") }
+                    )
+                case .failed(let error):
                     Text(error)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
                 }
-                
-                MangaSectionView(
-                    title: "Popular",
-                    items: filtered(viewModel.popular),
-                    onTapMore: { print("Popular") }
-                )
-
-                MangaSectionView(
-                    title: "Recently Added",
-                    items: filtered(viewModel.recentlyAdded),
-                    onTapMore: { print("Recently Added") }
-                )
-                
-                MangaSectionView(
-                    title: "Last updates",
-                    items: filtered(viewModel.lastUpdates),
-                    onTapMore: { print("Last updates") }
-                )
             }
         }
         .task {

@@ -20,9 +20,9 @@ struct StaticFilterAttributes: StaticFilterAttributesProtocol {
 
     var staticSections: [FilterSection] {
         [
-            FilterSection(id: .contentRating, isExpanded: false, tags: contentRatingTags),
-            FilterSection(id: .publicationDemographic, isExpanded: false, tags: publicationDemographicTags),
-            FilterSection(id: .status, isExpanded: false, tags: statusTags)
+            FilterSection(filterTagGroup: .contentRating, isExpanded: false, tags: contentRatingTags),
+            FilterSection(filterTagGroup: .publicationDemographic, isExpanded: false, tags: publicationDemographicTags),
+            FilterSection(filterTagGroup: .status, isExpanded: false, tags: statusTags)
         ]
     }
 

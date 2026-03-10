@@ -40,11 +40,11 @@ struct FilterScreen: View {
 
                 Divider().padding(.vertical, 8)
 
-                ForEach(viewModel.sections) { section in
+                ForEach(viewModel.sections, id: \.tags) { section in
                     FilterSectionView(
                         title: section.title,
                         isExpanded: section.isExpanded,
-                        onToggle: { viewModel.toggleSection(section.id) },
+                        onToggle: { viewModel.toggleSection(section.filterTagGroup) },
                         content: {
                                 TagChipsGrid(
                                     tags: section.tags,

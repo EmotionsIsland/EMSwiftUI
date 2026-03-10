@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 final class FilterScreenViewModel: ObservableObject {
     @Published private(set) var sections: [FilterSection] = []
     @Published private(set) var allTagsByID: [String: FilterTag] = [:]
@@ -23,35 +24,55 @@ final class FilterScreenViewModel: ObservableObject {
         self.options = options
     }
 
-    @MainActor func load() async {
+    func load() async {
         do {
             let tags = try await service.fetchTags()
-
-            let all = tags + options.staticTags
-            allTagsByID = Dictionary(uniqueKeysWithValues: all.map { ($0.id, $0) })
-
-            let grouped = Dictionary(grouping: tags, by: { $0.group })
-
-            var result = options.staticSections
-
-            result += options.apiOrder
-                .map { group in
-                    FilterSection(id: group, isExpanded: false, tags: grouped[group] ?? [])
-                }
-                .filter { !$0.tags.isEmpty }
-
-            if let other = grouped[.other], !other.isEmpty {
-                result.append(FilterSection(id: .other, isExpanded: false, tags: other))
-            }
-
-            sections = result
+            proccesTags(tags)
         } catch {
             print("Filter tags load error:", error)
         }
     }
+    
+    private func proccesTags(_ tags: [FilterTag]) {
+        let allTags = tags + options.staticTags
+        
+        allTagsByID = Dictionary(uniqueKeysWithValues: allTags.map { ($0.id, $0) })
+        
+        sections = buildSections(from: tags)
+    }
+    
+    private func buildSections(from tags: [FilterTag]) -> [FilterSection] {
+        let grouped = Dictionary(grouping: tags) { $0.group }
+        
+        var result = options.staticSections
+        
+        let apiSections = options.apiOrder
+            .map {
+                FilterSection(
+                    filterTagGroup: $0,
+                    isExpanded: false,
+                    tags: grouped[$0] ?? []
+                )
+            }
+            .filter { !$0.tags.isEmpty }
+        
+        result += apiSections
+        
+        if let other = grouped[.other], !other.isEmpty {
+            result.append(
+                FilterSection(
+                    filterTagGroup: .other,
+                    isExpanded: false,
+                    tags: other
+                )
+            )
+        }
+        
+        return result
+    }
 
     func toggleSection(_ group: FilterTagGroup) {
-        guard let idx = sections.firstIndex(where: { $0.id == group }) else { return }
+        guard let idx = sections.firstIndex(where: { $0.filterTagGroup == group }) else { return }
         sections[idx].isExpanded.toggle()
     }
 

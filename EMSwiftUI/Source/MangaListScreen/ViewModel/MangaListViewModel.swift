@@ -16,8 +16,7 @@ enum SizeFormat: String {
 
 protocol MangaListViewModel: ObservableObject {
     var items: [MangaData] { get }
-    var isLoading: Bool { get }
-    var errorMessage: String? { get }
+    var screenState: MangaListViewState { get }
     var popular: [MangaData] { get }
     var recentlyAdded: [MangaData] { get }
     var lastUpdates: [MangaData] { get }
@@ -27,8 +26,7 @@ protocol MangaListViewModel: ObservableObject {
 
 final class MangaListViewModelImpl: MangaListViewModel {
     @Published var items: [MangaData] = []
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
+    @Published var screenState: MangaListViewState = .isLoading
     @Published private(set) var popular: [MangaData] = []
     @Published private(set) var recentlyAdded: [MangaData] = []
     @Published private(set) var lastUpdates: [MangaData] = []
@@ -40,11 +38,6 @@ final class MangaListViewModelImpl: MangaListViewModel {
     }
     
     @MainActor func getData() async {
-        guard !isLoading else { return }
-        isLoading = true
-        errorMessage = nil
-        defer { isLoading = false }
-
         do {
             async let popularResponse = service.getManga(sort: .popular)
             async let recentlyAddedResponse = service.getManga(sort: .recentlyAdded)
@@ -55,8 +48,10 @@ final class MangaListViewModelImpl: MangaListViewModel {
             popular = popularModel.data
             recentlyAdded = recentlyAddedModel.data
             lastUpdates = lastUpdatesModel.data
+            
+            screenState = .isLoaded
         } catch {
-            errorMessage = error.localizedDescription
+            screenState = .failed(error: error.localizedDescription)
         }
     }
 }

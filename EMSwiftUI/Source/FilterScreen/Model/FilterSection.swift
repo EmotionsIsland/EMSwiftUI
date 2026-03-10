@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct FilterSection: Identifiable, Hashable {
-    let id: FilterTagGroup
+struct FilterSection: Hashable {
+    let filterTagGroup: FilterTagGroup
     var isExpanded: Bool
     var tags: [FilterTag]
 
-    var title: String { id.title }
+    var title: String { filterTagGroup.title }
 }
