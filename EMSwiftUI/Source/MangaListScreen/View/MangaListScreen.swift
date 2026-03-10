@@ -14,11 +14,11 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
     init(viewModel: VM) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-    
-    private func filtered(_ items: [MangaData]) -> [MangaData] {
+
+    private func filtered(_ items: [MangaGridItemViewModel]) -> [MangaGridItemViewModel] {
         let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return items }
-        return items.filter { ($0.attributes.mangaTitle).localizedCaseInsensitiveContains(text) }
+        return items.filter { $0.title.localizedCaseInsensitiveContains(text) }
     }
     
     var body: some View {
@@ -36,20 +36,20 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 case .isLoaded:
                     MangaSectionView(
                         title: "Popular",
-                        items: filtered(viewModel.popular),
+                        items: viewModel.popularVM,
                         onTapMore: { print("Popular") }
                     )
 
                     MangaSectionView(
                         title: "Recently Added",
-                        items: filtered(viewModel.recentlyAdded),
+                        items: viewModel.recentlyAddedVM,
                         onTapMore: { print("Recently Added") }
                     )
                     
                     MangaSectionView(
-                        title: "Last updates",
-                        items: filtered(viewModel.lastUpdates),
-                        onTapMore: { print("Last updates") }
+                        title: "Last Updates",
+                        items: viewModel.lastUpdatesVM,
+                        onTapMore: { print("Last Updates") }
                     )
                 case .failed(let error):
                     Text(error)

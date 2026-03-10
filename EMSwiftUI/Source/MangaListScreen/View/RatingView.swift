@@ -9,29 +9,42 @@ import SwiftUI
 
 struct RatingView: View {
     let rating: Double
-    let maxRating: Int
+    let maxRating: Int = 5
 
     var body: some View {
         HStack(spacing: 4) {
             ForEach(0..<maxRating, id: \.self) { index in
-                let value = rating - Double(index)
-                
-                if value >= 1.0 {
-                    Image("starIcon")
-                        .resizable()
-                        .renderingMode(.original)
-                } else if value >= 0.5 {
-                    Image("starIconHalf")
-                        .resizable()
-                        .renderingMode(.original)
-                } else {
-                    Image("starIcon")
-                        .resizable()
-                        .renderingMode(.template)
-                        .foregroundStyle(Color.grayBase)
-                        .opacity(0.3)
-                }
+                Image("starIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(Color.grayBase)
+                    .overlay(
+                        GeometryReader { geo in
+                            Image("starIcon")
+                                .renderingMode(.original)
+                                .resizable()
+                                .scaledToFit()
+                                .mask(
+                                    Rectangle()
+                                        .size(width: geo.size.width * starFill(for: index),
+                                              height: geo.size.height)
+                                )
+                        }
+                    )
+                    .frame(width: 16, height: 16)
             }
         }
+        .frame(height: 16)
+    }
+
+    private func starFill(for index: Int) -> CGFloat {
+        let value = rating - Double(index)
+        if value >= 1 {
+            return 1
+        }
+        if value > 0 {
+            return CGFloat(value)
+        }
+        return 0
     }
 }

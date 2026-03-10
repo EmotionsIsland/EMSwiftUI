@@ -8,19 +8,7 @@ import SwiftUI
 import Netify
 
 struct MangaGridItemView: View {
-    let manga: MangaData
-
-    private var title: String {
-        manga.attributes.mangaTitle
-    }
-
-    private var subtitle: String {
-        manga.attributes.mangaSubtitle
-    }
-
-    private var coverURL: URL? {
-        API.coverURL(for: manga, .size512)
-    }
+    @ObservedObject var vm: MangaGridItemViewModel
 
     private let coverHeight: CGFloat = 144
     private let cornerRadius: CGFloat = 12
@@ -29,15 +17,14 @@ struct MangaGridItemView: View {
         VStack(alignment: .leading, spacing: 6) {
             cover
 
-            Text(title)
+            Text(vm.title)
                 .font(.SFPro.semiboldNormal)
-                .fontWeight(.semibold)
                 .foregroundStyle(Color.blackBase)
                 .lineLimit(1)
 
-            RatingView(rating: 4.5, maxRating: 5)
+            RatingView(rating: vm.rating)
 
-            Text(subtitle)
+            Text(vm.subtitle)
                 .font(.SFPro.lightSmall)
                 .foregroundStyle(Color.grayBase)
                 .lineLimit(1)
@@ -51,7 +38,7 @@ struct MangaGridItemView: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .foregroundStyle(.quaternary)
                 
-                AsyncImage(url: coverURL) { phase in
+                AsyncImage(url: vm.coverURL) { phase in
                     switch phase {
                     case .success(let image):
                         image
