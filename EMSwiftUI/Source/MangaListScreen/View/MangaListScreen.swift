@@ -16,7 +16,45 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            // TODO: Create main view
+            VStack(spacing: 12) {
+                SearchBar(searchText: $searchText)
+                
+                Rectangle()
+                    .fill(Color.black.opacity(0.1))
+                    .frame(height: 1)
+                
+                switch viewModel.screenState {
+                case .isLoading:
+                    ProgressView().padding(.top, 12)
+                case .isLoaded:
+                    MangaSectionView(
+                        title: "Popular",
+                        items: filtered(viewModel.popular),
+                        onTapMore: { print("Popular") }
+                    )
+
+                    MangaSectionView(
+                        title: "Recently Added",
+                        items: filtered(viewModel.recentlyAdded),
+                        onTapMore: { print("Recently Added") }
+                    )
+                    
+                    MangaSectionView(
+                        title: "Last updates",
+                        items: filtered(viewModel.lastUpdates),
+                        onTapMore: { print("Last updates") }
+                    )
+                case .failed(let error):
+                    Text(error)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 16)
+                }
+            }
+        }
+        .task {
+            await viewModel.getData()
         }
     }
 }
