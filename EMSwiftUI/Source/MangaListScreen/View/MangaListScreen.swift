@@ -18,24 +18,27 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 40) {
                 MangaSectionView(title: "Категория 1") {
-                    ForEach(0..<3) { _ in
-                        Color.gray.frame(height: 150)
+                    ForEach(viewModel.mangaList) { manga in
+                        MangaSingleGridView(manga: manga)
                     }
                 }
                 
                 MangaSectionView(title: "Категория 2") {
-                    ForEach(0..<3) { _ in
-                        Color.gray.frame(height: 150)
+                    ForEach(viewModel.mangaList) { manga in
+                        MangaSingleGridView(manga: manga)
                     }
                 }
                 
                 MangaSectionView(title: "Категория 3") {
-                    ForEach(0..<3) { _ in
-                        Color.gray.frame(height: 150)
+                    ForEach(viewModel.mangaList) { manga in
+                        MangaSingleGridView(manga: manga)
                     }
                 }
             }
             .padding(.vertical)
+        }
+        .task {
+            await viewModel.getData()
         }
     }
 }
