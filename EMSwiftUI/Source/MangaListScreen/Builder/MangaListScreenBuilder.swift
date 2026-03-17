@@ -8,6 +8,7 @@
 import SwiftUI
 import Factory
 
+@MainActor
 final class MangaListScreenBuilder {
     static func build() -> some View {
         let service: MangaListService = MangaListServiceImpl(netify: Container.shared.netify())

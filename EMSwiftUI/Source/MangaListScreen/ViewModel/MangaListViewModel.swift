@@ -16,7 +16,6 @@ enum SizeFormat: String {
 
 @MainActor
 protocol MangaListViewModel: ObservableObject {
-    var items: [MangaData] { get }
     var screenState: MangaListViewState { get }
     
     var popularVM: [MangaGridItemViewModel] { get }
@@ -28,7 +27,6 @@ protocol MangaListViewModel: ObservableObject {
 
 @MainActor
 final class MangaListViewModelImpl: MangaListViewModel {
-    @Published var items: [MangaData] = []
     @Published var screenState: MangaListViewState = .isLoading
 
     @Published var popularVM: [MangaGridItemViewModel] = []
