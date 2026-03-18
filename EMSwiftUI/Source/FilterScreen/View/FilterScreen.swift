@@ -7,10 +7,83 @@
 
 import SwiftUI
 
-struct FilterScreen: View {
+@available(iOS 16.0, *)
+struct FilterScreen<VM: FilterTagsViewModel>: View {
+    @StateObject private var viewModel: VM
+    
+    init(viewModel: VM) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
-        VStack {
-            // TODO: Create View
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Selection")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.black)
+                    .padding(.top, 16)
+                    .padding(.horizontal)
+                
+                if !viewModel.selectedTags.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        FlexibleTagsView(
+                            tags: viewModel.selectedTags,
+                            isSelected: { _ in true },
+                            onTap: { tag in viewModel.toggleTag(tag) }
+                        )
+                    }
+                    .padding(.horizontal)
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(FilterSectionType.allCases) { section in
+                        FilterSectionView(
+                            title: section.rawValue,
+                            isExpanded: viewModel.expandedSections.contains(section),
+                            onHeaderTap: { viewModel.toggleSection(section) },
+                            content: {
+                                AnyView(
+                                    FlexibleTagsView(
+                                        tags: viewModel.sections[section] ?? [],
+                                        isSelected: { viewModel.isSelected($0) },
+                                        onTap: { tag in viewModel.toggleTag(tag) }
+                                    )
+                                )
+                            }
+                        )
+                        .padding(.horizontal)
+                    }
+                }
+                
+                VStack(spacing: 12) {
+                    Button {
+                        viewModel.apply()
+                    } label: {
+                        Text("Apply")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(Color("orangeBase"))
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal)
+                    
+                    Button {
+                        viewModel.reset()
+                    } label: {
+                        Text("Reset")
+                            .font(.system(size: 16, weight: .regular))
+                            .foregroundColor(.black)
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.bottom, 24)
+            }
+        }
+        .task {
+            await viewModel.load()
         }
     }
 }

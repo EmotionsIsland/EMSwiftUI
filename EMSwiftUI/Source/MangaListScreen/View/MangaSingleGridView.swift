@@ -23,7 +23,7 @@ struct MangaSingleGridView: View {
                     .frame(width: 100, height: 150)
             }
             
-            Text(manga.attributes.title.en ?? "No title")
+            Text(manga.attributes.title.english ?? "No title")
                 .font(.SFPro.lightSmall)
                 .foregroundColor(Color("PrimaryTextColor"))
                 .lineLimit(1)

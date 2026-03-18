@@ -7,7 +7,6 @@
 
 import Foundation
 
-// swiftlint:disable identifier_name
 struct MangaListModel: Decodable {
     let result: String
     let response: String
@@ -42,33 +41,18 @@ struct Attributes: Decodable {
     let availableTranslatedLanguages: [String?]
 }
 
-struct Title: Decodable {
-    let en: String?
-}
-
 struct Description: Decodable {
-    let en: String?
+    let english: String?
     let jaRo: String?
 }
 
 struct AlternativeTitle: Decodable {
-    let ru: String?
+    let russian: String?
 }
 
 struct AttributesDescription: Decodable {
-    let en: String?
-    let ru: String?
-}
-
-struct Tag: Decodable, Identifiable {
-    let id: String
-    let type: String
-    let attributes: TagAttributes
-}
-
-struct TagAttributes: Decodable {
-    let name: Title
-    let group: String
+    let english: String?
+    let russian: String?
 }
 
 struct Relationship: Decodable {
@@ -80,4 +64,3 @@ struct Relationship: Decodable {
 struct CoverAttributes: Decodable {
     let fileName: String
 }
-// swiftlint:enable identifier_name
