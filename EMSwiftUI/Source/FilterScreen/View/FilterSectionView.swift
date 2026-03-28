@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct FilterSectionView: View {
+struct FilterSectionView<Content: View>: View {
     let title: String
     let isExpanded: Bool
     let onToggle: () -> Void
-    let content: () -> AnyView
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {

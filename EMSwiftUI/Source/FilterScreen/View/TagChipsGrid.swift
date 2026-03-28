@@ -13,14 +13,14 @@ struct TagChipsGrid: View {
     let onTap: (FilterTag) -> Void
 
     var body: some View {
-        FlowLayout(spacing: 10) {
-            ForEach(tags, id: \.id) { tag in
-                TagChipView(
-                    title: tag.title,
-                    isSelected: isSelected(tag),
-                    action: { onTap(tag) }
-                )
-            }
+        FlowLayout(items: tags, spacing: 10) { tag in
+            TagChipView(
+                title: tag.title,
+                isSelected: isSelected(tag),
+                action: {
+                    onTap(tag)
+                }
+            )
         }
     }
 }

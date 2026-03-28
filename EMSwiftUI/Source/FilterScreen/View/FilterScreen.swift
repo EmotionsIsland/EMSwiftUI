@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct FilterScreen: View {
+    @StateObject private var viewModel: FilterScreenViewModel
+    
+    init(service: FilterTagsServiceProtocol) {
+        _viewModel = StateObject(wrappedValue: FilterScreenViewModel(service: service))
+    }
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 16) {
@@ -49,6 +55,9 @@ struct FilterScreen: View {
                 }
             }
             .padding(16)
+        }
+        .task {
+            await viewModel.load()
         }
     }
 }
