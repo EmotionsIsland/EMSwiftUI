@@ -15,12 +15,18 @@ enum SizeFormat: String {
 }
 
 protocol MangaListViewModel: ObservableObject {
-    var mangaList: [MangaData] { get }
+    var sections: [MangaSection] { get }
     func getData() async
 }
 
+struct MangaSection: Identifiable {
+    let id: String
+    let title: String
+    let mangaList: [MangaData]
+}
+
 final class MangaListViewModelImpl: MangaListViewModel {
-    @Published var mangaList: [MangaData] = []
+    @Published var sections: [MangaSection] = []
     private let service: MangaListService
 
     init(service: MangaListService) {
@@ -29,8 +35,22 @@ final class MangaListViewModelImpl: MangaListViewModel {
     
     @MainActor func getData() async {
         do {
-            let model = try await service.getManga()
-            self.mangaList = model.data
+            async let popular = service.getPopularManga()
+            async let recentlyAdded = service.getRecentlyAddedManga()
+            async let lastUpdated = service.getLastUpdatedManga()
+            async let seasonal = service.getSeasonalManga()
+
+            let popularModel = try await popular
+            let recentlyAddedModel = try await recentlyAdded
+            let lastUpdatedModel = try await lastUpdated
+            let seasonalModel = try await seasonal
+
+            sections = [
+                MangaSection(id: "popular", title: "Popular", mangaList: popularModel.data),
+                MangaSection(id: "recently-added", title: "Recently Added", mangaList: recentlyAddedModel.data),
+                MangaSection(id: "last-updates", title: "Last Updates", mangaList: lastUpdatedModel.data),
+                MangaSection(id: "seasonal", title: "Seasonal", mangaList: seasonalModel.data)
+            ]
         } catch {
             print("Error fetching manga: \(error)")
         }

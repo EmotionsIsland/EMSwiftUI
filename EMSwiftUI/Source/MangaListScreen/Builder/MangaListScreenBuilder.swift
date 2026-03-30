@@ -9,10 +9,10 @@ import SwiftUI
 import Factory
 
 final class MangaListScreenBuilder {
-    static func build() -> some View {
+    static func build(searchText: Binding<String>) -> some View {
         let service: MangaListService = MangaListServiceImpl(netify: Container.shared.netify())
         let viewModel = MangaListViewModelImpl(service: service)
-        let view = MangaListScreen(viewModel: viewModel)
+        let view = MangaListScreen(viewModel: viewModel, searchText: searchText)
         
         return view
     }

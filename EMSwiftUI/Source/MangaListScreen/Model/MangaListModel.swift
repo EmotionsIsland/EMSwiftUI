@@ -24,7 +24,7 @@ struct MangaData: Decodable, Identifiable {
 }
 
 struct Attributes: Decodable {
-    let title: Title
+    let title: MangaTitle
     let altTitles: [AlternativeTitle]
     let description: AttributesDescription
     let isLocked: Bool
@@ -47,7 +47,25 @@ struct Description: Decodable {
 }
 
 struct AlternativeTitle: Decodable {
-    let russian: String?
+    let value: String?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let dictionary = try container.decode([String: String].self)
+        value = dictionary.values.first
+    }
+}
+
+struct MangaTitle: Decodable {
+    let english: String?
+    let primary: String?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let dictionary = try container.decode([String: String].self)
+        english = dictionary["en"]
+        primary = dictionary["en"] ?? dictionary.values.first
+    }
 }
 
 struct AttributesDescription: Decodable {

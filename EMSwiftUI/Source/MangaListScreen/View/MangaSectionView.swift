@@ -24,9 +24,7 @@ struct MangaSectionView<Content: View>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(title)
-                .font(.SFPro.headline3)
-                .foregroundColor(Color("PrimaryTextColor"))
+            MangaSectionTitleView(title: title)
 
             LazyVGrid(columns: columns, spacing: 25) {
                 content
