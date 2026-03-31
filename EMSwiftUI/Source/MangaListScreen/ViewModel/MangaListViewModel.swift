@@ -14,16 +14,32 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-protocol MangaListViewModel: ObservableObject { }
+protocol MangaListViewModel: ObservableObject {
+    var mangas: [MangaData] { get }
+    
+    func fetchManga()
+}
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    // TODO: create Published variables
-    // TODO: create getData func
+    @Published var mangas: [MangaData] = []
     private let service: MangaListService
 
     init(service: MangaListService) {
         self.service = service
     }
     
-    @MainActor private func getData() async throws { }
+    @MainActor private func getData() async throws {
+        let data = try await service.getManga()
+        mangas = data.data
+    }
+    
+    func fetchManga() {
+        Task {
+            do {
+               try await getData()
+            } catch {
+                print("Ошибка загузки манги:\(error.localizedDescription)")
+            }
+        }
+    }
 }

@@ -12,8 +12,30 @@ struct RatingView: View {
     let maxRating: Int
     
     var body: some View {
-        VStack {
-            // TODO: Create star rating View
+        ZStack(alignment: .leading) {
+            HStack(spacing: 2) {
+                ForEach(0..<maxRating, id: \.self) { _ in
+                Image("starIcon")
+                        .foregroundStyle(Color(.gray).opacity(0.3))
+                        .font(.caption)
+                }
+            }
+            .overlay(
+            GeometryReader { geometry in
+                HStack(spacing: 2) {
+                    ForEach(0..<maxRating, id: \.self) { _ in
+                    Image("starIcon")
+                            .foregroundStyle(Color(.yellow))
+                            .font(.caption)
+                    }
+                }
+                .mask {
+                    Rectangle()
+                        .frame(width: geometry.size.width * rating / Double(maxRating))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            , alignment: .leading)
         }
     }
 }
