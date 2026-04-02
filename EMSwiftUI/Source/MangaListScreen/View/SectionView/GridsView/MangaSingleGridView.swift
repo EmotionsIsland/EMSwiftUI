@@ -18,5 +18,6 @@ struct MangaSingleGridView: View {
                 MangaGridItemView(viewModel: itemVM)
             }
         }
+        .padding(.horizontal, 16)
     }
 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FlowLayout<Item: Identifiable, Content: View>: View {
     let items: [Item]
-    var spacing: CGFloat = 8
     let content: (Item) -> Content
 
     @State private var sizes: [CGSize] = []
@@ -18,7 +17,7 @@ struct FlowLayout<Item: Identifiable, Content: View>: View {
     var body: some View {
         let points = layout(
             sizes: sizes,
-            spacing: spacing,
+            spacing: 8,
             containerWidth: containerWidth
         )
 

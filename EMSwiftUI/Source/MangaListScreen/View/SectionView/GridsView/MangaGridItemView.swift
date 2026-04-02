@@ -10,9 +10,6 @@ import Netify
 struct MangaGridItemView: View {
     @ObservedObject var viewModel: MangaGridItemViewModel
 
-    private let coverHeight: CGFloat = 144
-    private let cornerRadius: CGFloat = 12
-
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             cover
@@ -34,7 +31,7 @@ struct MangaGridItemView: View {
 
     private var cover: some View {
             ZStack {
-                RoundedRectangle(cornerRadius: cornerRadius)
+                RoundedRectangle(cornerRadius: 12)
                     .foregroundStyle(.quaternary)
                 
                 AsyncImage(url: viewModel.coverURL) { phase in
@@ -46,18 +43,21 @@ struct MangaGridItemView: View {
                         
                     case .failure:
                         Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
                             .foregroundStyle(.secondary)
                         
                     case .empty:
-                        EmptyView()
+                        ProgressView()
                         
                     @unknown default:
                         EmptyView()
                     }
                 }
             }
-            .frame(height: coverHeight)
+            .frame(width: 100, height: 144)
             .clipped()
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }

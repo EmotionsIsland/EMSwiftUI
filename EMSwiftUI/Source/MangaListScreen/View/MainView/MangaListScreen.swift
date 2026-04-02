@@ -34,23 +34,13 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 case .isLoading:
                     ProgressView().padding(.top, 12)
                 case .isLoaded:
-                    MangaSectionView(
-                        title: "Popular",
-                        items: viewModel.popularVM,
-                        onTapMore: { print("Popular") }
-                    )
-
-                    MangaSectionView(
-                        title: "Recently Added",
-                        items: viewModel.recentlyAddedVM,
-                        onTapMore: { print("Recently Added") }
-                    )
-                    
-                    MangaSectionView(
-                        title: "Last Updates",
-                        items: viewModel.lastUpdatesVM,
-                        onTapMore: { print("Last Updates") }
-                    )
+                    ForEach(viewModel.sections) { section in
+                        MangaSectionView(
+                            title: section.title,
+                            items: section.items,
+                            onTapMore: { print(section.title)}
+                        )
+                    }
                 case .failed(let error):
                     Text(error)
                         .font(.caption)
@@ -61,7 +51,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             }
         }
         .task {
-            await viewModel.getData()
+            await viewModel.loadIfNeeded()
         }
     }
 }

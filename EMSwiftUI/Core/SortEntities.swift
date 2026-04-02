@@ -23,3 +23,17 @@ enum MangaSort {
         }
     }
 }
+
+enum TagSort {
+    case titleAscending
+    case titleDescending
+
+    var queryItem: URLQueryItem {
+        switch self {
+        case .titleAscending:
+            return URLQueryItem(name: "order[name]", value: "asc")
+        case .titleDescending:
+            return URLQueryItem(name: "order[name]", value: "desc")
+        }
+    }
+}

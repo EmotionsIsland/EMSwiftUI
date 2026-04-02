@@ -18,3 +18,26 @@ extension Container {
         Factory(self) { LogifyImpl(logLevel: .debug) }
     }
 }
+
+extension Container {
+    var staticFilterAttributes: Factory<StaticFilterAttributesProtocol> {
+        Factory(self) {
+            StaticFilterAttributes()
+        }
+    }
+
+    var filterTagsService: Factory<FilterTagsServiceProtocol> {
+        Factory(self) {
+            FilterTagsService(netify: self.netify())
+        }
+    }
+
+    var filterScreenViewModel: Factory<FilterScreenViewModel> {
+        Factory(self) {
+            FilterScreenViewModel(
+                service: self.filterTagsService(),
+                options: self.staticFilterAttributes()
+            )
+        }
+    }
+}

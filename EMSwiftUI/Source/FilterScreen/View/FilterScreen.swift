@@ -10,8 +10,8 @@ import SwiftUI
 struct FilterScreen: View {
     @StateObject private var viewModel: FilterScreenViewModel
     
-    init(service: FilterTagsServiceProtocol) {
-        _viewModel = StateObject(wrappedValue: FilterScreenViewModel(service: service))
+    init(viewModel: FilterScreenViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
@@ -37,9 +37,10 @@ struct FilterScreen: View {
                     viewModel.reset()
                 }
 
-                Divider().padding(.vertical, 8)
+                Divider()
+                    .padding(.vertical, 8)
 
-                ForEach(viewModel.sections, id: \.tags) { section in
+                ForEach(viewModel.sections, id: \.filterTagGroup) { section in
                     FilterSectionView(
                         title: section.title,
                         isExpanded: section.isExpanded,

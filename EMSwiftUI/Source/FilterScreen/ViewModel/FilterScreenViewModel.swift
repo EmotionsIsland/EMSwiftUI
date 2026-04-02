@@ -7,7 +7,6 @@
 
 import Foundation
 
-@MainActor
 final class FilterScreenViewModel: ObservableObject {
     @Published private(set) var sections: [FilterSection] = []
     @Published private(set) var allTagsByID: [String: FilterTag] = [:]
@@ -27,12 +26,15 @@ final class FilterScreenViewModel: ObservableObject {
     func load() async {
         do {
             let tags = try await service.fetchTags()
-            proccesTags(tags)
+            await MainActor.run {
+                proccesTags(tags)
+            }
         } catch {
             print("Filter tags load error:", error)
         }
     }
     
+    @MainActor
     private func proccesTags(_ tags: [FilterTag]) {
         let allTags = tags + options.staticTags
         

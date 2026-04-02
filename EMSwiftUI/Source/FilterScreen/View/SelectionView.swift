@@ -16,16 +16,18 @@ struct SelectionView: View {
             Text("Selection")
                 .font(.system(size: 20, weight: .bold))
 
-            if selected.isEmpty {
-                Text("No filters selected")
-                    .foregroundColor(.grayBase)
-                    .font(.system(size: 14))
-            } else {
+            ZStack(alignment: .leading) {
                 TagChipsGrid(
                     tags: selected,
                     isSelected: { _ in true },
                     onTap: onTap
                 )
+                .opacity(selected.isEmpty ? 0 : 1)
+                
+                Text("No filters selected")
+                    .foregroundColor(.grayBase)
+                    .font(.system(size: 14))
+                    .opacity(selected.isEmpty ? 1 : 0)
             }
         }
     }

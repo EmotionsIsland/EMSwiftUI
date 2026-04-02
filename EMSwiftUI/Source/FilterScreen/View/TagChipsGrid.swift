@@ -13,7 +13,7 @@ struct TagChipsGrid: View {
     let onTap: (FilterTag) -> Void
 
     var body: some View {
-        FlowLayout(items: tags, spacing: 10) { tag in
+        FlowLayout(items: tags) { tag in
             TagChipView(
                 title: tag.title,
                 isSelected: isSelected(tag),

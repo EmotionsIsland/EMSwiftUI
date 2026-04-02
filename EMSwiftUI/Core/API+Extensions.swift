@@ -24,8 +24,8 @@ extension API {
         return api.endpoint(path: "/manga", queryItems: queryItems)
     }
     
-    static var mangaTags: Endpoint {
-        return api.endpoint(path: "/manga/tag")
+    static func mangaTags(sort: TagSort) -> Endpoint {
+        api.endpoint(path: "/manga/tag", queryItems: [sort.queryItem])
     }
 
     static func coverURL(for manga: MangaData, _ sizeFormat: SizeFormat = .size512) -> URL? {

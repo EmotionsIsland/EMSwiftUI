@@ -14,48 +14,106 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-@MainActor
 protocol MangaListViewModel: ObservableObject {
-    var items: [MangaData] { get }
     var screenState: MangaListViewState { get }
-    
-    var popularVM: [MangaGridItemViewModel] { get }
-    var recentlyAddedVM: [MangaGridItemViewModel] { get }
-    var lastUpdatesVM: [MangaGridItemViewModel] { get }
-    
-    func getData() async
+    var sections: [MangaSection] { get }
+
+    func loadIfNeeded() async
+    func reload() async
 }
 
-@MainActor
 final class MangaListViewModelImpl: MangaListViewModel {
-    @Published var items: [MangaData] = []
-    @Published var screenState: MangaListViewState = .isLoading
-
-    @Published var popularVM: [MangaGridItemViewModel] = []
-    @Published var recentlyAddedVM: [MangaGridItemViewModel] = []
-    @Published var lastUpdatesVM: [MangaGridItemViewModel] = []
+    @Published private(set) var screenState: MangaListViewState = .isLoading
+    @Published private(set) var sections: [MangaSection] = []
 
     private let service: MangaListService
+    private var hasLoaded = false
 
     init(service: MangaListService) {
         self.service = service
     }
 
-    func getData() async {
+    func loadIfNeeded() async {
+        guard !hasLoaded else { return }
+        await reload()
+    }
+    
+    func reload() async {
+        await setLoading()
+        
         do {
-            async let popularResponse = service.getManga(sort: .popular)
-            async let recentlyAddedResponse = service.getManga(sort: .recentlyAdded)
-            async let lastUpdatesResponse = service.getManga(sort: .lastUpdates)
-
-            let (popularModel, recentlyAddedModel, lastUpdatesModel) = try await (popularResponse, recentlyAddedResponse, lastUpdatesResponse)
-
-            popularVM = popularModel.data.map { MangaGridItemViewModel(manga: $0) }
-            recentlyAddedVM = recentlyAddedModel.data.map { MangaGridItemViewModel(manga: $0) }
-            lastUpdatesVM = lastUpdatesModel.data.map { MangaGridItemViewModel(manga: $0) }
-
-            screenState = .isLoaded
+            let loadedSections = try await loadAllSections()
+            await applyLoadedSections(loadedSections)
+            hasLoaded = true
         } catch {
-            screenState = .failed(error: error.localizedDescription)
+            await setFailed(error.localizedDescription)
         }
+    }
+}
+
+private extension MangaListViewModelImpl {
+    func loadAllSections() async throws -> [MangaSection] {
+        let configs: [MangaSectionConfig] = [
+            MangaSectionConfig(
+                id: "popular",
+                title: "Popular",
+                sort: .popular
+            ),
+            MangaSectionConfig(
+                id: "recent",
+                title: "Recently Added",
+                sort: .recentlyAdded
+            ),
+            MangaSectionConfig(
+                id: "updates",
+                title: "Last Updates",
+                sort: .lastUpdates
+            )
+        ]
+
+        return try await withThrowingTaskGroup(
+            of: (Int, MangaSection).self
+        ) { group in
+            for (index, config) in configs.enumerated() {
+                group.addTask { [service] in
+                    let response = try await service.getManga(sort: config.sort)
+                    let items = response.data.map { MangaGridItemViewModel(manga: $0) }
+
+                    let section = MangaSection(
+                        id: config.id,
+                        title: config.title,
+                        items: items
+                    )
+
+                    return (index, section)
+                }
+            }
+
+            var tempSections: [(Int, MangaSection)] = []
+
+            for try await result in group {
+                tempSections.append(result)
+            }
+
+            return tempSections
+                .sorted { $0.0 < $1.0 }
+                .map(\.1)
+        }
+    }
+
+    @MainActor
+    func setLoading() {
+        screenState = .isLoading
+    }
+
+    @MainActor
+    func applyLoadedSections(_ loadedSections: [MangaSection]) {
+        sections = loadedSections
+        screenState = .isLoaded
+    }
+
+    @MainActor
+    func setFailed(_ message: String) {
+        screenState = .failed(error: message)
     }
 }
