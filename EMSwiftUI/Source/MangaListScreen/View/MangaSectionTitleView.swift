@@ -9,10 +9,11 @@ import SwiftUI
 
 struct MangaSectionTitleView: View {
     let title: String
+    
     var body: some View {
         HStack {
             Text(title)
-                .font(Font.SFPro.headline3)
+                .font(Font.SFPro.semiboldNormal)
             
             Spacer()
             

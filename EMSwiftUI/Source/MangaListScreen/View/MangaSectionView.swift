@@ -10,7 +10,7 @@ import SwiftUI
 struct MangaSectionView: View {
     let sectionIndex: Int
     let title: String
-    let mangas: [MangaData]
+    let mangas: [MangaItemUIModel]
     
     let colums = Array(repeating: GridItem(.flexible()), count: 3)
     
@@ -20,8 +20,7 @@ struct MangaSectionView: View {
             
             LazyVGrid(columns: colums, spacing: 25) {
                 ForEach(mangas) { manga in
-                    MangaSingleGridView(manga: manga)
-                        .id("\(sectionIndex)-\(manga.id)")
+                    MangaSingleGridView(item: manga)
                 }
             }
         }

@@ -15,28 +15,26 @@ enum SizeFormat: String {
 }
 
 protocol MangaListViewModel: ObservableObject {
-    var mangas: [MangaData] { get }
+    var mangas: [MangaItemUIModel] { get }
     
     func fetchManga()
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    @Published var mangas: [MangaData] = []
+    @Published var mangas: [MangaItemUIModel] = []
     private let service: MangaListService
 
     init(service: MangaListService) {
         self.service = service
     }
     
-    @MainActor private func getData() async throws {
-        let data = try await service.getManga()
-        mangas = data.data
-    }
-    
     func fetchManga() {
         Task {
             do {
-               try await getData()
+                let data = try await service.getManga()
+                await MainActor.run {
+                    self.mangas = data.data.map { MangaItemUIModel(manga: $0)}
+                }
             } catch {
                 print("Ошибка загузки манги:\(error.localizedDescription)")
             }

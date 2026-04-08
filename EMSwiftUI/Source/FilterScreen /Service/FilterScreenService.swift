@@ -21,6 +21,6 @@ final class FilterScreenServiceImpl: FilterScreenService {
     }
     
     func getTags() async throws -> TagListModel {
-        try await netify.request(API.mangaTags, type: TagListModel.self  )
+        try await netify.request(API.mangaTags, type: TagListModel.self)
     }
 }

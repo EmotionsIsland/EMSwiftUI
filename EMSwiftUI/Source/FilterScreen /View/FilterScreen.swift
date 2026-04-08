@@ -24,7 +24,8 @@ struct FilterScreen<VM: FilterScreenViewModel>: View {
                 
                 CategoriesSectionView(groupTags: viewModel.groupTags,
                                       selectedTagsIDs: viewModel.selectedTagsIDs,
-                                      onTagTap: { id in viewModel.toggleTag(id: id)})
+                                      onTagTap: { id in viewModel.toggleTag(id: id)},
+                                      sortedKeys: viewModel.sortedKeys)
             }
         }
         .task {

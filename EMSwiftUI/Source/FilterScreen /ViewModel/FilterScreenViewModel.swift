@@ -12,6 +12,7 @@ protocol FilterScreenViewModel: ObservableObject {
     var groupTags: [String: [Tag]] { get }
     var selectedTagsIDs: Set<String> { get }
     var selectedTags: [Tag] { get  }
+    var sortedKeys: [String] { get }
     
     func fetchTags()
     func toggleTag(id: String)
@@ -23,28 +24,27 @@ final class FilterScreenViewModelImpl: FilterScreenViewModel {
     
     @Published var groupTags: [String: [Tag]] = [:]
     @Published var selectedTagsIDs: Set<String> = []
+    
     var selectedTags: [Tag] {
         let allTags = groupTags.values.flatMap {$0 }
         return allTags.filter {selectedTagsIDs.contains($0.id) }
+    }
+    
+    var sortedKeys: [String] {
+        groupTags.keys.sorted()
     }
     
     init(service: FilterScreenService) {
         self.service = service
     }
     
-    @MainActor private func getTags() async throws {
-        let response = try await service.getTags()
-        let allTags = response.data
-        
-        self.groupTags = Dictionary(grouping: allTags, by: {tag in
-            tag.attributes.group
-        })
-    }
-    
     func fetchTags() {
         Task {
             do {
-                try await getTags()
+                let response = try await service.getTags()
+                await MainActor.run {
+                    self.groupTags = Dictionary(grouping: response.data, by: {$0.attributes.group})
+                }
             } catch {
                 print("Ошибка загузки тэгов:\(error.localizedDescription)")
             }
@@ -61,5 +61,21 @@ final class FilterScreenViewModelImpl: FilterScreenViewModel {
     
     func reset() {
         selectedTagsIDs.removeAll()
+    }
+    
+    static func formatTitle(_ key: String) -> String {
+        switch key.lowercased() {
+        case "content":
+            return "Content Rating"
+        case "format":
+            return "Format"
+        case "genre":
+            return "Genre"
+        case "theme":
+            return "Theme"
+        case "magazine":
+            return "Magazine Demographic"
+        default: return key.capitalized
+        }
     }
 }

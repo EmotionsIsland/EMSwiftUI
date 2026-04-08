@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TapPillView: View {
     let title: String
-    var isSelected: Bool
-    var action: () -> Void
+    let isSelected: Bool
+    let action: () -> Void
     
     var body: some View {
         Button(action: action) {
@@ -19,14 +19,13 @@ struct TapPillView: View {
                     Image(systemName: "plus")
                         .font(Font.SFPro.semiboldNormal)
                 }
-                Text(title)                    .font(Font.SFPro.semiboldNormal)
+                Text(title)
+                    .font(Font.SFPro.semiboldNormal)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            
             .foregroundStyle(isSelected ? Color.whiteText : Color.blackBase)
             .background(isSelected ? Color.orangeBase : Color.grayBase)
-            
             .cornerRadius(8)
         }
         .buttonStyle(PlainButtonStyle())

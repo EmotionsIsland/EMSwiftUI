@@ -34,9 +34,8 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 20)
-            
             .task {
-                viewModel.fetchManga()
+                 viewModel.fetchManga()
             }
         }
     }

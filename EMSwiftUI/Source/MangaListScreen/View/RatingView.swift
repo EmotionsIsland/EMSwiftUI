@@ -25,7 +25,7 @@ struct RatingView: View {
                 HStack(spacing: 2) {
                     ForEach(0..<maxRating, id: \.self) { _ in
                     Image("starIcon")
-                            .foregroundStyle(Color(.yellow))
+                            .foregroundStyle(Color.yellowRating)
                             .font(.caption)
                     }
                 }

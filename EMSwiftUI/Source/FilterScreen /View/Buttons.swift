@@ -12,23 +12,14 @@ struct Buttons: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            Button(action: {
+            Button("Apply", action: {
                 print("Tapped")
-            }, label: {
-                Text("Apply")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.orangeBase)
-                    .foregroundStyle(Color(.white))
-                    .cornerRadius(8)
             })
-            Button(action: onReset,
-                   label: {
-                Text("Reset")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundStyle(Color.blackBase)
-            })
+            .buttonStyle(MainButtonStyle(backghroundColor: Color.orangeBase,
+                                         foregroundStyle: Color.white))
+            Button("Reset", action: onReset)
+                .buttonStyle(MainButtonStyle(backghroundColor: .clear,
+                                             foregroundStyle: Color.blackBase))
         }
         .padding(.top, 8)
     }
