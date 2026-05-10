@@ -8,7 +8,7 @@ struct FlexibleTagsView: View {
 
     @State private var tagSizes: [String: CGSize] = [:]
 
-    private let horizontalSpacing: CGFloat = 8
+    private let layoutService = FlowLayoutService(horizontalSpacing: 8)
     private let verticalSpacing: CGFloat = 8
     
     var body: some View {
@@ -20,11 +20,15 @@ struct FlexibleTagsView: View {
     }
 
     private func rowsView(maxWidth: CGFloat) -> some View {
-        let tagRows = rows(maxWidth: maxWidth)
+        let tagRows = layoutService.rows(
+            items: tags,
+            maxWidth: maxWidth,
+            sizeProvider: { size(for: $0) }
+        )
 
         return VStack(alignment: .leading, spacing: verticalSpacing) {
             ForEach(tagRows.indices, id: \.self) { rowIndex in
-                HStack(spacing: horizontalSpacing) {
+                HStack(spacing: layoutService.horizontalSpacing) {
                     ForEach(tagRows[rowIndex]) { tag in
                         let selected = isSelected(tag)
 
@@ -41,27 +45,6 @@ struct FlexibleTagsView: View {
         }
     }
 
-    private func rows(maxWidth: CGFloat) -> [[Tag]] {
-        var rows: [[Tag]] = [[]]
-        var currentRowWidth: CGFloat = .zero
-
-        for tag in tags {
-            let selected = isSelected(tag)
-            let size = tagSizes[sizeKey(for: tag, isSelected: selected), default: estimatedSize(for: tag)]
-            let spacing = rows[rows.count - 1].isEmpty ? CGFloat.zero : horizontalSpacing
-
-            if currentRowWidth + spacing + size.width > maxWidth, !rows[rows.count - 1].isEmpty {
-                rows.append([tag])
-                currentRowWidth = size.width
-            } else {
-                rows[rows.count - 1].append(tag)
-                currentRowWidth += spacing + size.width
-            }
-        }
-
-        return rows
-    }
-
     private func sizeReader(for id: String) -> some View {
         GeometryReader { geometry in
             Color.clear
@@ -69,19 +52,21 @@ struct FlexibleTagsView: View {
         }
     }
 
-    private func sizeKey(for tag: Tag, isSelected: Bool) -> String {
-        "\(tag.id)-\(isSelected)"
+    private func size(for tag: Tag) -> CGSize {
+        let selected = isSelected(tag)
+
+        return tagSizes[
+            sizeKey(for: tag, isSelected: selected),
+            default: layoutService.estimatedSize(title: title(for: tag), isSelected: selected)
+        ]
     }
 
-    private func estimatedSize(for tag: Tag) -> CGSize {
-        let title = tag.attributes.name.english ?? tag.id
-        let selectedIconWidth = isSelected(tag) ? CGFloat(18) : .zero
-        let averageCharacterWidth = CGFloat(9)
+    private func sizeKey(for tag: Tag, isSelected: Bool) -> String {
+        layoutService.sizeKey(id: tag.id, isSelected: isSelected)
+    }
 
-        return CGSize(
-            width: CGFloat(title.count) * averageCharacterWidth + 20 + selectedIconWidth,
-            height: 29
-        )
+    private func title(for tag: Tag) -> String {
+        tag.attributes.name.english ?? tag.id
     }
 }
 
