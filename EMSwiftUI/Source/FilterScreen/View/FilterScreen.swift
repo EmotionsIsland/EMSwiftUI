@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct FilterScreen<VM: FilterTagsViewModel>: View {
     @StateObject private var viewModel: VM
     
@@ -16,6 +15,15 @@ struct FilterScreen<VM: FilterTagsViewModel>: View {
     }
     
     var body: some View {
+        GeometryReader { geometry in
+            contentView(contentWidth: geometry.size.width - 32)
+        }
+        .task {
+            await viewModel.load()
+        }
+    }
+
+    private func contentView(contentWidth: CGFloat) -> some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 16) {
                 Text("Selection")
@@ -23,18 +31,20 @@ struct FilterScreen<VM: FilterTagsViewModel>: View {
                     .foregroundColor(.black)
                     .padding(.top, 16)
                     .padding(.horizontal)
-                
+
                 if !viewModel.selectedTags.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
                         FlexibleTagsView(
                             tags: viewModel.selectedTags,
+                            maxWidth: contentWidth,
                             isSelected: { _ in true },
                             onTap: { tag in viewModel.toggleTag(tag) }
                         )
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(FilterSectionType.allCases) { section in
                         FilterSectionView(
@@ -45,6 +55,7 @@ struct FilterScreen<VM: FilterTagsViewModel>: View {
                                 AnyView(
                                     FlexibleTagsView(
                                         tags: viewModel.sections[section] ?? [],
+                                        maxWidth: contentWidth,
                                         isSelected: { viewModel.isSelected($0) },
                                         onTap: { tag in viewModel.toggleTag(tag) }
                                     )
@@ -54,7 +65,7 @@ struct FilterScreen<VM: FilterTagsViewModel>: View {
                         .padding(.horizontal)
                     }
                 }
-                
+
                 VStack(spacing: 12) {
                     Button {
                         viewModel.apply()
@@ -69,7 +80,7 @@ struct FilterScreen<VM: FilterTagsViewModel>: View {
                     }
                     .buttonStyle(.plain)
                     .padding(.horizontal)
-                    
+
                     Button {
                         viewModel.reset()
                     } label: {
@@ -81,9 +92,7 @@ struct FilterScreen<VM: FilterTagsViewModel>: View {
                 }
                 .padding(.bottom, 24)
             }
-        }
-        .task {
-            await viewModel.load()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

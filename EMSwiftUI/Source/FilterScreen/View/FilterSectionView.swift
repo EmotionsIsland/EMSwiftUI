@@ -26,5 +26,6 @@ struct FilterSectionView: View {
             }
         }
         .padding(.vertical, 6)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
