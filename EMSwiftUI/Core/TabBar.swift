@@ -18,7 +18,7 @@ struct TabBar: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            headerView
+            TabBarHeaderView(selection: selection, searchText: $searchText)
             Divider()
             
             TabView(selection: $selection) {
@@ -31,21 +31,6 @@ struct TabBar: View {
 }
 
 private extension TabBar {
-    @ViewBuilder
-    var headerView: some View {
-        switch selection {
-        case .main:
-            SearchHeaderView(text: $searchText)
-        case .filter:
-            Text("Filters")
-                .font(.SFPro.headline3)
-                .foregroundColor(.blackBase)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(.white)
-        }
-    }
-    
     var mainTab: some View {
         MangaListScreenBuilder.build(searchText: $searchText)
             .tag(TabSelection.main)
@@ -60,6 +45,25 @@ private extension TabBar {
             .tabItem {
                 Image(.tabBarSearch)
             }
+    }
+}
+
+private struct TabBarHeaderView: View {
+    let selection: TabSelection
+    @Binding var searchText: String
+    
+    var body: some View {
+        switch selection {
+        case .main:
+            SearchHeaderView(text: $searchText)
+        case .filter:
+            Text("Filters")
+                .font(.SFPro.headline3)
+                .foregroundColor(.blackBase)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(.white)
+        }
     }
 }
 
