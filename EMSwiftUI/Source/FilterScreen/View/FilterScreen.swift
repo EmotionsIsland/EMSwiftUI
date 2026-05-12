@@ -32,7 +32,6 @@ private extension FilterScreen {
                 titleView
                 selectedTagsView(contentWidth: contentWidth)
                 sectionsView(contentWidth: contentWidth)
-                actionsView
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -56,6 +55,7 @@ private extension FilterScreen {
                     isSelected: { _ in true },
                     onTap: { tag in viewModel.toggleTag(tag) }
                 )
+                actionsView
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, horizontalPadding)
@@ -94,7 +94,7 @@ private extension FilterScreen {
             applyButton
             resetButton
         }
-        .padding(.bottom, 24)
+        .padding(.top, 4)
     }
 
     private var applyButton: some View {
@@ -110,7 +110,6 @@ private extension FilterScreen {
                 .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
         .buttonStyle(.plain)
-        .padding(.horizontal, horizontalPadding)
     }
 
     private var resetButton: some View {
