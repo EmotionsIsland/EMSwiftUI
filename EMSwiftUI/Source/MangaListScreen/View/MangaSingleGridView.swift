@@ -28,9 +28,11 @@ struct MangaSingleGridView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+}
 
+private extension MangaSingleGridView {
     @ViewBuilder
-    private var coverImage: some View {
+    var coverImage: some View {
         AsyncImage(url: item.coverURL) { phase in
             switch phase {
             case .empty:
@@ -40,6 +42,7 @@ struct MangaSingleGridView: View {
                 image
                     .resizable()
                     .scaledToFill()
+                    .frame(height: 144)
 
             case .failure:
                 placeholder
@@ -55,7 +58,7 @@ struct MangaSingleGridView: View {
         .padding(.bottom, 2)
     }
 
-    private var placeholder: some View {
+    var placeholder: some View {
         RoundedRectangle(cornerRadius: 4)
             .fill(.grayBase.opacity(0.2))
     }

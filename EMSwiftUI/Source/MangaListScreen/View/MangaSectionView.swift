@@ -10,11 +10,10 @@ import SwiftUI
 struct MangaSectionView: View {
     let section: MangaSection
 
-    private let columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25)
-    ]
+    private let columns: [GridItem] = Array(
+        repeating: GridItem(.flexible(), spacing: 25),
+        count: 3
+    )
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {

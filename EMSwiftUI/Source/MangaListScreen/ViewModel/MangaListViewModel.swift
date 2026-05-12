@@ -33,7 +33,6 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @Published private(set) var viewState: MangaListViewState = .loading
 
     private let service: MangaListService
-    private let placeholderRating: CGFloat = 4.2
     private var isFetching = false
 
     init(service: MangaListService) {
@@ -73,47 +72,12 @@ private extension MangaListViewModelImpl {
     }
 
     func makeSections(from data: [MangaData]) -> [MangaSection] {
-        let items = data.compactMap { mapItem(from: $0) }
+        let items = service.getSectionItems(from: data)
 
         return [
             MangaSection(title: "Popular", items: items),
             MangaSection(title: "Recently Added", items: items),
             MangaSection(title: "Last Updates", items: items)
         ]
-    }
-
-    func mapItem(from data: MangaData) -> MangaItem? {
-        guard let title = data.attributes.title.displayTitle else {
-            return nil
-        }
-
-        let genres = data.attributes.tags
-            .compactMap { $0.attributes.name.displayTitle ?? $0.attributes.name.en }
-            .joined(separator: ", ")
-
-        let coverFileName = data.relationships
-            .first(where: { $0.type == "cover_art" })?
-            .attributes?.fileName
-
-        let coverURL = makeCoverURL(
-            mangaId: data.id,
-            fileName: coverFileName
-        )
-
-        return MangaItem(
-            id: data.id,
-            title: title,
-            genres: genres,
-            coverURL: coverURL,
-            rating: placeholderRating
-        )
-    }
-
-    func makeCoverURL(mangaId: String, fileName: String?) -> URL? {
-        guard let fileName else { return nil }
-
-        return URL(
-            string: "https://uploads.mangadex.org/covers/\(mangaId)/\(fileName)"
-        )
     }
 }

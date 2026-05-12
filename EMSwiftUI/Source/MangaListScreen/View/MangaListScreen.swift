@@ -34,7 +34,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                             viewModel.retry()
                         },
                         label: {
-                            Text("Повторить")
+                            Text("Repeat")
                                 .font(.SFPro.bodyNormal)
                                 .foregroundStyle(.white)
                                 .frame(maxWidth: .infinity)
@@ -66,8 +66,10 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             viewModel.onAppear()
         }
     }
+}
 
-    private var searchView: some View {
+private extension MangaListScreen {
+    var searchView: some View {
         HStack(spacing: 4) {
             Image(.search)
                 .foregroundStyle(.grayBase)
