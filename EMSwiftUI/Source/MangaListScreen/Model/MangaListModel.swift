@@ -42,8 +42,38 @@ struct Attributes: Decodable {
     let availableTranslatedLanguages: [String?]
 }
 
+private struct AnyCodingKey: CodingKey {
+    var stringValue: String
+    init?(stringValue: String) {
+        self.stringValue = stringValue
+    }
+    var intValue: Int? { nil }
+    init?(intValue: Int) {
+        return nil
+    }
+}
+
 struct Title: Decodable {
     let en: String?
+    let displayTitle: String?
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: AnyCodingKey.self)
+        var values: [String: String] = [:]
+        for key in container.allKeys {
+            if let value = try? container.decode(String.self, forKey: key), !value.isEmpty {
+                values[key.stringValue] = value
+            }
+        }
+        en = values["en"]
+        if let english = values["en"], !english.isEmpty {
+            displayTitle = english
+        } else {
+            displayTitle = values
+                .sorted(by: { $0.key < $1.key })
+                .map(\.value)
+                .first
+        }
+    }
 }
 
 struct Description: Decodable {
@@ -79,5 +109,19 @@ struct Relationship: Decodable {
 
 struct CoverAttributes: Decodable {
     let fileName: String
+}
+
+struct MangaSection: Identifiable {
+    let id = UUID()
+    let title: String
+    let items: [MangaItem]
+}
+
+struct MangaItem: Identifiable {
+    let id: String
+    let title: String
+    let genres: String
+    let coverURL: URL?
+    let rating: CGFloat
 }
 // swiftlint:enable identifier_name
