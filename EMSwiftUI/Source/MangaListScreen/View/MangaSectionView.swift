@@ -16,11 +16,10 @@ struct MangaSectionView<Content: View>: View {
         self.content = content()
     }
 
-    private let columns = [
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25),
-        GridItem(.flexible(), spacing: 25)
-    ]
+    private let columns = Array(
+        repeating: GridItem(.flexible(), spacing: 25),
+        count: 3
+    )
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {

@@ -23,7 +23,41 @@ protocol MangaListViewModel: ObservableObject {
 struct MangaSection: Identifiable {
     let id: String
     let title: String
-    let mangaList: [MangaData]
+    let mangaList: [MangaListItem]
+}
+
+struct MangaListItem: Identifiable {
+    let manga: MangaData
+    
+    var id: String {
+        manga.id
+    }
+    
+    var titleText: String {
+        searchableTitle.isEmpty ? "No title" : searchableTitle
+    }
+    
+    var tagsText: String {
+        let tags = manga.attributes.tags
+            .compactMap(\.attributes.name.english)
+            .filter { !$0.isEmpty }
+        
+        guard !tags.isEmpty else {
+            return "No tags"
+        }
+        
+        return tags.prefix(3).joined(separator: ", ")
+    }
+    
+    var searchableTitle: String {
+        if let title = manga.attributes.title.primary, !title.isEmpty {
+            return title
+        }
+        
+        return manga.attributes.altTitles
+            .compactMap(\.value)
+            .first(where: { !$0.isEmpty }) ?? ""
+    }
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
@@ -42,8 +76,8 @@ final class MangaListViewModelImpl: MangaListViewModel {
         }
         
         return sections.compactMap { section in
-            let filteredManga = section.mangaList.filter { manga in
-                manga.searchableTitle.localizedCaseInsensitiveContains(trimmedQuery)
+            let filteredManga = section.mangaList.filter { item in
+                item.searchableTitle.localizedCaseInsensitiveContains(trimmedQuery)
             }
             
             guard !filteredManga.isEmpty else {
@@ -67,25 +101,17 @@ final class MangaListViewModelImpl: MangaListViewModel {
             let seasonalModel = try await seasonal
 
             sections = [
-                MangaSection(id: "popular", title: "Popular", mangaList: popularModel.data),
-                MangaSection(id: "recently-added", title: "Recently Added", mangaList: recentlyAddedModel.data),
-                MangaSection(id: "last-updates", title: "Last Updates", mangaList: lastUpdatedModel.data),
-                MangaSection(id: "seasonal", title: "Seasonal", mangaList: seasonalModel.data)
+                MangaSection(id: "popular", title: "Popular", mangaList: popularModel.data.map(MangaListItem.init)),
+                MangaSection(
+                    id: "recently-added",
+                    title: "Recently Added",
+                    mangaList: recentlyAddedModel.data.map(MangaListItem.init)
+                ),
+                MangaSection(id: "last-updates", title: "Last Updates", mangaList: lastUpdatedModel.data.map(MangaListItem.init)),
+                MangaSection(id: "seasonal", title: "Seasonal", mangaList: seasonalModel.data.map(MangaListItem.init))
             ]
         } catch {
             print("Error fetching manga: \(error)")
         }
-    }
-}
-
-private extension MangaData {
-    var searchableTitle: String {
-        if let title = attributes.title.primary, !title.isEmpty {
-            return title
-        }
-        
-        return attributes.altTitles
-            .compactMap(\.value)
-            .first(where: { !$0.isEmpty }) ?? ""
     }
 }

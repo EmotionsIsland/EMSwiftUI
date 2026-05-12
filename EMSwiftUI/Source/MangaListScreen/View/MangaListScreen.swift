@@ -21,8 +21,8 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
             VStack(spacing: 40) {
                 ForEach(viewModel.filteredSections(for: searchText)) { section in
                     MangaSectionView(title: section.title) {
-                        ForEach(section.mangaList) { manga in
-                            MangaSingleGridView(manga: manga)
+                        ForEach(section.mangaList) { item in
+                            MangaSingleGridView(item: item)
                         }
                     }
                 }
