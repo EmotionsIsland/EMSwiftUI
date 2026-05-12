@@ -16,7 +16,7 @@ protocol MangaListService {
 
 final class MangaListServiceImpl: MangaListService {
     let netify: Netify
-    private let placeholderRating: CGFloat = 4.2
+    private let placeholderRating: CGFloat = 4.6
 
     init(netify: Netify) {
         self.netify = netify
