@@ -19,7 +19,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 40) {
-                ForEach(filteredSections) { section in
+                ForEach(viewModel.filteredSections(for: searchText)) { section in
                     MangaSectionView(title: section.title) {
                         ForEach(section.mangaList) { manga in
                             MangaSingleGridView(manga: manga)
@@ -27,42 +27,10 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                     }
                 }
             }
-            .padding(.vertical)
+            .padding(.vertical, 16)
         }
         .task {
             await viewModel.getData()
         }
-    }
-    
-    private var filteredSections: [MangaSection] {
-        let trimmedQuery = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        guard !trimmedQuery.isEmpty else {
-            return viewModel.sections
-        }
-        
-        return viewModel.sections.compactMap { section in
-            let filteredManga = section.mangaList.filter { manga in
-                manga.searchableTitle.localizedCaseInsensitiveContains(trimmedQuery)
-            }
-
-            guard !filteredManga.isEmpty else {
-                return nil
-            }
-
-            return MangaSection(id: section.id, title: section.title, mangaList: filteredManga)
-        }
-    }
-}
-
-private extension MangaData {
-    var searchableTitle: String {
-        if let title = attributes.title.primary, !title.isEmpty {
-            return title
-        }
-        
-        return attributes.altTitles
-            .compactMap(\.value)
-            .first(where: { !$0.isEmpty }) ?? ""
     }
 }

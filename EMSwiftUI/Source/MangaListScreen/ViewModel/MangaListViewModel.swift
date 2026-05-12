@@ -16,6 +16,7 @@ enum SizeFormat: String {
 
 protocol MangaListViewModel: ObservableObject {
     var sections: [MangaSection] { get }
+    func filteredSections(for searchText: String) -> [MangaSection]
     func getData() async
 }
 
@@ -31,6 +32,26 @@ final class MangaListViewModelImpl: MangaListViewModel {
 
     init(service: MangaListService) {
         self.service = service
+    }
+    
+    func filteredSections(for searchText: String) -> [MangaSection] {
+        let trimmedQuery = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !trimmedQuery.isEmpty else {
+            return sections
+        }
+        
+        return sections.compactMap { section in
+            let filteredManga = section.mangaList.filter { manga in
+                manga.searchableTitle.localizedCaseInsensitiveContains(trimmedQuery)
+            }
+            
+            guard !filteredManga.isEmpty else {
+                return nil
+            }
+            
+            return MangaSection(id: section.id, title: section.title, mangaList: filteredManga)
+        }
     }
     
     @MainActor func getData() async {
@@ -54,5 +75,17 @@ final class MangaListViewModelImpl: MangaListViewModel {
         } catch {
             print("Error fetching manga: \(error)")
         }
+    }
+}
+
+private extension MangaData {
+    var searchableTitle: String {
+        if let title = attributes.title.primary, !title.isEmpty {
+            return title
+        }
+        
+        return attributes.altTitles
+            .compactMap(\.value)
+            .first(where: { !$0.isEmpty }) ?? ""
     }
 }
