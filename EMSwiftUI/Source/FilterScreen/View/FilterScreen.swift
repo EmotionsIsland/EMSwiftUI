@@ -81,6 +81,7 @@ private extension FilterScreen {
                 }
             }
             .padding([.horizontal, .bottom], 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 

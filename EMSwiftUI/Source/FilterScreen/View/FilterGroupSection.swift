@@ -33,6 +33,8 @@ struct FilterGroupSection<VM: FilterViewModel>: View {
                         onTap: { viewModel.toggleTag(tag) }
                     )
                 }
+                .id("group-tags-\(group)")
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.bottom, 16)
             }
         }

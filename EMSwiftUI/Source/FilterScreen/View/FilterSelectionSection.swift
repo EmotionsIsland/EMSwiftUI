@@ -23,6 +23,9 @@ struct FilterSelectionSection<VM: FilterViewModel>: View {
                     onTap: { viewModel.toggleTag(tag) }
                 )
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .id(viewModel.selectedTagsOrdered.map(\.id).sorted().joined(separator: "|"))
+
             Button(
                 action: {
                     dismiss()
