@@ -7,14 +7,8 @@
 
 import Foundation
 
-enum FilterViewState: Equatable {
-    case loading
-    case content
-    case error(String)
-}
-
 protocol FilterViewModel: ObservableObject {
-    var viewState: FilterViewState { get }
+    var viewState: TabViewState { get }
     var groupedTags: [String: [FilterTagItem]] { get }
     var selectedTags: Set<FilterTagItem> { get }
     var sortedGroupTitles: [String] { get }
@@ -31,13 +25,14 @@ protocol FilterViewModel: ObservableObject {
 }
 
 final class FilterViewModelImpl: FilterViewModel {
-    @Published private(set) var viewState: FilterViewState = .loading
+    @Published private(set) var viewState: TabViewState = .loading
     @Published private(set) var groupedTags: [String: [FilterTagItem]] = [:]
     @Published var selectedTags: Set<FilterTagItem> = []
     @Published private(set) var expandedGroups: Set<String> = []
     @Published private(set) var isLoading = false
 
     private let service: FilterService
+    private let mapper: FilterTagsMapper
     private var didLoad = false
 
     var sortedGroupTitles: [String] {
@@ -50,8 +45,12 @@ final class FilterViewModelImpl: FilterViewModel {
         }
     }
 
-    init(service: FilterService) {
+    init(
+        service: FilterService,
+        mapper: FilterTagsMapper
+    ) {
         self.service = service
+        self.mapper = mapper
     }
 
     func onAppear() {
@@ -99,12 +98,10 @@ private extension FilterViewModelImpl {
         do {
             let response = try await service.getTags()
             let data = response.data
-            let grouped = await Task.detached(priority: .userInitiated) {
-                Self.makeGroupedTags(from: data)
-            }.value
+            let grouped = mapper.makeGroupedTags(from: data)
             await MainActor.run {
                 groupedTags = grouped
-                viewState = .content
+                viewState = .loaded
             }
         } catch {
             await MainActor.run {
@@ -112,20 +109,5 @@ private extension FilterViewModelImpl {
                 viewState = .error(error.localizedDescription)
             }
         }
-    }
-
-    static func makeGroupedTags(from tags: [Tag]) -> [String: [FilterTagItem]] {
-        let items = tags.compactMap { tag -> FilterTagItem? in
-            guard let title = tag.attributes.name.en else {
-                return nil
-            }
-            return FilterTagItem(
-                id: tag.id,
-                title: title,
-                group: tag.attributes.group
-            )
-        }
-        return Dictionary(grouping: items, by: \.group)
-            .mapValues { $0.sorted { $0.title < $1.title } }
     }
 }

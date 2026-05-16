@@ -11,7 +11,8 @@ import Factory
 final class FilterScreenBuilder {
     static func build() -> some View {
         let service: FilterService = FilterServiceImpl(netify: Container.shared.netify())
-        let viewModel = FilterViewModelImpl(service: service)
+        let mapper: FilterTagsMapper = FilterTagsMapperImpl()
+        let viewModel = FilterViewModelImpl(service: service, mapper: mapper)
 
         return FilterScreen(viewModel: viewModel)
     }

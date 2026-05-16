@@ -31,7 +31,6 @@ struct MangaSingleGridView: View {
 }
 
 private extension MangaSingleGridView {
-    @ViewBuilder
     var coverImage: some View {
         AsyncImage(url: item.coverURL) { phase in
             switch phase {

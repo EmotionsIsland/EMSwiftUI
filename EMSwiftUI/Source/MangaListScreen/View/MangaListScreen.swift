@@ -48,7 +48,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                 .padding(.vertical, 12)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-            case .content:
+            case .loaded:
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 24) {
                         searchView

@@ -14,15 +14,9 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-enum MangaListViewState: Equatable {
-    case loading
-    case content
-    case error(String)
-}
-
 protocol MangaListViewModel: ObservableObject {
     var sections: [MangaSection] { get }
-    var viewState: MangaListViewState { get }
+    var viewState: TabViewState { get }
 
     func onAppear()
     func retry()
@@ -30,7 +24,7 @@ protocol MangaListViewModel: ObservableObject {
 
 final class MangaListViewModelImpl: MangaListViewModel {
     @Published private(set) var sections: [MangaSection] = []
-    @Published private(set) var viewState: MangaListViewState = .loading
+    @Published private(set) var viewState: TabViewState = .loading
 
     private let service: MangaListService
     private var isFetching = false
@@ -59,7 +53,7 @@ private extension MangaListViewModelImpl {
                 await MainActor.run {
                     self.isFetching = false
                     self.sections = sections
-                    self.viewState = .content
+                    self.viewState = .loaded
                 }
             } catch {
                 await MainActor.run {

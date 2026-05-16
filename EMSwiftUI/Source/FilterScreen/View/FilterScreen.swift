@@ -28,7 +28,7 @@ struct FilterScreen<VM: FilterViewModel>: View {
                 case .error(let message):
                     errorView(message: message)
 
-                case .content:
+                case .loaded:
                     content
                 }
             }

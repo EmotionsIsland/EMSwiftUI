@@ -12,6 +12,12 @@ enum TabSelection {
     case filter
 }
 
+enum TabViewState: Equatable {
+    case loading
+    case loaded
+    case error(String)
+}
+
 struct TabBar: View {
     @State private var selection: TabSelection = .main
     
