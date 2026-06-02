@@ -14,16 +14,57 @@ enum SizeFormat: String {
     case size1024 = ".1024.jpg"
 }
 
-protocol MangaListViewModel: ObservableObject { }
+protocol MangaListViewModel: ObservableObject {
+    var sections: [MangaSection] { get }
+    var viewState: LoadState<[MangaSection]> { get }
+    func onAppear()
+    func retry()
+}
 
 final class MangaListViewModelImpl: MangaListViewModel {
-    // TODO: create Published variables
-    // TODO: create getData func
+    @Published private(set) var sections: [MangaSection] = []
+    @Published private(set) var viewState: LoadState<[MangaSection]> = .loading
     private let service: MangaListService
-
+    private var loadingTask: Task<Void, Never>?
+    
     init(service: MangaListService) {
         self.service = service
     }
     
-    @MainActor private func getData() async throws { }
+    func onAppear() {
+        guard sections.isEmpty, loadingTask == nil else { return }
+        loadData()
+    }
+    
+    func retry() {
+        loadData()
+    }
+    
+    private func loadData() {
+        loadingTask?.cancel()
+        viewState = .loading
+        
+        loadingTask = Task {
+            do {
+                let response = try await service.getManga()
+                let items = service.mapToSectionItems(from: response.data)
+                let sections = [
+                    MangaSection(title: "Popular", items: items),
+                    MangaSection(title: "Recently Added", items: items),
+                    MangaSection(title: "Last Updates", items: items)
+                ]
+                await MainActor.run {
+                    self.sections = sections
+                    self.viewState = .loaded(sections)
+                    self.loadingTask = nil
+                }
+            } catch {
+                await MainActor.run {
+                    self.sections = []
+                    self.viewState = .error(error.localizedDescription)
+                    self.loadingTask = nil
+                }
+            }
+        }
+    }
 }

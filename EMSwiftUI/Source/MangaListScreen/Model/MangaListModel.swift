@@ -80,4 +80,17 @@ struct Relationship: Decodable {
 struct CoverAttributes: Decodable {
     let fileName: String
 }
+
+extension Title {
+    var displayTitle: String {
+        if let en, !en.isEmpty { return en }
+        return en ?? "Untitled"
+    }
+}
+
+extension TagAttributes {
+    var tagName: String {
+        name.displayTitle
+    }
+}
 // swiftlint:enable identifier_name

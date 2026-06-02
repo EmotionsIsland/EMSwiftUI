@@ -8,9 +8,49 @@
 import SwiftUI
 
 struct MangaSingleGridView: View {
+    let item: MangaItem
     var body: some View {
-        VStack {
-            // TODO: Create single grid View
+        VStack(alignment: .leading, spacing: 2) {
+            coverImage
+            Text(item.title)
+                .font(.SFPro.semiboldNormal)
+                .foregroundStyle(.blackBase)
+                .lineLimit(1)
+            RatingView(rating: item.rating, maxRating: 5)
+            Text(item.genres)
+                .font(.SFPro.lightSmall)
+                .foregroundStyle(.grayBase)
+                .lineLimit(1)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    @ViewBuilder
+    private var coverImage: some View {
+        AsyncImage(url: item.coverURL) { phase in
+            switch phase {
+            case .empty:
+                placeholder
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 144)
+                    .clipped()
+            case .failure:
+                placeholder
+            @unknown default:
+                placeholder
+            }
+        }
+        .frame(height: 144)
+        .frame(maxWidth: .infinity)
+        .clipShape(RoundedRectangle(cornerRadius: 4))
+        .padding(.bottom, 2)
+    }
+    
+    private var placeholder: some View {
+        RoundedRectangle(cornerRadius: 4)
+            .fill(Color.grayBase.opacity(0.2))
     }
 }
