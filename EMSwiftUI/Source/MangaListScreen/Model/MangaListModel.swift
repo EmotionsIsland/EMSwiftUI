@@ -43,7 +43,18 @@ struct Attributes: Decodable {
 }
 
 struct Title: Decodable {
-    let en: String?
+    let values: [String: String]
+        
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        values = try container.decode([String: String].self)
+    }
+    
+    var displayTitle: String {
+        if let en = values["en"], !en.isEmpty { return en }
+        if let ru = values["ru"], !ru.isEmpty { return ru }
+        return values.first?.value ?? "Untitled"
+    }
 }
 
 struct Description: Decodable {
@@ -79,13 +90,6 @@ struct Relationship: Decodable {
 
 struct CoverAttributes: Decodable {
     let fileName: String
-}
-
-extension Title {
-    var displayTitle: String {
-        if let en, !en.isEmpty { return en }
-        return en ?? "Untitled"
-    }
 }
 
 extension TagAttributes {
