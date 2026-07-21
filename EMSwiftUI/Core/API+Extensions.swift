@@ -28,9 +28,26 @@ extension API {
         return api.endpoint(path: "/manga/tag")
     }
 
+    static func mangaList(withOrder order: Order) -> Endpoint {
+        let queryItems = [
+            URLQueryItem(name: "limit", value: "6"),
+            URLQueryItem(name: "contentRating[]", value: "safe"),
+            URLQueryItem(name: "order[\(order.rawValue)]", value: "desc"),
+            URLQueryItem(name: "includes[]", value: "cover_art")
+        ]
+
+        return api.endpoint(path: "/manga", queryItems: queryItems)
+    }
+
     static func coverURL(for manga: MangaData, _ sizeFormat: SizeFormat = .size512) -> URL? {
         guard let fileName = manga.relationships.first(where: { $0.type == "cover_art" })?.attributes?.fileName else { return nil }
 
         return coverURL.endpoint(path: "/covers/\(manga.id)/\(fileName)\(sizeFormat.rawValue)").url
+    }
+
+    enum Order: String {
+        case popular = "followedCount"
+        case recentlyAdded = "createdAt"
+        case lastUpdates = "latestUploadedChapter"
     }
 }

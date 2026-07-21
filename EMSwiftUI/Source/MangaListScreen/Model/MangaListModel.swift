@@ -43,7 +43,14 @@ struct Attributes: Decodable {
 }
 
 struct Title: Decodable {
+    let ru: String?
     let en: String?
+    let jaRo: String?
+    enum CodingKeys: String, CodingKey {
+        case en
+        case jaRo = "ja-ro"
+        case ru
+    }
 }
 
 struct Description: Decodable {
@@ -52,7 +59,14 @@ struct Description: Decodable {
 }
 
 struct AlternativeTitle: Decodable {
+    let en: String?
     let ru: String?
+    let jaRo: String?
+    enum CodingKeys: String, CodingKey {
+        case en
+        case jaRo = "ja-ro"
+        case ru
+    }
 }
 
 struct AttributesDescription: Decodable {
