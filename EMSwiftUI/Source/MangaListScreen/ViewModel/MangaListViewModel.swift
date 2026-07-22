@@ -18,7 +18,9 @@ protocol MangaListViewModel: ObservableObject {
     var popularMangas: [MangaModel] { get }
     var recentlyAddedMangas: [MangaModel] { get }
     var lastUpdatedMangas: [MangaModel] { get }
+    var viewState: ViewState { get }
     func loadData() async
+    func retry() async
 }
 
 final class MangaListViewModelImpl: MangaListViewModel {
@@ -27,39 +29,33 @@ final class MangaListViewModelImpl: MangaListViewModel {
     @Published var popularMangas: [MangaModel] = []
     @Published var recentlyAddedMangas: [MangaModel] = []
     @Published var lastUpdatedMangas: [MangaModel] = []
+    @Published var viewState: ViewState = .initial
 
     init(service: MangaListService) {
         self.service = service
     }
 
-    func loadData() async {
-        try? await getData()
+    @MainActor func loadData() async {
+        guard case .initial = viewState else { return }
+        viewState = .loading
+        await getData()
     }
 
-    @MainActor private func getData() async throws {
-        popularMangas = try await convertToMangaModel(service.getManga(withOrder: .popular).data)
-        recentlyAddedMangas = try await convertToMangaModel(service.getManga(withOrder: .recentlyAdded).data)
-        lastUpdatedMangas = try await convertToMangaModel(service.getManga(withOrder: .lastUpdates).data)
+    @MainActor func retry() async {
+        if case .loading = viewState { return }
+        viewState = .loading
+        await getData()
     }
 
-    private func convertToMangaModel(_ mangas: [MangaData]) -> [MangaModel] {
-        mangas.compactMap { mangaData in
-            let title = mangaData.attributes.title
-            let altTitles = mangaData.attributes.altTitles
-            return MangaModel(
-                id: mangaData.id,
-                coverUrl: API.coverURL(for: mangaData),
-                title: title.en
-                    ?? altTitles.compactMap { $0.en }.first
-                    ?? title.ru
-                    ?? altTitles.compactMap { $0.ru }.first
-                    ?? title.jaRo
-                    ?? altTitles.compactMap { $0.jaRo }.first
-                    ?? "Missing title",
-                genres: mangaData.attributes.tags
-                    .filter { $0.attributes.group == "genre" }
-                    .compactMap { $0.attributes.name.en }
-                )
+    @MainActor private func getData() async {
+        do {
+            async let popularMangas = service.getMangaModels(withOrder: .popular)
+            async let recentlyAddedMangas = service.getMangaModels(withOrder: .recentlyAdded)
+            async let lastUpdatedMangas = service.getMangaModels(withOrder: .lastUpdates)
+            (self.popularMangas, self.recentlyAddedMangas, self.lastUpdatedMangas) = try await (popularMangas, recentlyAddedMangas, lastUpdatedMangas)
+            viewState = .loaded
+        } catch let error {
+            viewState = .error(error as? NetworkError ?? .unknown(statusCode: -1))
         }
     }
 }

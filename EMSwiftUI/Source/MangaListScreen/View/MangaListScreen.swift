@@ -15,14 +15,28 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
     }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
+        VStack {
             searchBar
-            MangaSectionView(title: "Popular", mangaList: viewModel.popularMangas)
-            MangaSectionView(title: "Recently Added", mangaList: viewModel.recentlyAddedMangas)
-            MangaSectionView(title: "Last updates", mangaList: viewModel.lastUpdatedMangas)
-        }
-        .task {
-            await viewModel.loadData()
+            ScrollView(.vertical, showsIndicators: false) {
+                switch viewModel.viewState {
+                case .loading, .initial:
+                    ProgressView("Loading")
+                case .loaded:
+                    MangaSectionView(title: "Popular", mangaList: viewModel.popularMangas)
+                    MangaSectionView(title: "Recently Added", mangaList: viewModel.recentlyAddedMangas)
+                    MangaSectionView(title: "Last updates", mangaList: viewModel.lastUpdatedMangas)
+                case .error(let error):
+                    VStack {
+                        Text("Ошибка: \(error.localizedDescription)")
+                        Button("Повторить") {
+                            Task { await viewModel.retry() }
+                        }
+                    }
+                }
+            }
+            .task {
+                await viewModel.loadData()
+            }
         }
     }
 
