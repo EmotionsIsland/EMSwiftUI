@@ -41,7 +41,7 @@ struct FilterScreen<VM: FilterViewModel>: View {
                         }
                     }
                 }
-            }.padding(.horizontal)
+            }.padding(.horizontal, 16)
         }
         .task {
             await viewModel.loadData()
