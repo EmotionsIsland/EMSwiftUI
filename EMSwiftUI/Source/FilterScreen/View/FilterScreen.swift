@@ -61,11 +61,6 @@ struct FilterScreen<VM: FilterViewModel>: View {
         }
         .foregroundStyle(.blackBase)
         .padding(.horizontal, 16)
-        .padding(.bottom, 8)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(.grayBase)
-        }
+        .bottomSeparator()
     }
 }

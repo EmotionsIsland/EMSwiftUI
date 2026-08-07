@@ -10,7 +10,8 @@ import Factory
 
 final class MangaListScreenBuilder {
     static func build() -> some View {
-        let service: MangaListService = MangaListServiceImpl(netify: Container.shared.netify())
+        let mapper: MangaMapper = MangaMapperImpl()
+        let service: MangaListService = MangaListServiceImpl(netify: Container.shared.netify(), mapper: mapper)
         let viewModel = MangaListViewModelImpl(service: service)
         let view = MangaListScreen(viewModel: viewModel)
         

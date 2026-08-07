@@ -17,34 +17,18 @@ struct SelectedTagsView<VM: FilterViewModel>: View {
                 .foregroundStyle(.blackBase)
                 .padding(.bottom, 16)
             FlowLayout(items: viewModel.selectedTags) { tag in
-                Text("＋ \(tag.attributes.name.en ?? "Unknown")")
-                    .frame(minHeight: 36)
-                    .fixedSize(horizontal: true, vertical: true)
-                    .padding(.horizontal, 8)
-                    .font(.SFPro.bodyNormal)
-                    .foregroundStyle(.white)
-                    .background(.orangeBase)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .onTapGesture {
-                        withAnimation {
-                            viewModel.toggleSelection(for: tag)
-                        }
-                    }
+                TagView(
+                    title: "＋ \(tag.attributes.name.en ?? "Unknown")",
+                    isSelected: true,
+                    action: { viewModel.toggleSelection(for: tag) }
+                )
             }
             .padding(.bottom, 18)
             Button("Apply") { }
-                .font(.SFPro.mediumNormal)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(.orangeBase)
-                .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .orangeButtonStyle()
             Button("Reset") { viewModel.resetSelection() }
-                .font(.SFPro.mediumNormal)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .foregroundStyle(.blackBase)
-        } 
+                .resetButtonStyle()
+        }
         .animation(.easeInOut(duration: 0.25), value: viewModel.selectedTags.count)
     }
 }

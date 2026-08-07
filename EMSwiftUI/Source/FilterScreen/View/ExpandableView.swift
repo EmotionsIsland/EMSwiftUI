@@ -31,22 +31,12 @@ struct ExpandableView<VM: FilterViewModel>: View {
                 .foregroundStyle(.blackBase)
             }
             if isExpanded {
-                FlowLayout(
-                    items: tags
-                ) { tag in
-                    Text((viewModel.isSelected(tag) ? "＋ " : "") + (tag.attributes.name.en ?? "Unknown"))
-                        .frame(minHeight: 36)
-                        .fixedSize(horizontal: true, vertical: true)
-                        .padding(.horizontal, 8)
-                        .font(.SFPro.bodyNormal)
-                        .foregroundStyle(viewModel.isSelected(tag) ? .white : .blackBase)
-                        .background(viewModel.isSelected(tag) ? .orangeBase : .whiteText)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .onTapGesture {
-                            withAnimation {
-                                viewModel.toggleSelection(for: tag)
-                            }
-                        }
+                FlowLayout(items: tags) { tag in
+                    TagView(
+                        title: tag.attributes.name.en ?? "Unknown",
+                        isSelected: viewModel.isSelected(tag),
+                        action: { viewModel.toggleSelection(for: tag) }
+                    )
                 }
             }
         }

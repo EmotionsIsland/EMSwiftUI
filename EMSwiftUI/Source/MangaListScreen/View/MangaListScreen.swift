@@ -26,12 +26,7 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
                     MangaSectionView(title: "Recently Added", mangaList: viewModel.recentlyAddedMangas)
                     MangaSectionView(title: "Last updates", mangaList: viewModel.lastUpdatedMangas)
                 case .error(let error):
-                    VStack {
-                        Text("Ошибка: \(error.localizedDescription)")
-                        Button("Повторить") {
-                            Task { await viewModel.retry() }
-                        }
-                    }
+                    errorView(error)
                 }
             }
             .task {
@@ -53,11 +48,17 @@ struct MangaListScreen<VM: MangaListViewModel>: View {
         .foregroundStyle(.grayBase)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .padding(.horizontal, 16)
-        .padding(.bottom, 8)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(.grayBase)
+        .bottomSeparator()
+    }
+
+    private func errorView(_ error: Error) -> some View {
+        VStack {
+            Text("Ошибка: \(error.localizedDescription)")
+            Button("Повторить") {
+                Task {
+                    await viewModel.retry()
+                }
+            }
         }
     }
 }
