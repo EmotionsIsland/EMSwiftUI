@@ -12,24 +12,26 @@ protocol MangaMapper {
 }
 
 final class MangaMapperImpl: MangaMapper {
+    private let titleResolver: TitleResolver
+
+    init(titleResolver: TitleResolver = TitleResolver()) {
+        self.titleResolver = titleResolver
+    }
+
     func map(_ mangas: [MangaData]) -> [MangaModel] {
         mangas.map { mangaData in
-            let title = mangaData.attributes.title
-            let altTitles = mangaData.attributes.altTitles
-
+            let title = titleResolver.resolve(
+                title: mangaData.attributes.title,
+                alternativeTitles: mangaData.attributes.altTitles
+            ) ?? "Missing title"
+            let genres = mangaData.attributes.tags
+                .filter { $0.attributes.group == "genre" }
+                .compactMap { $0.attributes.name.en }
             return MangaModel(
                 id: mangaData.id,
                 coverUrl: API.coverURL(for: mangaData),
-                title: title.en
-                    ?? altTitles.compactMap { $0.en }.first
-                    ?? title.ru
-                    ?? altTitles.compactMap { $0.ru }.first
-                    ?? title.jaRo
-                    ?? altTitles.compactMap { $0.jaRo }.first
-                    ?? "Missing title",
-                genres: mangaData.attributes.tags
-                    .filter { $0.attributes.group == "genre" }
-                    .compactMap { $0.attributes.name.en }
+                title: title,
+                genres: genres
             )
         }
     }
